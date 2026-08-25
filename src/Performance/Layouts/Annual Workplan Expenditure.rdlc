@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_AnnualStrategyWorkplan">
+          <DataField>No_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="Description_AnnualStrategyWorkplan">
+          <DataField>Description_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="StrategyPlanID_AnnualStrategyWorkplan">
+          <DataField>StrategyPlanID_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="YearReportingCode_AnnualStrategyWorkplan">
+          <DataField>YearReportingCode_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="StartDate_AnnualStrategyWorkplan">
+          <DataField>StartDate_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="EndDate_AnnualStrategyWorkplan">
+          <DataField>EndDate_AnnualStrategyWorkplan</DataField>
+        </Field>
+        <Field Name="ActivityID_StrategyWorkplanLines">
+          <DataField>ActivityID_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="Description_StrategyWorkplanLines">
+          <DataField>Description_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="ImportedAnnualTargetQty_StrategyWorkplanLines">
+          <DataField>ImportedAnnualTargetQty_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="ImportedAnnualTargetQty_StrategyWorkplanLinesFormat">
+          <DataField>ImportedAnnualTargetQty_StrategyWorkplanLinesFormat</DataField>
+        </Field>
+        <Field Name="ImportedAnnualBudgetEst_StrategyWorkplanLines">
+          <DataField>ImportedAnnualBudgetEst_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="ImportedAnnualBudgetEst_StrategyWorkplanLinesFormat">
+          <DataField>ImportedAnnualBudgetEst_StrategyWorkplanLinesFormat</DataField>
+        </Field>
+        <Field Name="PrimaryDirectorate_StrategyWorkplanLines">
+          <DataField>PrimaryDirectorate_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="PerfomanceIndicator_StrategyWorkplanLines">
+          <DataField>PerfomanceIndicator_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="UnitofMeasure_StrategyWorkplanLines">
+          <DataField>UnitofMeasure_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="KeyPerformanceIndicator_StrategyWorkplanLines">
+          <DataField>KeyPerformanceIndicator_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="AssignedWeight_StrategyWorkplanLines">
+          <DataField>AssignedWeight_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="AssignedWeight_StrategyWorkplanLinesFormat">
+          <DataField>AssignedWeight_StrategyWorkplanLinesFormat</DataField>
+        </Field>
+        <Field Name="AnnualTarget_StrategyWorkplanLines">
+          <DataField>AnnualTarget_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="AnnualTarget_StrategyWorkplanLinesFormat">
+          <DataField>AnnualTarget_StrategyWorkplanLinesFormat</DataField>
+        </Field>
+        <Field Name="AnnualBudget_StrategyWorkplanLines">
+          <DataField>AnnualBudget_StrategyWorkplanLines</DataField>
+        </Field>
+        <Field Name="AnnualBudget_StrategyWorkplanLinesFormat">
+          <DataField>AnnualBudget_StrategyWorkplanLinesFormat</DataField>
+        </Field>
+        <Field Name="InitiativeNo_SubWorkplanActivity">
+          <DataField>InitiativeNo_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="ObjectiveInitiative_SubWorkplanActivity">
+          <DataField>ObjectiveInitiative_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="StartDate_SubWorkplanActivity">
+          <DataField>StartDate_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="DueDate_SubWorkplanActivity">
+          <DataField>DueDate_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="OutcomePerfomanceIndicator_SubWorkplanActivity">
+          <DataField>OutcomePerfomanceIndicator_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="UnitofMeasure_SubWorkplanActivity">
+          <DataField>UnitofMeasure_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="DesiredPerfomanceDirection_SubWorkplanActivity">
+          <DataField>DesiredPerfomanceDirection_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="ImportedAnnualTargetQty_SubWorkplanActivity">
+          <DataField>ImportedAnnualTargetQty_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="ImportedAnnualTargetQty_SubWorkplanActivityFormat">
+          <DataField>ImportedAnnualTargetQty_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="TotalBudget_SubWorkplanActivity">
+          <DataField>TotalBudget_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="TotalBudget_SubWorkplanActivityFormat">
+          <DataField>TotalBudget_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="KPIType_SubWorkplanActivity">
+          <DataField>KPIType_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="Q1TargetQty_SubWorkplanActivity">
+          <DataField>Q1TargetQty_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="Q1TargetQty_SubWorkplanActivityFormat">
+          <DataField>Q1TargetQty_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="Q2TargetQty_SubWorkplanActivity">
+          <DataField>Q2TargetQty_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="Q2TargetQty_SubWorkplanActivityFormat">
+          <DataField>Q2TargetQty_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="Q3TargetQty_SubWorkplanActivity">
+          <DataField>Q3TargetQty_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="Q3TargetQty_SubWorkplanActivityFormat">
+          <DataField>Q3TargetQty_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="Q4TargetQty_SubWorkplanActivity">
+          <DataField>Q4TargetQty_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="Q4TargetQty_SubWorkplanActivityFormat">
+          <DataField>Q4TargetQty_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="SubInitiativeNo_SubWorkplanActivity">
+          <DataField>SubInitiativeNo_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="SubTargets_SubWorkplanActivity">
+          <DataField>SubTargets_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="SubTargets_SubWorkplanActivityFormat">
+          <DataField>SubTargets_SubWorkplanActivityFormat</DataField>
+        </Field>
+        <Field Name="ExpenseAmount_SubWorkplanActivity">
+          <DataField>ExpenseAmount_SubWorkplanActivity</DataField>
+        </Field>
+        <Field Name="ExpenseAmount_SubWorkplanActivityFormat">
+          <DataField>ExpenseAmount_SubWorkplanActivityFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

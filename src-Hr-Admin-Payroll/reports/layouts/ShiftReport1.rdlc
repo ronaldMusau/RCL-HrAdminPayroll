@@ -1,0 +1,1194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>c3d4e5f6-a7b8-9012-cdef-012345678901</rd:ReportID>
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.1.30001.02</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.1.30001.02</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-06-05T07:06:16.8492047Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>d4e5f6a7-b8c9-0123-defa-123456789012</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Rectangle Name="HeaderSection">
+            <ReportItems>
+              <Image Name="CompanyLogo">
+                <Source>Database</Source>
+                <Value>=First(Fields!CompanyLogo.Value, "DataSet_Result")</Value>
+                <MIMEType>image/png</MIMEType>
+                <Sizing>FitProportional</Sizing>
+                <Top>0.08in</Top>
+                <Left>0.5in</Left>
+                <Height>0.85in</Height>
+                <Width>1.8in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Image>
+              <Textbox Name="CompanyNameTB">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyName.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <Color>#005b96</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.08in</Top>
+                <Left>2.5in</Left>
+                <Height>0.35in</Height>
+                <Width>5.2in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+              <Textbox Name="ReportTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>SHIFT SCHEDULE</Value>
+                        <Style>
+                          <FontSize>13pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.52in</Top>
+                <Left>2.5in</Left>
+                <Height>0.45in</Height>
+                <Width>5.2in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Height>1.1in</Height>
+            <Width>8in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="DetailsSection">
+            <ReportItems>
+              <Textbox Name="ShiftNoLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Shift No:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ShiftNoValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!No.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartmentLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Department:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.3in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartmentValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!ShiftDepartment.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>5.7in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StartDateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Start Date:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StartDateValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(First(Fields!ShiftStartDate.Value, "DataSet_Result"), "MM/dd/yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="EndDateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>End Date:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.3in</Width>
+                <ZIndex>6</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="EndDateValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(First(Fields!ShiftEndDate.Value, "DataSet_Result"), "MM/dd/yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>5.7in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>7</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="WeekNoLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Week No / Year:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>8</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="WeekNoValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!WeekNo.Value, "DataSet_Result") &amp; " / " &amp; First(Fields!Year.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>5.7in</Width>
+                <ZIndex>9</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StatusLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Status:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>10</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StatusValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!ApprovalStatus.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>11</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="CreatedByLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Created By:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.3in</Width>
+                <ZIndex>12</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="CreatedByValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Createdby.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>5.7in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>13</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>1.15in</Top>
+            <Height>1.42in</Height>
+            <Width>8in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="LinesSection">
+            <ReportItems>
+              <Textbox Name="LinesHeading">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>SHIFT LINES</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Tablix Name="ShiftLinesTablix">
+                <TablixBody>
+                  <TablixColumns>
+                    <TablixColumn>
+                      <Width>0.92361in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>1.47361in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>0.92361in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>1.12361in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>0.92361in</Width>
+                    </TablixColumn>
+                    <TablixColumn>
+                      <Width>1.63194in</Width>
+                    </TablixColumn>
+                  </TablixColumns>
+                  <TablixRows>
+                    <TablixRow>
+                      <Height>0.3in</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EmpNoHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Emp No</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EmpNameHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Employee Name</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="ShiftTypeHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Shift Type</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="ShiftDateHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Shift Date</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="StartTimeHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Start Time</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EndTimeHeader">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>End Time</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#0070c0</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <TablixRow>
+                      <Height>0.32in</Height>
+                      <TablixCells>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EmpNoCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Employee_No_.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EmpNameCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Employee_Name.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="ShiftTypeCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Shift_Type.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="ShiftDateCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Format(Fields!Shift_Date.Value, "MM/dd/yyyy")</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="StartTimeCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Format(Fields!Shift_Start_Time.Value, "hh:mm tt")</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="EndTimeCell">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Format(Fields!Shift_End_Time.Value, "hh:mm tt")</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, "#eef4fb", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                  </TablixRows>
+                </TablixBody>
+                <TablixColumnHierarchy>
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixColumnHierarchy>
+                <TablixRowHierarchy>
+                  <TablixMembers>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="ShiftLinesGroup">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!Employee_No_.Value &amp; Fields!Shift_Date.Value</GroupExpression>
+                        </GroupExpressions>
+                        <Filters>
+                          <Filter>
+                            <FilterExpression>=IIF(IsNothing(Fields!Employee_No_.Value), "", Fields!Employee_No_.Value)</FilterExpression>
+                            <Operator>NotEqual</Operator>
+                            <FilterValues>
+                              <FilterValue />
+                            </FilterValues>
+                          </Filter>
+                        </Filters>
+                      </Group>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixRowHierarchy>
+                <DataSetName>DataSet_Result</DataSetName>
+                <Top>0.38in</Top>
+                <Left>0.5in</Left>
+                <Height>0.62in</Height>
+                <Width>7in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Tablix>
+            </ReportItems>
+            <Top>2.62in</Top>
+            <Height>1.85in</Height>
+            <Width>8.5in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="FooterSection">
+            <ReportItems>
+              <Textbox Name="CompanyFooter">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyName.Value, "DataSet_Result") &amp; "  |  " &amp; First(Fields!CompanyAddress.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyPhone.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.45in</Height>
+                <Width>7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>4.52in</Top>
+            <Height>0.55in</Height>
+            <Width>8in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>5.15in</Height>
+        <Style />
+      </Body>
+      <Width>8.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CompanyLogo">
+          <DataField>CompanyLogo</DataField>
+        </Field>
+        <Field Name="CompanyPhone">
+          <DataField>CompanyPhone</DataField>
+        </Field>
+        <Field Name="No">
+          <DataField>No</DataField>
+        </Field>
+        <Field Name="ShiftDepartment">
+          <DataField>ShiftDepartment</DataField>
+        </Field>
+        <Field Name="ShiftStartDate">
+          <DataField>ShiftStartDate</DataField>
+        </Field>
+        <Field Name="ShiftEndDate">
+          <DataField>ShiftEndDate</DataField>
+        </Field>
+        <Field Name="WeekNo">
+          <DataField>WeekNo</DataField>
+        </Field>
+        <Field Name="Year">
+          <DataField>Year</DataField>
+        </Field>
+        <Field Name="ShiftType">
+          <DataField>ShiftType</DataField>
+        </Field>
+        <Field Name="Department">
+          <DataField>Department</DataField>
+        </Field>
+        <Field Name="Createdby">
+          <DataField>Createdby</DataField>
+        </Field>
+        <Field Name="DocumentDate">
+          <DataField>DocumentDate</DataField>
+        </Field>
+        <Field Name="SupervisorUserID">
+          <DataField>SupervisorUserID</DataField>
+        </Field>
+        <Field Name="ApprovalStatus">
+          <DataField>ApprovalStatus</DataField>
+        </Field>
+        <Field Name="Employee_No_">
+          <DataField>Employee_No_</DataField>
+        </Field>
+        <Field Name="Employee_Name">
+          <DataField>Employee_Name</DataField>
+        </Field>
+        <Field Name="Shift_Type">
+          <DataField>Shift_Type</DataField>
+        </Field>
+        <Field Name="Shift_Date">
+          <DataField>Shift_Date</DataField>
+        </Field>
+        <Field Name="Shift_Start_Time">
+          <DataField>Shift_Start_Time</DataField>
+        </Field>
+        <Field Name="Shift_End_Time">
+          <DataField>Shift_End_Time</DataField>
+        </Field>
+        <Field Name="Task_Assigned">
+          <DataField>Task_Assigned</DataField>
+        </Field>
+        <Field Name="Meal_Order">
+          <DataField>Meal_Order</DataField>
+        </Field>
+        <Field Name="Meal_Order_Description">
+          <DataField>Meal_Order_Description</DataField>
+        </Field>
+        <Field Name="Is_Public_Holiday">
+          <DataField>Is_Public_Holiday</DataField>
+        </Field>
+        <Field Name="Leave_Allocated">
+          <DataField>Leave_Allocated</DataField>
+        </Field>
+        <Field Name="Mon_Shift">
+          <DataField>Mon_Shift</DataField>
+        </Field>
+        <Field Name="Mon_Start_Time">
+          <DataField>Mon_Start_Time</DataField>
+        </Field>
+        <Field Name="Mon_End_Time">
+          <DataField>Mon_End_Time</DataField>
+        </Field>
+        <Field Name="Tue_Shift">
+          <DataField>Tue_Shift</DataField>
+        </Field>
+        <Field Name="Tue_Start_Time">
+          <DataField>Tue_Start_Time</DataField>
+        </Field>
+        <Field Name="Tue_End_Time">
+          <DataField>Tue_End_Time</DataField>
+        </Field>
+        <Field Name="Wed_Shift">
+          <DataField>Wed_Shift</DataField>
+        </Field>
+        <Field Name="Wed_Start_Time">
+          <DataField>Wed_Start_Time</DataField>
+        </Field>
+        <Field Name="Wed_End_Time">
+          <DataField>Wed_End_Time</DataField>
+        </Field>
+        <Field Name="Thu_Shift">
+          <DataField>Thu_Shift</DataField>
+        </Field>
+        <Field Name="Thu_Start_Time">
+          <DataField>Thu_Start_Time</DataField>
+        </Field>
+        <Field Name="Thu_End_Time">
+          <DataField>Thu_End_Time</DataField>
+        </Field>
+        <Field Name="Fri_Shift">
+          <DataField>Fri_Shift</DataField>
+        </Field>
+        <Field Name="Fri_Start_Time">
+          <DataField>Fri_Start_Time</DataField>
+        </Field>
+        <Field Name="Fri_End_Time">
+          <DataField>Fri_End_Time</DataField>
+        </Field>
+        <Field Name="Sat_Shift">
+          <DataField>Sat_Shift</DataField>
+        </Field>
+        <Field Name="Sat_Start_Time">
+          <DataField>Sat_Start_Time</DataField>
+        </Field>
+        <Field Name="Sat_End_Time">
+          <DataField>Sat_End_Time</DataField>
+        </Field>
+        <Field Name="Sun_Shift">
+          <DataField>Sun_Shift</DataField>
+        </Field>
+        <Field Name="Sun_Start_Time">
+          <DataField>Sun_Start_Time</DataField>
+        </Field>
+        <Field Name="Sun_End_Time">
+          <DataField>Sun_End_Time</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

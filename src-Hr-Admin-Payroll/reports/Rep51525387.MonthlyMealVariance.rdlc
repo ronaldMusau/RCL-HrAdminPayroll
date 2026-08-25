@@ -1,0 +1,1178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="txtTitle">
+            <CanGrow>true</CanGrow>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!ReportTitle.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0in</Top>
+            <Left>0in</Left>
+            <Height>0.28in</Height>
+            <Width>13.8in</Width>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>LightGrey</Color>
+              </Border>
+              <BackgroundColor>#D9D9D9</BackgroundColor>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>1pt</PaddingTop>
+              <PaddingBottom>1pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="txtVarianceLeftTitle">
+            <CanGrow>true</CanGrow>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>VARIANCE</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.28in</Top>
+            <Left>0in</Left>
+            <Height>0.06in</Height>
+            <Width>3.75in</Width>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+                <Color>Black</Color>
+              </Border>
+              <BackgroundColor>#DDE5B6</BackgroundColor>
+              <PaddingLeft>1pt</PaddingLeft>
+              <PaddingRight>1pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Tablix Name="tblSummary">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1.25in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.25in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.25in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.2in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sHdrPeriod">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Period</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#DDE5B6</BackgroundColor>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sHdrAmount">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#DDE5B6</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sHdrVariance">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Variance</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#DDE5B6</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.18in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sPeriod">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!IsYearHeader.Value, "Period", Fields!SummaryMonthName.Value)</Value>
+                                  <Style>
+                                    <FontWeight>=IIF(Fields!IsYearHeader.Value, "Bold", "Normal")</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sAmount">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!IsYearHeader.Value, CStr(Fields!SummaryYear.Value), Format(Fields!SummaryAmount.Value, "#,##0"))</Value>
+                                  <Style>
+                                    <FontWeight>=IIF(Fields!IsYearHeader.Value, "Bold", "Normal")</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="sVar">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!IsYearHeader.Value, "", Code.DashZero(Fields!SummaryVariance.Value))</Value>
+                                  <Style>
+                                    <FontWeight>=IIF(Fields!IsYearHeader.Value, "Bold", "Normal")</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="SummaryGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!LineNo.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <Filters>
+              <Filter>
+                <FilterExpression>=Fields!SectionType.Value</FilterExpression>
+                <Operator>Equal</Operator>
+                <FilterValues>
+                  <FilterValue>SUMMARY</FilterValue>
+                </FilterValues>
+              </Filter>
+            </Filters>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>0.34in</Top>
+            <Left>0in</Left>
+            <Height>0.38in</Height>
+            <Width>3.75in</Width>
+            <Style />
+          </Tablix>
+          <Tablix Name="tblDetail">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.45in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.15in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.8in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.8in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.8in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.18in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrNo">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>No</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrItem">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Items</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrPrevM">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!PrevMonthLabel.Value, "DataSet_Result")</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrPrevM2">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value></Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrCurrM">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!CurrMonthLabel.Value, "DataSet_Result")</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrCurrM2">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value></Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrVar">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>VARIANCE</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dHdrVar2">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value></Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#D9D9D9</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.18in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubNo">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value></Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubItem">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value></Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubPrevQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubPrevAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubCurrQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubCurrAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#F2F2F2</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubVarQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#C4D79B</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dSubVarAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Amount</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>#C4D79B</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.18in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dNo">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!IsDetailTotal.Value, "", CStr(Fields!DetailLineNo.Value))</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dItem">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!DetailItemName.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontStyle>=IIF(Fields!IsDetailTotal.Value, "Normal", "Italic")</FontStyle>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                    <Color>=IIF(Fields!IsDetailTotal.Value, "Black", "#C00000")</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dPrevQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!PrevQty.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dPrevAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!PrevAmt.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dCurrQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!CurrQty.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dCurrAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!CurrAmt.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#D9D9D9", "White")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dVarQty">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!VarQty.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#A9D08E", "#C4D79B")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="dVarAmt">
+                          <CanGrow>true</CanGrow>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Code.DashZero(Fields!VarAmt.Value)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>=IIF(Fields!IsDetailTotal.Value, "Bold", "Normal")</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                              <Color>Black</Color>
+                            </Border>
+                            <BackgroundColor>=IIF(Fields!IsDetailTotal.Value, "#A9D08E", "#C4D79B")</BackgroundColor>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="DetailGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!LineNo.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <Filters>
+              <Filter>
+                <FilterExpression>=Fields!SectionType.Value</FilterExpression>
+                <Operator>Equal</Operator>
+                <FilterValues>
+                  <FilterValue>DETAIL</FilterValue>
+                </FilterValues>
+              </Filter>
+            </Filters>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>0.34in</Top>
+            <Left>4.05in</Left>
+            <Height>0.54in</Height>
+            <Width>8in</Width>
+            <Style />
+          </Tablix>
+        </ReportItems>
+        <Height>0.95in</Height>
+        <Style />
+      </Body>
+      <Width>14in</Width>
+      <Page>
+        <PageHeight>11in</PageHeight>
+        <PageWidth>14.5in</PageWidth>
+        <LeftMargin>0.2in</LeftMargin>
+        <RightMargin>0.2in</RightMargin>
+        <TopMargin>0.2in</TopMargin>
+        <BottomMargin>0.2in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function DashZero(ByVal Value As Decimal)
+    If Value = 0 Then
+        Return "-"
+    End If
+    Return FormatNumber(Value, 0)
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>55713f0c-89a3-4a73-a4ac-91d3fdb33f77</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="ReportTitle">
+          <DataField>ReportTitle</DataField>
+        </Field>
+        <Field Name="PrevMonthLabel">
+          <DataField>PrevMonthLabel</DataField>
+        </Field>
+        <Field Name="CurrMonthLabel">
+          <DataField>CurrMonthLabel</DataField>
+        </Field>
+        <Field Name="SectionType">
+          <DataField>SectionType</DataField>
+        </Field>
+        <Field Name="LineNo">
+          <DataField>LineNo</DataField>
+        </Field>
+        <Field Name="IsYearHeader">
+          <DataField>IsYearHeader</DataField>
+        </Field>
+        <Field Name="IsDetailTotal">
+          <DataField>IsDetailTotal</DataField>
+        </Field>
+        <Field Name="SummaryYear">
+          <DataField>SummaryYear</DataField>
+        </Field>
+        <Field Name="SummaryMonthName">
+          <DataField>SummaryMonthName</DataField>
+        </Field>
+        <Field Name="SummaryAmount">
+          <DataField>SummaryAmount</DataField>
+        </Field>
+        <Field Name="SummaryAmountFormat">
+          <DataField>SummaryAmountFormat</DataField>
+        </Field>
+        <Field Name="SummaryVariance">
+          <DataField>SummaryVariance</DataField>
+        </Field>
+        <Field Name="SummaryVarianceFormat">
+          <DataField>SummaryVarianceFormat</DataField>
+        </Field>
+        <Field Name="DetailLineNo">
+          <DataField>DetailLineNo</DataField>
+        </Field>
+        <Field Name="DetailItemName">
+          <DataField>DetailItemName</DataField>
+        </Field>
+        <Field Name="PrevQty">
+          <DataField>PrevQty</DataField>
+        </Field>
+        <Field Name="PrevQtyFormat">
+          <DataField>PrevQtyFormat</DataField>
+        </Field>
+        <Field Name="PrevAmt">
+          <DataField>PrevAmt</DataField>
+        </Field>
+        <Field Name="PrevAmtFormat">
+          <DataField>PrevAmtFormat</DataField>
+        </Field>
+        <Field Name="CurrQty">
+          <DataField>CurrQty</DataField>
+        </Field>
+        <Field Name="CurrQtyFormat">
+          <DataField>CurrQtyFormat</DataField>
+        </Field>
+        <Field Name="CurrAmt">
+          <DataField>CurrAmt</DataField>
+        </Field>
+        <Field Name="CurrAmtFormat">
+          <DataField>CurrAmtFormat</DataField>
+        </Field>
+        <Field Name="VarQty">
+          <DataField>VarQty</DataField>
+        </Field>
+        <Field Name="VarQtyFormat">
+          <DataField>VarQtyFormat</DataField>
+        </Field>
+        <Field Name="VarAmt">
+          <DataField>VarAmt</DataField>
+        </Field>
+        <Field Name="VarAmtFormat">
+          <DataField>VarAmtFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

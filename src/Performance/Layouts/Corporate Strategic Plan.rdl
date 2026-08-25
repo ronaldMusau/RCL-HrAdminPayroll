@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="ReportForNavId_1">
+          <DataField>ReportForNavId_1</DataField>
+        </Field>
+        <Field Name="Code_CorporateStrategicPlans">
+          <DataField>Code_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="Description_CorporateStrategicPlans">
+          <DataField>Description_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="PrimaryTheme_CorporateStrategicPlans">
+          <DataField>PrimaryTheme_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="StrategyFramework_CorporateStrategicPlans">
+          <DataField>StrategyFramework_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="StartDate_CorporateStrategicPlans">
+          <DataField>StartDate_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="EndDate_CorporateStrategicPlans">
+          <DataField>EndDate_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="DurationYears_CorporateStrategicPlans">
+          <DataField>DurationYears_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="VisionStatement_CorporateStrategicPlans">
+          <DataField>VisionStatement_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="MissionStatement_CorporateStrategicPlans">
+          <DataField>MissionStatement_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="ImplementationStatus_CorporateStrategicPlans">
+          <DataField>ImplementationStatus_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="ApprovalStatus_CorporateStrategicPlans">
+          <DataField>ApprovalStatus_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="NoSeries_CorporateStrategicPlans">
+          <DataField>NoSeries_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="CreatedBy_CorporateStrategicPlans">
+          <DataField>CreatedBy_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="CreatedDate_CorporateStrategicPlans">
+          <DataField>CreatedDate_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="CreationTime_CorporateStrategicPlans">
+          <DataField>CreationTime_CorporateStrategicPlans</DataField>
+        </Field>
+        <Field Name="CompanyInfoName">
+          <DataField>CompanyInfoName</DataField>
+        </Field>
+        <Field Name="CompanyInfoPicture">
+          <DataField>CompanyInfoPicture</DataField>
+        </Field>
+        <Field Name="ReportForNavId_124">
+          <DataField>ReportForNavId_124</DataField>
+        </Field>
+        <Field Name="Name_CompanyInformation">
+          <DataField>Name_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Name2_CompanyInformation">
+          <DataField>Name2_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Address_CompanyInformation">
+          <DataField>Address_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Address2_CompanyInformation">
+          <DataField>Address2_CompanyInformation</DataField>
+        </Field>
+        <Field Name="City_CompanyInformation">
+          <DataField>City_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Picture_CompanyInformation">
+          <DataField>Picture_CompanyInformation</DataField>
+        </Field>
+        <Field Name="PostCode_CompanyInformation">
+          <DataField>PostCode_CompanyInformation</DataField>
+        </Field>
+        <Field Name="County_CompanyInformation">
+          <DataField>County_CompanyInformation</DataField>
+        </Field>
+        <Field Name="CountryName">
+          <DataField>CountryName</DataField>
+        </Field>
+        <Field Name="ReportForNavId_17">
+          <DataField>ReportForNavId_17</DataField>
+        </Field>
+        <Field Name="StrategicPlanID_StrategicInitiative">
+          <DataField>StrategicPlanID_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="ThemeID_StrategicInitiative">
+          <DataField>ThemeID_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="ObjectiveID_StrategicInitiative">
+          <DataField>ObjectiveID_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="StrategyID_StrategicInitiative">
+          <DataField>StrategyID_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="Code_StrategicInitiative">
+          <DataField>Code_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="Description_StrategicInitiative">
+          <DataField>Description_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="FrameworkPerspective_StrategicInitiative">
+          <DataField>FrameworkPerspective_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="StrategyPlannedTarget_StrategicInitiative">
+          <DataField>StrategyPlannedTarget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="StrategyPlannedTarget_StrategicInitiativeFormat">
+          <DataField>StrategyPlannedTarget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="PCPlannedTarget_StrategicInitiative">
+          <DataField>PCPlannedTarget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="PCPlannedTarget_StrategicInitiativeFormat">
+          <DataField>PCPlannedTarget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="AchievedTarget_StrategicInitiative">
+          <DataField>AchievedTarget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="AchievedTarget_StrategicInitiativeFormat">
+          <DataField>AchievedTarget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="PlannedBudget_StrategicInitiative">
+          <DataField>PlannedBudget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="PlannedBudget_StrategicInitiativeFormat">
+          <DataField>PlannedBudget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="UsageBudget_StrategicInitiative">
+          <DataField>UsageBudget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="UsageBudget_StrategicInitiativeFormat">
+          <DataField>UsageBudget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="StrategyFramework_StrategicInitiative">
+          <DataField>StrategyFramework_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="Collectivetarget_StrategicInitiative">
+          <DataField>Collectivetarget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="Collectivetarget_StrategicInitiativeFormat">
+          <DataField>Collectivetarget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="CollectiveBudget_StrategicInitiative">
+          <DataField>CollectiveBudget_StrategicInitiative</DataField>
+        </Field>
+        <Field Name="CollectiveBudget_StrategicInitiativeFormat">
+          <DataField>CollectiveBudget_StrategicInitiativeFormat</DataField>
+        </Field>
+        <Field Name="YearOne">
+          <DataField>YearOne</DataField>
+        </Field>
+        <Field Name="YearOneTarget">
+          <DataField>YearOneTarget</DataField>
+        </Field>
+        <Field Name="YearOneTargetFormat">
+          <DataField>YearOneTargetFormat</DataField>
+        </Field>
+        <Field Name="YearTwo">
+          <DataField>YearTwo</DataField>
+        </Field>
+        <Field Name="YearTwoTarget">
+          <DataField>YearTwoTarget</DataField>
+        </Field>
+        <Field Name="YearTwoTargetFormat">
+          <DataField>YearTwoTargetFormat</DataField>
+        </Field>
+        <Field Name="YearThree">
+          <DataField>YearThree</DataField>
+        </Field>
+        <Field Name="YearThreeTarget">
+          <DataField>YearThreeTarget</DataField>
+        </Field>
+        <Field Name="YearThreeTargetFormat">
+          <DataField>YearThreeTargetFormat</DataField>
+        </Field>
+        <Field Name="YearFour">
+          <DataField>YearFour</DataField>
+        </Field>
+        <Field Name="YearFourTarget">
+          <DataField>YearFourTarget</DataField>
+        </Field>
+        <Field Name="YearFourTargetFormat">
+          <DataField>YearFourTargetFormat</DataField>
+        </Field>
+        <Field Name="YearFive">
+          <DataField>YearFive</DataField>
+        </Field>
+        <Field Name="YearFiveTarget">
+          <DataField>YearFiveTarget</DataField>
+        </Field>
+        <Field Name="YearFiveTargetFormat">
+          <DataField>YearFiveTargetFormat</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

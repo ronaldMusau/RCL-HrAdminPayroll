@@ -1,0 +1,801 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>a1b2c3d4-e5f6-7890-abcd-ef1234567890</rd:ReportID>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>b2c3d4e5-f6a7-8901-bcde-f12345678901</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Image Name="CompanyLogo">
+            <Source>Database</Source>
+            <Value>=First(Fields!CompanyLogo.Value, "DataSet_Result")</Value>
+            <MIMEType>image/png</MIMEType>
+            <Sizing>FitProportional</Sizing>
+            <Top>0.1in</Top>
+            <Left>0.5in</Left>
+            <Height>0.75in</Height>
+            <Width>1.5in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
+          <Textbox Name="CompanyNameText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!CompanyName.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>13pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#005b96</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.2in</Top>
+            <Left>2.2in</Left>
+            <Height>0.55in</Height>
+            <Width>5.3in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+            </Style>
+          </Textbox>
+          <Rectangle Name="Divider1">
+            <Top>1.0in</Top>
+            <Left>0.5in</Left>
+            <Height>0.05in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <BackgroundColor>#0070c0</BackgroundColor>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Textbox Name="MemoTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>INTERNAL MEMO</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.1in</Top>
+            <Left>0.5in</Left>
+            <Height>0.35in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+            </Style>
+          </Textbox>
+          <Textbox Name="FromText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>From:  </Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=First(Fields!RequestorName.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.55in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Textbox Name="DateText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Date:  </Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Format(First(Fields!ActivityDate.Value, "DataSet_Result"), "MM/dd/yyyy")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.88in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Textbox Name="SubjectText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!Purpose.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>2.21in</Top>
+            <Left>0.5in</Left>
+            <Height>0.35in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Rectangle Name="Divider2">
+            <Top>2.65in</Top>
+            <Left>0.5in</Left>
+            <Height>0.05in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <BackgroundColor>#0070c0</BackgroundColor>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Textbox Name="VenueText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=IIf(First(Fields!Venue.Value, "DataSet_Result") = "", "", "Venue:  " &amp; First(Fields!Venue.Value, "DataSet_Result"))</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>2.78in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Textbox Name="PeriodText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Period:  </Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Format(First(Fields!ActivityDate.Value, "DataSet_Result"), "MM/dd/yyyy") &amp; "  to  " &amp; Format(First(Fields!EndDate.Value, "DataSet_Result"), "MM/dd/yyyy")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>3.11in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Textbox Name="TimeText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=IIf(First(Fields!StartTime.Value, "DataSet_Result") = "", "", "Time:  " &amp; Format(First(Fields!StartTime.Value, "DataSet_Result"), "hh:mm tt") &amp; "  to  " &amp; Format(First(Fields!EndTime.Value, "DataSet_Result"), "hh:mm tt"))</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>3.44in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Textbox Name="ActivityHeading">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Activity Schedule:</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>3.82in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Tablix Name="ActivityTablix">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>7.0in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.28in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ActivityLineCell">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Format(Fields!Start_Date.Value, "MM/dd/yyyy") &amp; "  to  " &amp; Format(Fields!End_Date.Value, "MM/dd/yyyy") &amp; "   —   " &amp; Fields!Activity_Description.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="ActivityLinesGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Activity_Description.Value</GroupExpression>
+                    </GroupExpressions>
+                    <Filters>
+                      <Filter>
+                        <FilterExpression>=IIF(IsNothing(Fields!Activity_Description.Value), "", Fields!Activity_Description.Value)</FilterExpression>
+                        <Operator>NotEqual</Operator>
+                        <FilterValues>
+                          <FilterValue></FilterValue>
+                        </FilterValues>
+                      </Filter>
+                    </Filters>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>4.15in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="AttendeesHeading">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Attendees:</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>4.55in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>13</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Tablix Name="AttendeesTablix">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>7.0in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.28in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="AttendeeNameCell">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AttenderEmployeeName.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="AttendeesGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!AttenderEmployeeNo.Value</GroupExpression>
+                    </GroupExpressions>
+                    <Filters>
+                      <Filter>
+                        <FilterExpression>=IIF(IsNothing(Fields!AttenderEmployeeName.Value), "", Fields!AttenderEmployeeName.Value)</FilterExpression>
+                        <Operator>NotEqual</Operator>
+                        <FilterValues>
+                          <FilterValue></FilterValue>
+                        </FilterValues>
+                      </Filter>
+                    </Filters>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>4.88in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>14</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="SubmittedText">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Submitted for your approval.</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontStyle>Italic</FontStyle>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>5.28in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>15</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Rectangle Name="Divider3">
+            <Top>5.65in</Top>
+            <Left>0.5in</Left>
+            <Height>0.05in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>16</ZIndex>
+            <Style>
+              <BackgroundColor>#0070c0</BackgroundColor>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Textbox Name="ApprovedByHeading">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Approved By:</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+              </Paragraph>
+            </Paragraphs>
+            <Top>5.78in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>17</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+          <Tablix Name="ApprovedByTablix">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>7.0in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.28in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ApproverNameCell">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ApproverName.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="ApprovedByGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!ApproverName.Value</GroupExpression>
+                    </GroupExpressions>
+                    <Filters>
+                      <Filter>
+                        <FilterExpression>=IIF(IsNothing(Fields!ApproverName.Value), "", Fields!ApproverName.Value)</FilterExpression>
+                        <Operator>NotEqual</Operator>
+                        <FilterValues>
+                          <FilterValue></FilterValue>
+                        </FilterValues>
+                      </Filter>
+                    </Filters>
+                  </Group>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet_Result</DataSetName>
+            <Top>6.11in</Top>
+            <Left>0.5in</Left>
+            <Height>0.28in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>18</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="CompanyFooter">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!CompanyName.Value, "DataSet_Result") &amp; "  |  " &amp; First(Fields!CompanyAddress.Value, "DataSet_Result")</Value>
+                    <Style>
+                      <FontFamily>Arial</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#0070c0</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>6.55in</Top>
+            <Left>0.5in</Left>
+            <Height>0.35in</Height>
+            <Width>7.0in</Width>
+            <ZIndex>19</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <Height>7.0in</Height>
+        <Style />
+      </Body>
+      <Width>8in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CompanyLogo">
+          <DataField>CompanyLogo</DataField>
+        </Field>
+        <Field Name="No">
+          <DataField>No</DataField>
+        </Field>
+        <Field Name="RequestorUserID">
+          <DataField>RequestorUserID</DataField>
+        </Field>
+        <Field Name="RequestorName">
+          <DataField>RequestorName</DataField>
+        </Field>
+        <Field Name="DepartmentCode">
+          <DataField>DepartmentCode</DataField>
+        </Field>
+        <Field Name="ActivityDate">
+          <DataField>ActivityDate</DataField>
+        </Field>
+        <Field Name="StartTime">
+          <DataField>StartTime</DataField>
+        </Field>
+        <Field Name="EndTime">
+          <DataField>EndTime</DataField>
+        </Field>
+        <Field Name="EndDate">
+          <DataField>EndDate</DataField>
+        </Field>
+        <Field Name="Venue">
+          <DataField>Venue</DataField>
+        </Field>
+        <Field Name="CreatedDate">
+          <DataField>CreatedDate</DataField>
+        </Field>
+        <Field Name="Purpose">
+          <DataField>Purpose</DataField>
+        </Field>
+        <Field Name="Start_Date">
+          <DataField>Start_Date</DataField>
+        </Field>
+        <Field Name="End_Date">
+          <DataField>End_Date</DataField>
+        </Field>
+        <Field Name="Activity_Description">
+          <DataField>Activity_Description</DataField>
+        </Field>
+        <Field Name="AttenderEmployeeNo">
+          <DataField>AttenderEmployeeNo</DataField>
+        </Field>
+        <Field Name="AttenderEmployeeName">
+          <DataField>AttenderEmployeeName</DataField>
+        </Field>
+        <Field Name="ApproverID">
+          <DataField>ApproverID</DataField>
+        </Field>
+        <Field Name="ApproverName">
+          <DataField>ApproverName</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

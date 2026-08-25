@@ -1,0 +1,1245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>f1e2d3c4-b5a6-7890-fedc-ba9876543210</rd:ReportID>
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>PBIRB</am:Name>
+      <am:Version>15.7.1815.334</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.1.30001.02</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-06-11T12:49:50.9363270Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>d4e5f6a7-b8c9-0123-defa-456789012345</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Rectangle Name="HeaderSection">
+            <ReportItems>
+              <Image Name="CompanyLogo">
+                <Source>Database</Source>
+                <Value>=First(Fields!Logo.Value, "DataSet_Result")</Value>
+                <MIMEType>image/png</MIMEType>
+                <Sizing>FitProportional</Sizing>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.85in</Height>
+                <Width>1.8in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Image>
+              <Textbox Name="ReportTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>TRAVEL CLEARANCE FORM</Value>
+                        <Style>
+                          <FontSize>14pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.2in</Top>
+                <Left>2.5in</Left>
+                <Height>0.65in</Height>
+                <Width>4.8in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Height>1.2in</Height>
+            <Width>8in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="EmployeeInfoSection">
+            <ReportItems>
+              <Textbox Name="OriginLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Country of Origin:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.08in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.2in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="OriginValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Fields!Origin.Value</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.08in</Top>
+                <Left>2.8in</Left>
+                <Height>0.25in</Height>
+                <Width>4.9in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DestinationLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Destination:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.2in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DestinationValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Fields!LocalDestination.Value</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.4in</Top>
+                <Left>2.8in</Left>
+                <Height>0.25in</Height>
+                <Width>4.9in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="NameLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Name:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.72in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.2in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="NameValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Fields!EmployeeName.Value</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.72in</Top>
+                <Left>2.8in</Left>
+                <Height>0.25in</Height>
+                <Width>4.9in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="TitleLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Title:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.04in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.2in</Width>
+                <ZIndex>6</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="TitleValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Fields!EmpJobTitle.Value</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.04in</Top>
+                <Left>2.8in</Left>
+                <Height>0.25in</Height>
+                <Width>4.9in</Width>
+                <ZIndex>7</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PurposeLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Purpose of Travel:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.36in</Top>
+                <Left>0.5in</Left>
+                <Height>0.35in</Height>
+                <Width>2.2in</Width>
+                <ZIndex>8</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PurposeValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Fields!ReasonforTravel.Value</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.36in</Top>
+                <Left>2.8in</Left>
+                <Height>0.35in</Height>
+                <Width>4.9in</Width>
+                <ZIndex>9</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>1.25in</Top>
+            <Height>1.82in</Height>
+            <Width>8in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="PersonalTripBox">
+            <ReportItems>
+              <Textbox Name="PersonalTripTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>☐  Personal Trip</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.1in</Left>
+                <Height>0.25in</Height>
+                <Width>6.7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PeriodOfLeaveLbl">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Period of Leave Days:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.42in</Top>
+                <Left>0.1in</Left>
+                <Height>0.25in</Height>
+                <Width>2.1in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PeriodOfLeaveVal">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>="From " &amp; Format(Last(Fields!TripStartDate.Value), "dd/MM/yyyy") &amp; "   To " &amp; Format(Last(Fields!TripEndDate.Value), "dd/MM/yyyy")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.42in</Top>
+                <Left>2.25in</Left>
+                <Height>0.25in</Height>
+                <Width>4.55in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="Box1HODLine">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Head of Department:  Name &amp; Signature  _____________________________</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.78in</Top>
+                <Left>0.1in</Left>
+                <Height>0.5in</Height>
+                <Width>6.7in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>3.17in</Top>
+            <Left>0.5in</Left>
+            <Height>1.45in</Height>
+            <Width>7in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="DutyTravelBox">
+            <ReportItems>
+              <Textbox Name="DutyTravelTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>☐  Duty Travel</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.1in</Left>
+                <Height>0.25in</Height>
+                <Width>6.7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="MemoNumberLine">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Approved Memo Number:  ____________________________</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.42in</Top>
+                <Left>0.1in</Left>
+                <Height>0.25in</Height>
+                <Width>6.7in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="Box2HODLine">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Head of Department:  Name &amp; Signature  _____________________________</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.05in</Top>
+                <Left>0.1in</Left>
+                <Height>0.5in</Height>
+                <Width>6.7in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>4.72in</Top>
+            <Left>0.5in</Left>
+            <Height>1.65in</Height>
+            <Width>7in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="TravelPeriodSection">
+            <ReportItems>
+              <Textbox Name="TravelPeriodHeading">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Travel Period</Value>
+                        <Style>
+                          <FontSize>12pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <TextDecoration>Underline</TextDecoration>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>6.5in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartureLbl">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Date of Departure:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.4in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartureVal">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(Last(Fields!TripStartDate.Value), "dd/MM/yyyy")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>3.1in</Left>
+                <Height>0.25in</Height>
+                <Width>4.3in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ReturnLbl">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Expected Date of Return:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.65in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2.4in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ReturnVal">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(Last(Fields!TripEndDate.Value), "dd/MM/yyyy")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.65in</Top>
+                <Left>3.1in</Left>
+                <Height>0.25in</Height>
+                <Width>4.3in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>6.47in</Top>
+            <Height>1in</Height>
+            <Width>8in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="CertificationSection">
+            <ReportItems>
+              <Textbox Name="CertificationText">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>I hereby certify that the above-mentioned individual is a RwandAir Catering staff member and is authorized to travel to </Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                      <TextRun>
+                        <Value>=Last(Fields!LocalDestination.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                      <TextRun>
+                        <Value> for the purpose stated above.</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.6in</Height>
+                <Width>6.8in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>7.57in</Top>
+            <Height>0.75in</Height>
+            <Width>8in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="ApprovalSection">
+            <ReportItems>
+              <Textbox Name="ApprovalHeading">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>APPROVAL: (COO/CEO / RwandAir)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>6.5in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox9">
+                <rd:DefaultName>Textbox9</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>COO Name:</Value>
+                        <Style />
+                      </TextRun>
+                      <TextRun>
+                        <Value>=Fields!COO_Approver_Name.Value</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.35306in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>3.65278in</Width>
+                <ZIndex>1</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!COO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox10">
+                <rd:DefaultName>Textbox10</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Signature:--------------------</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.34167in</Top>
+                <Left>4.26389in</Left>
+                <Height>0.26139in</Height>
+                <Width>1.70833in</Width>
+                <ZIndex>2</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!COO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox11">
+                <rd:DefaultName>Textbox11</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Date:----------------</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.31389in</Top>
+                <Left>6in</Left>
+                <Height>0.28917in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>3</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!COO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox12">
+                <rd:DefaultName>Textbox9</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>CEO Name:</Value>
+                        <Style />
+                      </TextRun>
+                      <TextRun>
+                        <Value>=Fields!CEO_Approver_Name.Value</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.76958in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>3.65278in</Width>
+                <ZIndex>4</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!CEO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox13">
+                <rd:DefaultName>Textbox10</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Signature:--------------------</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.75819in</Top>
+                <Left>4.26389in</Left>
+                <Height>0.26139in</Height>
+                <Width>1.70833in</Width>
+                <ZIndex>5</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!CEO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Textbox14">
+                <rd:DefaultName>Textbox11</rd:DefaultName>
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Date:---------------</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.73041in</Top>
+                <Left>6in</Left>
+                <Height>0.28917in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>6</ZIndex>
+                <Visibility>
+                  <Hidden>=NOT CBool(Fields!CEO_Approval.Value)</Hidden>
+                </Visibility>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>8.42in</Top>
+            <Height>1.5in</Height>
+            <Width>8in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="FooterSection">
+            <ReportItems>
+              <Textbox Name="CompanyFooter">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>RwandAir Catering Ltd, KN 5RD Kanombe, Kigali International Airport, Kigali - Rwanda</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Tel : +250 783 721 776 / +250 735 633 722</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.45in</Height>
+                <Width>7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>10.02in</Top>
+            <Height>0.55in</Height>
+            <Width>8in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>10.65in</Height>
+        <Style />
+      </Body>
+      <Width>8in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Logo">
+          <DataField>Logo</DataField>
+        </Field>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CompanyPhone">
+          <DataField>CompanyPhone</DataField>
+        </Field>
+        <Field Name="RequestNo">
+          <DataField>RequestNo</DataField>
+        </Field>
+        <Field Name="RequestID">
+          <DataField>RequestID</DataField>
+        </Field>
+        <Field Name="RequestDate">
+          <DataField>RequestDate</DataField>
+        </Field>
+        <Field Name="ReasonforTravel">
+          <DataField>ReasonforTravel</DataField>
+        </Field>
+        <Field Name="Employee_No_">
+          <DataField>Employee_No_</DataField>
+        </Field>
+        <Field Name="EmployeeName">
+          <DataField>EmployeeName</DataField>
+        </Field>
+        <Field Name="EmpJobTitle">
+          <DataField>EmpJobTitle</DataField>
+        </Field>
+        <Field Name="DriverName">
+          <DataField>DriverName</DataField>
+        </Field>
+        <Field Name="ModeofTravel">
+          <DataField>ModeofTravel</DataField>
+        </Field>
+        <Field Name="LocalDestination">
+          <DataField>LocalDestination</DataField>
+        </Field>
+        <Field Name="Origin">
+          <DataField>Origin</DataField>
+        </Field>
+        <Field Name="TripStartDate">
+          <DataField>TripStartDate</DataField>
+        </Field>
+        <Field Name="TripEndDate">
+          <DataField>TripEndDate</DataField>
+        </Field>
+        <Field Name="International_Destination">
+          <DataField>International_Destination</DataField>
+        </Field>
+        <Field Name="COO_Approval">
+          <DataField>COO_Approval</DataField>
+        </Field>
+        <Field Name="COO_Approver_Name">
+          <DataField>COO_Approver_Name</DataField>
+        </Field>
+        <Field Name="CEO_Approval">
+          <DataField>CEO_Approval</DataField>
+        </Field>
+        <Field Name="CEO_Approver_Name">
+          <DataField>CEO_Approver_Name</DataField>
+        </Field>
+        <Field Name="Employee_Name">
+          <DataField>Employee_Name</DataField>
+        </Field>
+        <Field Name="Department_Name">
+          <DataField>Department_Name</DataField>
+        </Field>
+        <Field Name="International">
+          <DataField>International</DataField>
+        </Field>
+        <Field Name="Locals">
+          <DataField>Locals</DataField>
+        </Field>
+        <Field Name="ApproverID">
+          <DataField>ApproverID</DataField>
+        </Field>
+        <Field Name="ApproverName">
+          <DataField>ApproverName</DataField>
+        </Field>
+        <Field Name="ApprovalDate">
+          <DataField>ApprovalDate</DataField>
+        </Field>
+        <Field Name="LastModifiedDateTime">
+          <DataField>LastModifiedDateTime</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="ReportForNavId_1">
+          <DataField>ReportForNavId_1</DataField>
+        </Field>
+        <Field Name="No_PerformanceDiaryLog">
+          <DataField>No_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="EmployeeNo_PerformanceDiaryLog">
+          <DataField>EmployeeNo_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="IncidenceDate_PerformanceDiaryLog">
+          <DataField>IncidenceDate_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="PerformanceEntryType_PerformanceDiaryLog">
+          <DataField>PerformanceEntryType_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="DiarySource_PerformanceDiaryLog">
+          <DataField>DiarySource_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="Description_PerformanceDiaryLog">
+          <DataField>Description_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="PersonalScorecardID_PerformanceDiaryLog">
+          <DataField>PersonalScorecardID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="GoalID_PerformanceDiaryLog">
+          <DataField>GoalID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="ObjectiveID_PerformanceDiaryLog">
+          <DataField>ObjectiveID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="DisciplinaryCaseID_PerformanceDiaryLog">
+          <DataField>DisciplinaryCaseID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="DirectorateCode_PerformanceDiaryLog">
+          <DataField>DirectorateCode_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="EmployeeNames_PerformanceDiaryLog">
+          <DataField>EmployeeNames_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="DocumentDate_PerformanceDiaryLog">
+          <DataField>DocumentDate_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="RegionID_PerformanceDiaryLog">
+          <DataField>RegionID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="ActivityStartDate_PerformanceDiaryLog">
+          <DataField>ActivityStartDate_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="ActivityEndDate_PerformanceDiaryLog">
+          <DataField>ActivityEndDate_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="CSPID_PerformanceDiaryLog">
+          <DataField>CSPID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="AWPID_PerformanceDiaryLog">
+          <DataField>AWPID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="BoardPCID_PerformanceDiaryLog">
+          <DataField>BoardPCID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="CEOPCID_PerformanceDiaryLog">
+          <DataField>CEOPCID_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="FunctionalPC_PerformanceDiaryLog">
+          <DataField>FunctionalPC_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="CreatedBy_PerformanceDiaryLog">
+          <DataField>CreatedBy_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="CreatedOn_PerformanceDiaryLog">
+          <DataField>CreatedOn_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="CreatedTime_PerformanceDiaryLog">
+          <DataField>CreatedTime_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="ApprovalStatus_PerformanceDiaryLog">
+          <DataField>ApprovalStatus_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="YearReportingCode_PerformanceDiaryLog">
+          <DataField>YearReportingCode_PerformanceDiaryLog</DataField>
+        </Field>
+        <Field Name="ReportForNavId_124">
+          <DataField>ReportForNavId_124</DataField>
+        </Field>
+        <Field Name="Name_CompanyInformation">
+          <DataField>Name_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Name2_CompanyInformation">
+          <DataField>Name2_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Address_CompanyInformation">
+          <DataField>Address_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Address2_CompanyInformation">
+          <DataField>Address2_CompanyInformation</DataField>
+        </Field>
+        <Field Name="City_CompanyInformation">
+          <DataField>City_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Picture_CompanyInformation">
+          <DataField>Picture_CompanyInformation</DataField>
+        </Field>
+        <Field Name="PostCode_CompanyInformation">
+          <DataField>PostCode_CompanyInformation</DataField>
+        </Field>
+        <Field Name="County_CompanyInformation">
+          <DataField>County_CompanyInformation</DataField>
+        </Field>
+        <Field Name="CountryName">
+          <DataField>CountryName</DataField>
+        </Field>
+        <Field Name="ReportForNavId_17">
+          <DataField>ReportForNavId_17</DataField>
+        </Field>
+        <Field Name="PLogNo_PlogLines">
+          <DataField>PLogNo_PlogLines</DataField>
+        </Field>
+        <Field Name="InitiativeNo_PlogLines">
+          <DataField>InitiativeNo_PlogLines</DataField>
+        </Field>
+        <Field Name="Description_PlogLines">
+          <DataField>Description_PlogLines</DataField>
+        </Field>
+        <Field Name="GoalID_PlogLines">
+          <DataField>GoalID_PlogLines</DataField>
+        </Field>
+        <Field Name="StrategyPlanID_PlogLines">
+          <DataField>StrategyPlanID_PlogLines</DataField>
+        </Field>
+        <Field Name="YearReportingCode_PlogLines">
+          <DataField>YearReportingCode_PlogLines</DataField>
+        </Field>
+        <Field Name="PlannedDate_PlogLines">
+          <DataField>PlannedDate_PlogLines</DataField>
+        </Field>
+        <Field Name="AchievedDate_PlogLines">
+          <DataField>AchievedDate_PlogLines</DataField>
+        </Field>
+        <Field Name="PrimaryDirectorate_PlogLines">
+          <DataField>PrimaryDirectorate_PlogLines</DataField>
+        </Field>
+        <Field Name="UnitofMeasure_PlogLines">
+          <DataField>UnitofMeasure_PlogLines</DataField>
+        </Field>
+        <Field Name="TargetQty_PlogLines">
+          <DataField>TargetQty_PlogLines</DataField>
+        </Field>
+        <Field Name="TargetQty_PlogLinesFormat">
+          <DataField>TargetQty_PlogLinesFormat</DataField>
+        </Field>
+        <Field Name="AchievedTarget_PlogLines">
+          <DataField>AchievedTarget_PlogLines</DataField>
+        </Field>
+        <Field Name="AchievedTarget_PlogLinesFormat">
+          <DataField>AchievedTarget_PlogLinesFormat</DataField>
+        </Field>
+        <Field Name="AWPID_PlogLines">
+          <DataField>AWPID_PlogLines</DataField>
+        </Field>
+        <Field Name="BoardPCID_PlogLines">
+          <DataField>BoardPCID_PlogLines</DataField>
+        </Field>
+        <Field Name="CEOPCID_PlogLines">
+          <DataField>CEOPCID_PlogLines</DataField>
+        </Field>
+        <Field Name="FunctionalPC_PlogLines">
+          <DataField>FunctionalPC_PlogLines</DataField>
+        </Field>
+        <Field Name="EmployeeNo_PlogLines">
+          <DataField>EmployeeNo_PlogLines</DataField>
+        </Field>
+        <Field Name="PersonalScorecardID_PlogLines">
+          <DataField>PersonalScorecardID_PlogLines</DataField>
+        </Field>
+        <Field Name="Comments_PlogLines">
+          <DataField>Comments_PlogLines</DataField>
+        </Field>
+        <Field Name="KeyPerformanceIndicator_PlogLines">
+          <DataField>KeyPerformanceIndicator_PlogLines</DataField>
+        </Field>
+        <Field Name="DueDate_PlogLines">
+          <DataField>DueDate_PlogLines</DataField>
+        </Field>
+        <Field Name="Variance">
+          <DataField>Variance</DataField>
+        </Field>
+        <Field Name="variance1">
+          <DataField>variance1</DataField>
+        </Field>
+        <Field Name="variance1Format">
+          <DataField>variance1Format</DataField>
+        </Field>
+        <Field Name="ReportForNavId_50">
+          <DataField>ReportForNavId_50</DataField>
+        </Field>
+        <Field Name="SubActivityNo_SubPlogLines">
+          <DataField>SubActivityNo_SubPlogLines</DataField>
+        </Field>
+        <Field Name="Description_SubPlogLines">
+          <DataField>Description_SubPlogLines</DataField>
+        </Field>
+        <Field Name="TargetQty_SubPlogLines">
+          <DataField>TargetQty_SubPlogLines</DataField>
+        </Field>
+        <Field Name="TargetQty_SubPlogLinesFormat">
+          <DataField>TargetQty_SubPlogLinesFormat</DataField>
+        </Field>
+        <Field Name="AchievedTarget_SubPlogLines">
+          <DataField>AchievedTarget_SubPlogLines</DataField>
+        </Field>
+        <Field Name="AchievedTarget_SubPlogLinesFormat">
+          <DataField>AchievedTarget_SubPlogLinesFormat</DataField>
+        </Field>
+        <Field Name="Weight_SubPlogLines">
+          <DataField>Weight_SubPlogLines</DataField>
+        </Field>
+        <Field Name="Weight_SubPlogLinesFormat">
+          <DataField>Weight_SubPlogLinesFormat</DataField>
+        </Field>
+        <Field Name="DueDate_SubPlogLines">
+          <DataField>DueDate_SubPlogLines</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
