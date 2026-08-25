@@ -25,6 +25,16 @@ page 52211554 "Shift Card"
                 {
 
                 }
+                field("Week No."; Rec."Week No.")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field(Year; Rec."Year")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field("Shift Type"; Rec."Shift Type")
                 {
                     ApplicationArea = All;
@@ -41,11 +51,6 @@ page 52211554 "Shift Card"
                 field(Department; Rec.Department)
                 {
                     Visible = false;
-                }
-                field(Status; Rec."Approval Status")
-                {
-                    ApplicationArea = All;
-                    Editable = false;
                 }
             }
 
@@ -82,60 +87,6 @@ page 52211554 "Shift Card"
                 end;
             }
 
-            action(MySendApproval)
-            {
-                Caption = 'Send Approval Request';
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-                    VarVariant := Rec;
-                    if (Rec."Approval Status" <> Rec."Approval Status"::Open) and (Rec."Approval Status" <> Rec."Approval Status"::Rejected) then
-                        Error('Document Status has to be open');
-                    if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
-                        CustomApprovals.OnSendDocForApproval(VarVariant);
-                    Message('Approval request has been sent successfully.');
-                end;
-            }
-            action(MyCancelApproval)
-            {
-                Caption = 'Cancel Approval Request';
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-                    if Rec."Approval Status" <> Rec."Approval Status"::Released then begin
-                        VarVariant := Rec;
-                        CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
-                        Message('Approval request has been Canceled');
-                    end;
-                end;
-            }
-            action(MyApproval)
-            {
-                Caption = 'Approval';
-                ApplicationArea = All;
-
-                Image = Approvals;
-                RunPageMode = View;
-
-                trigger OnAction()
-                begin
-                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId)
-                end;
-            }
-            action(Reopen)
-            {
-                Caption = 'Reopen';
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-                    Rec."Approval Status" := Rec."Approval Status"::"Pending Approval";
-                end;
-            }
-
-
             action("Post Doc")
             {
                 Caption = 'Post';
@@ -146,6 +97,18 @@ page 52211554 "Shift Card"
                     Rec.posted := true;
                 end;
             }
+            action(Reopen)
+            {
+                Caption = 'Reopen';
+                ApplicationArea = All;
+                Image = ReOpen;
+
+                trigger OnAction()
+                begin
+                    Rec.posted := false;
+                    Rec.Modify();
+                end;
+            }
             action(PrintShiftReport)
             {
                 ApplicationArea = All;
@@ -153,12 +116,9 @@ page 52211554 "Shift Card"
                 Image = Print;
 
                 trigger OnAction()
-                var
-                    RecRef: RecordRef;
-                    MemoHeader: Record "Shift Header";
                 begin
-                    RecRef.GetTable(Rec);
-                    Report.RunModal(Report::"Shift Report", true, true, MemoHeader);
+                    Rec.SetRange("No.", Rec."No.");
+                    Report.Run(Report::"Shift Report", true, false, Rec);
                 end;
             }
 
@@ -173,21 +133,12 @@ page 52211554 "Shift Card"
                 actionref(Attachment; MyAttachment) { }
 
             }
-            group(Approvall)
-            {
-                Caption = 'Approval';
-
-                actionref(MySendApprovalRef; MySendApproval) { }
-                actionref(MyApprovalRef; MyCancelApproval) { }
-                actionref(MyApprovalsRef; MyApproval) { }
-                actionref(ReopenRef; Reopen) { }
-
-            }
             group(Post)
             {
                 Caption = 'Post';
 
                 actionref(MyPostRef; "Post Doc") { }
+                actionref(ReopenRef; Reopen) { }
 
             }
             group(Report)
@@ -203,9 +154,5 @@ page 52211554 "Shift Card"
 
     }
 
-    var
-        VarVariant: Variant;
-        ApprovalsMgmt: Codeunit "Approvals Mgmt.";
-        CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
 }
 

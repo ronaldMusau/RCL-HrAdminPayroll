@@ -59,6 +59,12 @@ page 51525394 "Staff Appraisal Card"
                 }
                 field("Overall Score(%)"; Rec."Overall Score(%)")
                 { }
+                field(ApprovalStatus; Rec."Approval Status")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Approval Status';
+                    Editable = false;
+                }
             }
             part(Control18; "Staff Appraisal Lines")
             {
@@ -109,6 +115,14 @@ page 51525394 "Staff Appraisal Card"
                 Type = FILTER("Supervisor Comments");
             }
         }
+        area(FactBoxes)
+        {
+            part(ApprovalEntries; "Approval FactBox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Table ID" = const(51525339), "Document No." = field(No);
+            }
+        }
     }
 
     actions
@@ -135,126 +149,62 @@ page 51525394 "Staff Appraisal Card"
                 PromotedCategory = Process;
                 RunObject = Page "Appraisal Remarks";
             }
-            action("Send to Supervisor")
+            action(SendApprovalRequest)
             {
-                Image = SendTo;
+                Caption = 'Send Approval Request';
+                ApplicationArea = All;
+                Image = SendApprovalRequest;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
 
                 trigger OnAction()
+                var
+                    VarVariant: Variant;
+                    CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Appraisal already approved!');
-                    if Rec."Sent to Supervisor" then
-                        Error('Appraisal already sent for approval!');
-                    Rec.CalcFields("Supervisor Name");
-                    if Confirm('Are you sure you want to send these appraisal for review to ' + Rec."Supervisor Name" + '? ', false) = true then begin
-                        Rec."Sent to Supervisor" := true;
-                        Rec."Date-Time Sent For Approval" := CurrentDateTime;
-                        Rec.Modify;
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    VarVariant := Rec;
+                    if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
+                        CustomApprovals.OnSendDocForApproval(VarVariant);
                 end;
             }
-            action(Reject)
+            action(CancelApprovalRequest)
             {
-                Image = Reject;
+                Caption = 'Cancel Approval Request';
+                ApplicationArea = All;
+                Image = CancelApprovalRequest;
                 Promoted = true;
                 PromotedCategory = Process;
-                PromotedIsBig = true;
 
                 trigger OnAction()
+                var
+                    VarVariant: Variant;
+                    CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Appraisal already approved!');
-                    Rec.CalcFields("Supervisor Name");
-                    Rec.TestField("Approved By Supervisor", false);
-                    if Confirm('Send Back to staff ' + Rec."Staff Name" + '? ', false) = true then begin
-                        Rec."Sent to Supervisor" := false;
-                        Rec."Date-Time Approved" := CurrentDateTime; //Date-time rejected
-                        Rec.Modify;
-
-                        //FRED 5/3/23 - Send email notification
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec."Staff No");
-                        if Employee.FindFirst then begin
-                            SenderStaffID := Employee."User ID";
-                        end;
-
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec.Supervisor);
-                        if Employee.FindFirst then begin
-                            SupervisorID := Employee."User ID";
-                        end;
-                        //MESSAGE('%1, %2, %3, %4',SenderStaffID,SupervisorID,"Staff Name","Supervisor Name"); EXIT;
-                        SendEmailNotification(Rec.No, SenderStaffID, SupervisorID, Rec."Staff Name", Rec."Supervisor Name", 'DOWN', 'REJECTED');
-
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    VarVariant := Rec;
+                    CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
                 end;
             }
-            action(Approve)
+            action(Approvals)
             {
-                Image = SendTo;
+                Caption = 'Approvals';
+                ApplicationArea = All;
+                Image = Approvals;
                 Promoted = true;
                 PromotedCategory = Process;
-                PromotedIsBig = true;
 
                 trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Appraisal already approved!');
-                    Rec.CalcFields("Supervisor Name");
-                    /*UserSetup.Reset;
-                    //UserSetup.SETRANGE("User ID",USERID);
-                    UserSetup.SetRange("Employee No.", Supervisor);
-                    if not UserSetup.FindFirst then begin
-                        //ERROR('Approval targets can only be approved by Supervisor %1',"Supervisor Name");
-                        Error('User setup data for Supervisor %1 not found. Ask the System Admin to set it up before proceeding!', "Supervisor Name");
-                    end;*/
-
-
-                    //IF CONFIRM('Are you sure you want to send these targets for review to '+"Supervisor Name"+'? ', FALSE) = TRUE THEN
-                    if Confirm('Are you sure you want to approve this appraisal? ', false) = true then begin
-                        Rec."Sent to Supervisor" := true;
-                        Rec."Approved By Supervisor" := true;
-                        Rec."Date-Time Approved" := CurrentDateTime;
-                        Rec.Modify;
-
-                        //FRED 5/3/23 - Send email notification
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec."Staff No");
-                        if Employee.FindFirst then begin
-                            SenderStaffID := Employee."User ID";
-                        end;
-
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec.Supervisor);
-                        if Employee.FindFirst then begin
-                            SupervisorID := Employee."User ID";
-                        end;
-                        //MESSAGE('%1, %2, %3, %4',SenderStaffID,SupervisorID,"Staff Name","Supervisor Name"); EXIT;
-                        SendEmailNotification(Rec.No, SenderStaffID, SupervisorID, Rec."Staff Name", Rec."Supervisor Name", 'DOWN', 'APPROVED');
-
-
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
                 end;
             }
-
         }
     }
     trigger OnOpenPage()
     begin
-        if Rec."Approved By Supervisor" then
-            CurrPage.Editable := false;
+        CurrPage.Editable := Rec."Approval Status" = Rec."Approval Status"::Open;
     end;
 
     var

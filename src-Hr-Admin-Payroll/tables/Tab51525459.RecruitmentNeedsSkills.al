@@ -1,4 +1,4 @@
-table 51525459 "Recruitment Needs Skills"
+﻿table 51525459 "Recruitment Needs Skills"
 {
     fields
     {
@@ -23,19 +23,11 @@ table 51525459 "Recruitment Needs Skills"
         {
             DataClassification = ToBeClassified;
         }
-        field(6; Remarks; Code[10])
+        field(6; Remarks; Text[250])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "HR Documents".Code WHERE(Global = CONST(true));
-
-            trigger OnValidate()
-            begin
-                if HrDocs.Get(Remarks) then
-                    Name := HrDocs.Description;
-            end;
         }
     }
-
     keys
     {
         key(Key1; "Recruitment Need Code", "Line No")
@@ -43,11 +35,7 @@ table 51525459 "Recruitment Needs Skills"
             Clustered = true;
         }
     }
-
     fieldgroups
     {
     }
-
-    var
-        HrDocs: Record "HR Documents";
 }

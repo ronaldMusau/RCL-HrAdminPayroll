@@ -21,6 +21,12 @@ page 51525375 "Leave Application HR"
                     {
                         Editable = false;
                     }
+                    field("Combined Request No."; Rec."Combined Request No.")
+                    {
+                        Editable = false;
+                        Visible = Rec."Combined Request No." <> '';
+                        ToolTip = 'Other applications submitted together with this one, for different leave types, in the same request.';
+                    }
                     field("Employee No"; Rec."Employee No")
                     {
                         Editable = FieldsEditable;
@@ -49,6 +55,10 @@ page 51525375 "Leave Application HR"
                     {
                         Caption = 'Department Name';
                         Editable = false;
+                    }
+                    field("Sub Responsibility Center"; Rec."Sub Responsibility Center")
+                    {
+                        Caption = 'Section';
                     }
                     field("Leave Type"; Rec."Leave Type")
                     {
@@ -192,6 +202,8 @@ page 51525375 "Leave Application HR"
                 Visible = IsSendForApprovalVisible;
 
                 trigger OnAction()
+                var
+                    ApprovalEntry2: Record "Approval Entry";
                 begin
                     Rec.TestField("Days Applied");
                     Rec.TestField("Leave Type");
@@ -204,15 +216,13 @@ page 51525375 "Leave Application HR"
                         CustomApprovals.OnSendDocForApproval(VarVariant);
                     HrMgmtCU.FnSendEmails(Rec."Duties Taken Over By", Rec."Application No", Rec."Days Applied", Rec.Name, Rec."Employee Name", Rec."Start Date", Rec."End Date");
 
-                    HrMgmtCU.SendLeaveApprovalEmail(ApprovalEntry, ApprovalEntry."Document No.");
-
-                    ApprovalEntry.RESET;
-                    ApprovalEntry.SETRANGE(ApprovalEntry."Document No.", Rec."Application No");
-                    ApprovalEntry.SETRANGE(ApprovalEntry.Status, ApprovalEntry.Status::Open);
-                    IF ApprovalEntry.FINDFIRST THEN begin
-                        //  PortalApprovalsCU.SendLeaveApprovalEmail(ApprovalEntry, ApprovalEntry."Document No.");
-                        //   HrMgmtCU.UpdatePortalApprovalRecords(ApprovalEntry."Document No.", ApprovalEntry."Sender Employee No");
-                    end;
+                    // Send submission notification
+                    ApprovalEntry2.Reset();
+                    ApprovalEntry2.SetRange("Table ID", DATABASE::"Employee Leave Application");
+                    ApprovalEntry2.SetRange("Document No.", Rec."Application No");
+                    ApprovalEntry2.SetRange(Status, ApprovalEntry2.Status::Open);
+                    if ApprovalEntry2.FindFirst() then
+                        HrMgmtCU.SendLeaveSubmittedEmail(ApprovalEntry2, Rec."Application No");
                 end;
             }
             action("Cancel Approval Re&quest")
@@ -229,6 +239,26 @@ page 51525375 "Leave Application HR"
                         Error('Status must be Pending Approval!');
                     VarVariant := Rec;
                     CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
+                end;
+            }
+            action(ReopenLeaveApplication)
+            {
+                Caption = 'Reopen';
+                ApplicationArea = All;
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                Visible = IsReopenVisible;
+                trigger OnAction()
+                var
+                    VarVariant: Variant;
+                    CustomApprovalsLocal: Codeunit "Custom Approvals Mgmt HR";
+                begin
+                    VarVariant := Rec;
+                    CustomApprovalsLocal.OnReopenDocument(VarVariant);
+                    Rec.Get(Rec."Application No");
+                    CurrPage.Update(false);
                 end;
             }
             action(Print)
@@ -255,10 +285,14 @@ page 51525375 "Leave Application HR"
 
                 trigger OnAction()
                 var
-                    ApprovalEntries: Page "Approval Entries";
-                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                    ApprovalEntry: Record "Approval Entry";
+                    LeaveApprovalEntries: Page "Leave Approval Entries";
                 begin
-                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
+                    ApprovalEntry.Reset();
+                    ApprovalEntry.SetRange("Table ID", DATABASE::"Employee Leave Application");
+                    ApprovalEntry.SetRange("Document No.", Rec."Application No");
+                    LeaveApprovalEntries.SetTableView(ApprovalEntry);
+                    LeaveApprovalEntries.RunModal();
                 end;
             }
             action("Post Leave")
@@ -267,6 +301,7 @@ page 51525375 "Leave Application HR"
                 Promoted = true;
                 PromotedCategory = Process;
                 Visible = IsPostVisible;
+                Enabled = not Rec.Posted;
 
                 trigger OnAction()
                 var
@@ -277,6 +312,8 @@ page 51525375 "Leave Application HR"
 
                     if Rec.Status <> Rec.Status::Released then
                         Error(ERROR1);
+                    if Rec.Posted = true then
+                        Error('Leave has already been posted');
                     FnPostLeavePg(Rec."Application No");
                     /*IF CONFIRM('Are you sure you want to post this leave?.',TRUE,FALSE)=TRUE THEN
                     BEGIN
@@ -484,6 +521,7 @@ page 51525375 "Leave Application HR"
         IsCancelVisible: Boolean;
         IsSendForApprovalVisible: Boolean;
         IsPostVisible: Boolean;
+        IsReopenVisible: Boolean;
         ERROR1: Label 'Leave status must be open';
         VarVariant: Variant;
         CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
@@ -565,7 +603,13 @@ page 51525375 "Leave Application HR"
         HRLeaveApplication: Record "Employee Leave Application";
         HRLeavePeriods: Record "HR Leave Periods";
         journal: Record "HR Leave Journal Line";
+        LeaveLedgerEntries: Record "HR Leave Ledger Entries";
+
     begin
+        LeaveLedgerEntries.Reset();
+        LeaveLedgerEntries.SetRange("Document No.", LeaveNo);
+        if LeaveLedgerEntries.FindSet() then
+            Error('The leave is already posted');
         LRegister.Reset;
         LRegister.SetRange(LRegister."Application No", LeaveNo);
         if LRegister.FindFirst then begin
@@ -644,10 +688,13 @@ page 51525375 "Leave Application HR"
         else
             ApprVDaysVisi := false;
 
-        if Rec.Status = Rec.Status::Released then
+        if (Rec.Status = Rec.Status::Released) and (not Rec.Posted) then
             IsPostVisible := true
         else
             IsPostVisible := false;
+
+        IsReopenVisible := (Rec.Status = Rec.Status::Rejected) or
+                           (Rec.Status = Rec.Status::Released);
 
         FieldsEditable := false;
         if ((Rec.Status = Rec.Status::Open) or (Rec.Status = Rec.Status::Rejected)) = true then

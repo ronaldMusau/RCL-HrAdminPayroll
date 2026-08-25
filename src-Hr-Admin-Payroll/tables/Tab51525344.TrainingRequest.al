@@ -591,6 +591,11 @@ table 51525344 "Training Request"
             OptionCaption = 'CDP ERC,World Bank,ERC Workshop';
             OptionMembers = "CDP ERC","World Bank","ERC Workshop";
         }
+        field(88; "Training Master Plan No."; Code[30])
+        {
+            Caption = 'Annual Training Plan No.';
+            TableRelation = "Annual Training Plan"."No." where("Approval Status" = const(Released));
+        }
     }
 
     keys

@@ -1,7 +1,7 @@
 table 51525455 "Medical Information"
 {
-    DrillDownPageID = "Medical Claim Header";
-    LookupPageID = "Medical Claim Header";
+    DrillDownPageId = "Medical Information Setup";
+    LookupPageId = "Medical Information Setup";
 
     fields
     {

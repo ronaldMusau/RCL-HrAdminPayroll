@@ -32,6 +32,10 @@ pageextension 51525302 "Employee Card Ext HR" extends "Employee Card"
                         Error('You must select Apply Daily Rates before providing the daily rate!');
                 end;
             }
+            field("Biometric ID"; Rec."Biometric ID")
+            {
+
+            }
             field("Exempt from Housing Levy"; Rec."Exempt from Housing Levy")
             {
                 Visible = false;
@@ -341,26 +345,36 @@ pageextension 51525302 "Employee Card Ext HR" extends "Employee Card"
                 }
             }
         }
+        modify("Job Title")
+        {
+            Editable = false;
+        }
         addlast(Administration)
         {
-            field("Supervisor Name"; Rec."Supervisor Name")
+            field("Supervisor No."; Rec."Supervisor No.")
             {
                 Editable = IsNewRecord;
-                LookupPageId = "Employee List";
+                Caption = 'Supervisor No.';
 
-                trigger OnLookup(var Text: Text): Boolean
+                trigger OnValidate()
                 var
-                    EmpList: Page "Employee List";
                     EmpRec: Record Employee;
                 begin
-                    if IsNewRecord then begin
-                        if EmpList.RunModal() = Action::LookupOK then begin
-                            EmpList.GetRecord(EmpRec);
-                            Rec."Supervisor Name" := EmpRec."No.";
-                        end;
-                        exit(true);
-                    end;
+                    if EmpRec.Get(Rec."Supervisor No.") then
+                        Rec."Supervisor Name" := EmpRec."First Name" + ' ' + EmpRec."Last Name"
+                    else
+                        Rec."Supervisor Name" := '';
                 end;
+            }
+            field("Manager Name"; Rec."Manager Name")
+            {
+                Editable = false;
+                Caption = 'Manager Name';
+            }
+            field("Supervisor Name"; Rec."Supervisor Name")
+            {
+                Editable = false;
+                Caption = 'Supervisor Name';
             }
             field("Contract Start Date"; Rec."Contract Start Date")
             {
@@ -588,6 +602,11 @@ pageextension 51525302 "Employee Card Ext HR" extends "Employee Card"
     trigger OnAfterGetRecord()
     begin
         Rec.Validate(Position);
+        // Auto-fill Manager Name
+        if Rec."Manager No." <> '' then begin
+            if MgrRec.Get(Rec."Manager No.") then
+                Rec."Manager Name" := MgrRec."First Name" + ' ' + MgrRec."Last Name";
+        end;
 
         if Rec."Overtime Amount Currency" = '' then
             Rec."Overtime Amount Currency" := 'USD';
@@ -665,6 +684,7 @@ pageextension 51525302 "Employee Card Ext HR" extends "Employee Card"
 
     var
         CanEditPaymentInfo: Boolean;
+        MgrRec: Record Employee;
         UserSetup: Record "User Setup";
         CanEditCard: Boolean;
         IsNewRecord: Boolean;

@@ -159,9 +159,18 @@ page 51525351 "Payroll Processing Card"
                     end;
                 end;
             }
+            action("Payroll Variance")
+            {
+                Caption = '3. Payroll Variance';
+                Image = PaymentPeriod;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                RunObject = Report "Payroll Variance Report";
+            }
             action("3.  Transfer to Journal")
             {
-                Caption = '3.  Transfer to Journal';
+                Caption = '4.  Transfer to Journal';
                 Image = TransferToGeneralJournal;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -235,7 +244,7 @@ page 51525351 "Payroll Processing Card"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 RunObject = Report "Send Payslips";
-                Enabled = false;
+                Enabled = true;
             }
             action("Export Assignment Matrix")
             {
@@ -265,10 +274,8 @@ page 51525351 "Payroll Processing Card"
 
                 trigger OnAction()
                 begin
-                    PayProcessHeader.RESET;
-                    PayProcessHeader.SETRANGE("Payroll Period", Rec."Payroll Period");
-                    IF PayProcessHeader.FIND('-') THEN
-                        REPORT.RUN(51525235, TRUE, FALSE, PayProcessHeader);
+                    ExportSingleEarningReport.SetReportFilter(Rec."Payroll Period");
+                    ExportSingleEarningReport.Run();
                 end;
             }
             action("Update Single Earning")

@@ -1,6 +1,6 @@
-table 51525341 "Training Master Plan Header"
+﻿table 51525341 "Training Master Plan Header"
 {
-    Caption = 'Training Master Plan Header';
+    Caption = 'Course';
     DataClassification = ToBeClassified;
     DrillDownPageId = "Training Master Plan";
     LookupPageId = "Training Master Plan";
@@ -95,6 +95,45 @@ table 51525341 "Training Master Plan Header"
         {
 
         }
+        field(16; "Training Area"; Text[250])
+        {
+            Caption = 'Training Area';
+        }
+        field(17; "Target Group"; Text[250])
+        {
+            Caption = 'Target Group';
+        }
+        field(18; "No. of Trainees"; Integer)
+        {
+            Caption = 'No. of Trainees';
+        }
+        field(19; "Proposed Start Date"; Date)
+        {
+            Caption = 'Proposed Start Date';
+        }
+        field(20; "Proposed End Date"; Date)
+        {
+            Caption = 'Proposed End Date';
+        }
+        field(21; "Proposed Trainer"; Text[250])
+        {
+            Caption = 'Proposed Trainer';
+        }
+        field(22; "Venue/Location"; Text[250])
+        {
+            Caption = 'Venue/Location';
+        }
+        field(23; "Budget/Expense"; Decimal)
+        {
+            Caption = 'Budget/Expense';
+        }
+        field(25; "Approval Status"; Option)
+        {
+            Caption = 'Approval Status';
+            OptionMembers = Open,"Pending Approval",Released,Rejected;
+            OptionCaption = 'Open,Pending Approval,Released,Rejected';
+            Editable = false;
+        }
     }
     keys
     {
@@ -117,10 +156,11 @@ table 51525341 "Training Master Plan Header"
 
         if "No." = '' then begin
             TrainingMasterPlan.Reset();
-            if TrainingMasterPlan.FindLast then begin
-                "No." := IncStr(TrainingMasterPlan."No.")
-            end else begin
-                "No." := 'TMP-0001';
+              TrainingMasterPlan.SetFilter("No.", 'CRS*');
+              if TrainingMasterPlan.FindLast then begin
+                  "No." := IncStr(TrainingMasterPlan."No.")
+              end else begin
+                  "No." := 'CRS-0001';
             end;
         end;
     end;
@@ -144,10 +184,18 @@ table 51525341 "Training Master Plan Header"
         UserSetup: Record "User Setup";
     begin
         isReadOnly := false;
+        // Skip readonly check for web service and API calls (ESS portal)
+        if CurrentClientType in [CurrentClientType::Api, CurrentClientType::ODataV4, CurrentClientType::OData] then
+            exit(false);
         UserSetup.Reset();
         UserSetup.SetRange("User ID", UserId);
         UserSetup.SetRange("Training Readonly", true);
         if UserSetup.FindFirst() then
             isReadOnly := true;
     end;
+
 }
+
+
+
+

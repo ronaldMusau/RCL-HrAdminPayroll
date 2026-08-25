@@ -14,10 +14,20 @@ table 51525475 Provinces
         {
             Caption = 'Description';
         }
+        field(3; "Country/Region Code"; Code[10])
+        {
+            Caption = 'Country/Region Code';
+            TableRelation = "Country/Region".Code;
+
+            trigger OnValidate()
+            begin
+                // Optionally clear lower-level fields if country changes
+            end;
+        }
     }
     keys
     {
-        key(PK; Name)
+        key(PK; Name, "Country/Region Code")
         {
             Clustered = true;
         }

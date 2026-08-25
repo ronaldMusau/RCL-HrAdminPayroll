@@ -1,4 +1,4 @@
-report 51525344 "Training Report"
+﻿report 51525344 "Training Report"
 {
     ApplicationArea = All;
     Caption = 'Training Report';
@@ -9,7 +9,7 @@ report 51525344 "Training Report"
     {
         dataitem(TrainingSchedules; "Training Schedules")
         {
-            DataItemTableView = SORTING("No.") where(Status = filter(Done | Ongoing));
+            DataItemTableView = SORTING("No.") where(Status = filter(Completed | Ongoing));
             RequestFilterFields = "No.", "Trainer No.", "Training No.";
 
             column(CompanyName; CompanyInformation.Name)
@@ -75,29 +75,7 @@ report 51525344 "Training Report"
             column(TrainingLocation; "Training Location")
             {
             }
-            column(InstructorAllowance; "Instructor Allowance")
-            {
-            }
-            column(FacilityCosts; "Facility Costs")
-            {
-            }
-            column(CertificatesIssued; "Certificates Issued?")
-            {
-            }
-            column(FacilityLunch; "Facility Lunch")
-            {
-            }
-            column(HeadofficeLunch; "Head office Lunch")
-            {
-            }
-            column(OtherCosts; "Other Costs")
-            {
-            }
             column(ReportTitle; ReportTitle)
-            { }
-            column(AllOtherCosts; AllOtherCosts)
-            { }
-            column(TotalCosts; TotalCosts)
             { }
 
             trigger OnAfterGetRecord()
@@ -106,11 +84,6 @@ report 51525344 "Training Report"
                     CompanyInformation.CalcFields(Picture)
                 else
                     ComapnyInfoCaptured := true;
-
-                TrainingSchedules.CalcFields("Add. Instructor Allowances");
-                "Instructor Allowance" += "Add. Instructor Allowances";
-                AllOtherCosts := "Facility Costs" + "Facility Lunch" + "Head office Lunch" + "Other Costs";
-                TotalCosts := AllOtherCosts + "Instructor Allowance";
             end;
 
             trigger OnPreDataItem()
@@ -180,7 +153,5 @@ report 51525344 "Training Report"
         EndDate: Date;
         Category: Option External,"Internal","Internal and External";
         ReportTitle: Text;
-        AllOtherCosts: Decimal;
-        TotalCosts: Decimal;
-        AdditionalInstructors: Record "Additional Instructors";
 }
+

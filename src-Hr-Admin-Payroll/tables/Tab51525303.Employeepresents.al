@@ -2,11 +2,10 @@ table 51525303 "Employee presents"
 {
     fields
     {
-        field(1; "Employee No."; Text[30])
+        field(1; No; Integer)
         {
-        }
-        field(2; Name; Text[50])
-        {
+            DataClassification = ToBeClassified;
+            AutoIncrement = true;
         }
         field(3; Description; Text[200])
         {
@@ -25,7 +24,7 @@ table 51525303 "Employee presents"
 
     keys
     {
-        key(Key1; "Employee No.")
+        key(Key1; No)
         {
             Clustered = true;
         }

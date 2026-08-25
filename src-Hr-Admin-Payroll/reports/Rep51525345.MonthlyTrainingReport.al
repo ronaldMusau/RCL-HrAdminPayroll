@@ -83,7 +83,7 @@ report 51525345 "Monthly Training Report"
                 EndDate := CalcDate('CM', StartDate);
                 Classes.Reset();
                 Classes.SetFilter("Start Date", '%1..%2', StartDate, EndDate);
-                Classes.SetFilter(Status, '%1|%1', Classes.Status::Done, Classes.Status::Ongoing);
+                Classes.SetFilter(Status, '%1|%2', Classes.Status::Completed, Classes.Status::Ongoing);
                 if Classes.FindSet() then
                     repeat
                         Classes.CalcFields("Participants Count");

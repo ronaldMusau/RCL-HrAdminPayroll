@@ -1,4 +1,4 @@
-report 51525328 "Import Legacy Training Data"
+﻿report 51525328 "Import Legacy Training Data"
 {
     ProcessingOnly = true;
 
@@ -15,7 +15,7 @@ report 51525328 "Import Legacy Training Data"
                 ExcelBuffer: Record "Excel Buffer" temporary;
             begin
                 if Direction = Direction::Export then begin
-                    Window.Close;
+                    //Window.Close;
                     // ExcelBuffer.SetFriendlyFilename('Employee Data as at ' + Format(Today, 0, '<Month Text> <Day,2> <Year4>'));
                     // ExcelBuffer.CreateBookAndOpenExcel('', 'Employee Data as at ' + Format(Today, 0, '<Month Text> <Day,2>, <Year4>'), '', '', UserId);
 
@@ -77,7 +77,7 @@ report 51525328 "Import Legacy Training Data"
                 PartNo: Code[30];
             begin
                 if Direction = Direction::Import then begin
-                    Window.Open('Preparing training data import for #######1');
+                    //Window.Open('Preparing training data import for #######1');
                     ExcelBuffer.DeleteAll;
 
                     Course.SetRange("No.", 'XYZXYZ'); //When importing, don't fetch any employee, just pick it from the excel
@@ -138,7 +138,7 @@ report 51525328 "Import Legacy Training Data"
                         Evaluate(EvalCompletedDate, GetValueAtCell(ExcelBuffer, RowNo, 32));
                         EvaluationComments := CopyStr(GetValueAtCell(ExcelBuffer, RowNo, 33), 1, 250);
 
-                        Window.Update(1, EventTitle);
+                        //Window.Update(1, EventTitle);
 
                         CourseNo := '';
                         Courses.Reset();
@@ -196,11 +196,11 @@ report 51525328 "Import Legacy Training Data"
                             ClassInit."End Date" := CompletedDate;
 
                             if ClassInit."End Date" < Today() then
-                                ClassInit.Status := ClassInit.Status::Done;
+                                ClassInit.Status := ClassInit.Status::Completed;
                             if ClassInit."End Date" >= Today() then
                                 ClassInit.Status := ClassInit.Status::Ongoing;
                             if ClassInit."Start Date" > Today() then
-                                ClassInit.Status := ClassInit.Status::Pending;
+                                ClassInit.Status := ClassInit.Status::Open;
 
                             LineNo := 0;
                             TrainingLocations.Reset();
@@ -262,7 +262,7 @@ report 51525328 "Import Legacy Training Data"
                             ParticipantsInit."Legacy Data" := true;
                             ParticipantsInit."Certificate Link" := '';
                             if AttendeeCertFilePath <> '' then
-                                ParticipantsInit."Certificate Link" := 'https://ess.rwandair.com/NEWERPDocuments/' + ReplaceString(AttendeeCertFilePath, '\', '/');
+                                ParticipantsInit."Certificate Link" := 'https://ess.rwandaircatering.rw/NEWERPDocuments/' + ReplaceString(AttendeeCertFilePath, '\', '/');
                             ParticipantsInit."Renew By" := RenewByDate;
                             ParticipantsInit.Insert(true);
                         end else begin
@@ -275,7 +275,7 @@ report 51525328 "Import Legacy Training Data"
                                 if (Participants."Certificate Serial No." = '') and (AttendeeCertNo <> '') then
                                     Participants."Certificate Serial No." := AttendeeCertNo;
                                 if (Participants."Certificate Link" = '') and (AttendeeCertFilePath <> '') then
-                                    Participants."Certificate Link" := 'https://ess.rwandair.com/NEWERPDocuments/' + ReplaceString(AttendeeCertFilePath, '\', '/');
+                                    Participants."Certificate Link" := 'https://ess.rwandaircatering.rw/NEWERPDocuments/' + ReplaceString(AttendeeCertFilePath, '\', '/');
                                 if (Participants."Renew By" = 0D) and (RenewByDate <> 0D) then
                                     Participants."Renew By" := RenewByDate;
                             end;
@@ -284,7 +284,7 @@ report 51525328 "Import Legacy Training Data"
                     end;
                 end;
                 Message('Import successful!');
-                Window.Close;
+                //Window.Close;
 
                 HeadingsCaptured := false;
             end;

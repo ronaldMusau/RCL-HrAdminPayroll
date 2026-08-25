@@ -325,8 +325,8 @@ table 51525343 "Internal Employement History"
             lastDay := HrSetup."Final Payroll Adm Day";
             if lastDay = 0 then
                 lastDay := 15;
-            if (Date2DMY(Today, 1) > lastDay) then //must wait until payroll period is closed
-                Error('Wait until the new month before creating staff movement for new employees!');
+            // if (Date2DMY(Today, 1) > lastDay) then //must wait until payroll period is closed
+            //     Error('Wait until the new month before creating staff movement for new employees!');
         end;
 
 

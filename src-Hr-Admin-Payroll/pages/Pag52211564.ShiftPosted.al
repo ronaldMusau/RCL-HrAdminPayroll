@@ -26,7 +26,7 @@ page 52211564 "Shift Posted"
 
                 }
                 field("Shift Type"; Rec."Shift Type") { ApplicationArea = All; }
-                field(Status; Rec."Approval Status") { ApplicationArea = All; }
+                //field(Status; Rec."Approval Status") { ApplicationArea = All; }
                 field(Posted; Rec.Posted) { ApplicationArea = All; }
             }
         }

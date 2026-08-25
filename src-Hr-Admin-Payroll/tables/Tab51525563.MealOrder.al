@@ -3,6 +3,7 @@ table 51525563 "Meal Order"
     Caption = 'Meal Order';
     DataClassification = ToBeClassified;
     LookupPageId = "Meal Order Setup";
+    DrillDownPageId = "Meal Order Setup";
 
     fields
     {
@@ -24,6 +25,12 @@ table 51525563 "Meal Order"
         key(PK; "Code")
         {
             Clustered = true;
+        }
+    }
+    fieldgroups
+    {
+        fieldgroup(DropDown; "Code", "Meal Orders")
+        {
         }
     }
 }

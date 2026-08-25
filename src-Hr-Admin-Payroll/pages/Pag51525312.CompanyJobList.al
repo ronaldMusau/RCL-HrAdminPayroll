@@ -16,6 +16,7 @@ page 51525312 "Company Job List"
                 ShowCaption = false;
                 field("Job ID"; Rec."Job ID")
                 {
+                    Editable = false;
                 }
                 field("Job Description"; Rec."Job Description")
                 {
@@ -23,12 +24,16 @@ page 51525312 "Company Job List"
                 }
                 field("No of Posts"; Rec."No of Posts")
                 {
-                    Visible = false;
+                    //Visible = false;
                 }
                 field("Occupied Establishments"; Rec."Occupied Establishments")
                 {
                     Caption = 'In Position';
-                    Visible = false;
+                    //Visible = false;
+                }
+                field("Vacant Establishments"; Rec."Vacant Establishments")
+                {
+                    ToolTip = 'Specifies the value of the Vacant Establishments field.', Comment = '%';
                 }
                 field("""No of Posts""-""Occupied Establishments"""; Rec."No of Posts" - Rec."Occupied Establishments")
                 {

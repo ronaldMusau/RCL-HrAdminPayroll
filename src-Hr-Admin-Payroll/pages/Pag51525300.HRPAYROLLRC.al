@@ -1,4 +1,4 @@
-page 51525300 "HR& PAYROLL R.C"
+﻿page 51525300 "HR& PAYROLL R.C"
 {
     ApplicationArea = All;
     Caption = 'HR ROLE CENTER';
@@ -66,7 +66,7 @@ page 51525300 "HR& PAYROLL R.C"
                     Image = Journal;
                     RunObject = Page "HR Leave Journal Lines";
                 }
-                group("Leave Reports")
+                group("LeaveReportsMenu")
                 {
                     Image = LotInfo;
                     action("Leave Balances")
@@ -74,10 +74,10 @@ page 51525300 "HR& PAYROLL R.C"
                         Image = Balance;
                         RunObject = Report "HR Leave Balances";
                     }
-                    action("Hr Leave Balances")
+                    action("Leave Liability")
                     {
                         Image = "Report";
-                        RunObject = Report "HR Leave Balances";
+                        RunObject = Report "Leave Liability Report";
                     }
                     action("Hr Leave Balances All")
                     {
@@ -241,10 +241,7 @@ page 51525300 "HR& PAYROLL R.C"
 
                 }
             }
-            group("Self Service")
-            {
-                Caption = 'Self Service';
-            }
+
         }
         area(sections)
         {
@@ -328,6 +325,14 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "Failed First Interview List";
                 }
+                action("Passed Oral Interview")
+                {
+                    RunObject = Page "Passed Second Interview List";
+                }
+                action("Failed Oral Interview")
+                {
+                    RunObject = Page "Failed Second Interview List";
+                }
                 action("Passed Due Diligence")
                 {
                     RunObject = Page "Passed Due Diligence List";
@@ -336,14 +341,7 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "Failed Due Diligence List";
                 }
-                action("Passed Second Interview")
-                {
-                    RunObject = Page "Passed Second Interview List";
-                }
-                action("Failed Second Interview")
-                {
-                    RunObject = Page "Failed Second Interview List";
-                }
+
                 /*action("Shortlisted Job Applications")
                 {
                     RunObject = Page "Short Listed Job Applications";
@@ -393,6 +391,12 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "HR Employee List";
                 }
+                action("Employee Documents")
+                {
+                    Caption = 'Employee Documents';
+                    Image = Documents;
+                    RunObject = Page "Employee Documents List";
+                }
                 action(" Employee list All data")
                 {
                     RunObject = Page "HR Employee list All data";
@@ -427,6 +431,7 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "Job Exit Reason List";
                 }
+
             }
             group("Employee Disciplinary")
             {
@@ -525,6 +530,19 @@ page 51525300 "HR& PAYROLL R.C"
                 action("Time & Attendance")
                 {
                     RunObject = Page "Attendance Ledger List";
+                    Visible = false;
+                }
+                action("Attendance Entry List")
+                {
+                    RunObject = page "Attendance Entry Admin";
+                    Caption = 'Time & Attendance';
+                }
+                group(Reports)
+                {
+                    action("Attendance Report")
+                    {
+                        RunObject = report "Attendance Report";
+                    }
                 }
 
             }
@@ -553,6 +571,31 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "Leave Types Setup";
                 }
+                group("LeaveReportsNav")
+                {
+                    Caption = 'Reports';
+                    action("Employee Leave StatementRC")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Employee Leave Statement';
+                        RunObject = Report "Employee Leave Statement";
+                        ToolTip = 'Print leave statement per employee showing allocated, accrued, taken and balance per leave type.';
+                    }
+                    action("Leave Balance SummaryRC")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Leave Balance Summary';
+                        RunObject = Report "Leave Balance Summary";
+                        ToolTip = 'Print summary of leave balances for all employees.';
+                    }
+                    action("Leave Taken ReportRC")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Leave Taken Report';
+                        RunObject = Report "Leave Taken Report";
+                        ToolTip = 'Print detailed list of all approved leave applications taken.';
+                    }
+                }
             }
             group(Action77)
             {
@@ -562,25 +605,18 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     Caption = 'Key Performance Areas';
                     RunObject = Page "Performance Management Themes";
+                    Visible = false;
                 }
                 action("Performance Objectives")
                 {
                     RunObject = Page "Performance Objectives";
+                    Visible = false;
                 }
                 action("Departmental Objectives")
                 {
                     RunObject = Page "WB Departmental Targets";
                 }
-                action("Evaluation Scale")
-                {
-                    RunObject = Page "Appraisal Remarks";
-                }
 
-                action("Appraissal Periods")
-                {
-                    Caption = 'Appraissal Periods';
-                    RunObject = Page "HR Appraisal Period List";
-                }
                 action("Performance Planning")
                 {
                     Caption = 'Target Setting';
@@ -613,10 +649,41 @@ page 51525300 "HR& PAYROLL R.C"
                     RunObject = Page "First Peer Review";
                     Visible = false;
                 }
+                // action(Appraisals)
+                // {
+                //     Caption = 'Apprissals';
+                //     RunObject = Page "Staff Appraisal Lists";
+                // }
                 action(Appraisals)
                 {
-                    Caption = 'Apprissals';
-                    RunObject = Page "Staff Appraisal Lists";
+                    Caption = 'Appraisals';
+                    RunObject = Page "Mid Year Appraisal";
+
+                }
+                group(Setups1)
+                {
+                    Caption = 'Setups';
+                    action("Evaluation Scale")
+                    {
+                        RunObject = Page "Appraisal Remarks";
+                    }
+
+                    action("Appraissal Periods")
+                    {
+                        Caption = 'Appraisal Periods';
+                        RunObject = Page "HR Appraisal Period List";
+                    }
+
+                }
+                action("PIP List")
+                {
+                    Caption = 'Performance Improvement Plans';
+                    RunObject = Page "PIP List";
+                }
+                action(PIPSetupAction)
+                {
+                    Caption = 'PIP Setup';
+                    RunObject = Page "PIP Setup";
                 }
             }
             /*group("Resource Planning  & TimeSheets")
@@ -637,9 +704,15 @@ page 51525300 "HR& PAYROLL R.C"
             {
                 Caption = 'Training';
                 Image = FiledPosted;
-                action("Training Master Plan")
+                action("Course Cards")
                 {
+                    Caption = 'Course Cards';
                     RunObject = Page "Training Master Plan";
+                }
+                action("Annual Training Plans")
+                {
+                    Caption = 'Training Master Plan';
+                    RunObject = Page "Annual Training Plan List";
                 }
                 action("Training Requests")
                 {
@@ -665,73 +738,12 @@ page 51525300 "HR& PAYROLL R.C"
                 {
                     RunObject = Page "Completed Trainings";
                 }
-            }
-            group(Memo)
-            {
-                Caption = 'Memo';
-                action("Memo List")
+                action("Training Evaluations")
                 {
-                    RunObject = Page "Memo List";
-                }
-                action("Posted Memo List")
-                {
-                    RunObject = Page "Posted Memo List";
+                    Caption = 'Training Evaluations';
+                    RunObject = Page "Training Evaluation List";
                 }
             }
-            group("Medical Claim")
-            {
-                Caption = 'Medical Claims';
-                action("Medical Claims")
-                {
-                    RunObject = Page "Claim List";
-                }
-                action("Posted Medical Claims")
-                {
-                    RunObject = Page "Posted Claims List";
-                }
-            }
-
-            group(Travel)
-            {
-                Caption = 'Travel';
-
-
-                action("Travelling Request")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Travelling Request';
-                    RunObject = Page "Travelling Request Lines";
-                }
-                action("Posted Travelling Request")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Travelling Request';
-                    RunObject = Page "Posted Travelling Requests";
-                }
-                action("Employee Travel Request")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Employee Travel Request';
-                    RunObject = Page "Employee Travel Request";
-                    Visible = false;
-                }
-
-                action("Accident / Incident Logs")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Accident / Incident Logs';
-                    RunObject = Page "Accident / Incident Logs List";
-                }
-                action("My Shifts")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'My Shifts';
-                    RunObject = Page "My Shifts";
-                }
-            }
-
-
-
             group("Shift Management")
             {
                 Caption = 'Shift Management';
@@ -751,26 +763,173 @@ page 51525300 "HR& PAYROLL R.C"
                 }
 
             }
+            group(SelfService)
+            {
+                Caption = 'Self Service';
+                group(Memo)
+                {
+                    Caption = 'Memo';
+                    action("Memo List")
+                    {
+                        RunObject = Page "Memo List";
+                    }
+                    action("Posted Memo List")
+                    {
+                        RunObject = Page "Posted Memo List";
+                    }
+                }
+                group("Medical Claim")
+                {
+                    Caption = 'Medical Claims';
+                    action("Medical Claims")
+                    {
+                        RunObject = Page "Claim List";
+                    }
+                    action("Posted Medical Claims")
+                    {
+                        RunObject = Page "Posted Claims List";
+                    }
+                    action(MedicalCertificateTypes)
+                    {
+                        Caption = 'Medical Certificate Types';
+                        ApplicationArea = All;
+                        RunObject = Page "Medical Information Setup";
+                        Image = Setup;
+                    }
+                }
+
+                group(Travel)
+                {
+                    Caption = 'Travel';
+
+
+                    action("Travelling Request")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Travelling Request';
+                        RunObject = Page "Travelling Request Lines";
+                    }
+                    action("Posted Travelling Request")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Travelling Request';
+                        RunObject = Page "Posted Travelling Requests";
+                    }
+                    action("Employee Travel Request")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Employee Travel Request';
+                        RunObject = Page "Employee Travel Request";
+                        Visible = false;
+                    }
+
+                }
+                group("Incidents Logs")
+                {
+                    action("Accident / Incident Logs")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Accident / Incident Logs';
+                        RunObject = Page "Accident / Incident Logs List";
+                    }
+                }
+                group("Compassionate Checks")
+                {
+                    Caption = 'Compassionate Checks';
+                    action("Compassionate Checks List")
+                    {
+                        Caption = 'New Compassionate Checks';
+                        RunObject = Page "Compassionate Checks List";
+                        RunPageLink = "Approval Status" = CONST(Open);
+                    }
+                    action("Pending Compassionate Checks")
+                    {
+                        Caption = 'Pending Compassionate Checks';
+                        RunObject = Page "Compassionate Checks List";
+                        RunPageLink = "Approval Status" = CONST("Pending Approval");
+                    }
+                    action("Approved Compassionate Checks")
+                    {
+                        Caption = 'Approved Compassionate Checks';
+                        RunObject = Page "Compassionate Checks List";
+                        RunPageLink = "Approval Status" = CONST(Approved);
+                    }
+                    action("Compassionate Check Setup")
+                    {
+                        Caption = 'Compassionate Check Setup';
+                        Image = Setup;
+                        RunObject = Page "Compassionate Check Setup";
+                    }
+                }
+                group("Staff Advances")
+                {
+                    action("Loan Product Types")
+                    {
+                        Caption = 'Staff Advance Products';
+                        RunObject = Page "Loan Product Type list";
+                    }
+                    action("Loan Applications")
+                    {
+                        Caption = 'Staff Advance Applications';
+                        RunObject = Page "Loan Application List";
+                    }
+                }
+                group("Meal Requisition")
+                {
+                    action("Meal Setup")
+                    {
+                        Caption = 'Meal Setup';
+                        RunObject = Page "Item List";
+                    }
+                    action("Meal Requisitions")
+                    {
+                        Caption = 'Meal Requisitions';
+                        RunObject = Page "Meal Requisition List";
+                        RunPageLink = Status = CONST(Open);
+                    }
+                    action("Pending Meal Requisitions")
+                    {
+                        Caption = 'Meal Requisitions Pending Approval';
+                        RunObject = Page "Meal Requisition List";
+                        RunPageLink = Status = CONST("Pending Approval");
+                    }
+                    action("Approved Meal Requisitions")
+                    {
+                        Caption = 'Approved Meal Requisitions';
+                        RunObject = Page "Meal Requisition List";
+                        RunPageLink = Status = CONST(Approved);
+                    }
+                }
+                action(ServiceCertificate)
+                {
+                    Caption = 'Service Certificate';
+                    RunObject = Report "Service Certificate";
+                }
+            }
+
+
+
+
+
 
         }
         area(reporting)
         {
-            /*group("TimeSheet Management")
+            group("Other Reports")
             {
-                Caption = 'TimeSheet Management';
-                Image = LotInfo;
-                Visible = false;
-                action("Staff Timesheet")
+                action(StaffMeals)
                 {
-                    Image = Timesheet;
-                    RunObject = Report "Employee Timesheet Report";
+                    Caption = 'Staff Meal Costing';
+                    RunObject = Report "Staff Meal Costing";
                 }
-                action("Timesheet Report")
+                action(MonthlyMealVariance)
                 {
-                    Caption = 'Timesheet Report';
-                    RunObject = Report "Employee Timesheet Ver2";
+                    Caption = 'Monthly Meal Variance';
+                    RunObject = Report "Monthly Meal Variance";
                 }
-            }*/
+            }
         }
     }
 }
+
+

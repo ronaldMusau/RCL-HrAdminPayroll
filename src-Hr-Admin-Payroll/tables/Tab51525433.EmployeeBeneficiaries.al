@@ -1,7 +1,8 @@
 table 51525433 "Employee Beneficiaries"
 {
     Caption = 'Employee Relative';
-
+    LookupPageId = "Employee Beneficiaries Lines";
+    DrillDownPageId = "Employee Beneficiaries Lines";
     fields
     {
         field(1; "Employee Code"; Code[20])
@@ -69,11 +70,16 @@ table 51525433 "Employee Beneficiaries"
         {
             OptionMembers = " "," MALE"," FEMALE";
         }
+        field(14; "Line No."; Integer)
+        {
+            DataClassification = SystemMetadata;
+            AutoIncrement = true;
+        }
     }
 
     keys
     {
-        key(Key1; "Employee Code", Relationship, SurName, "Other Names")
+        key(Key1; "Employee Code", "Line No.")
         {
             Clustered = true;
         }

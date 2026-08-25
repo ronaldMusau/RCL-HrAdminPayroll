@@ -7,40 +7,40 @@ table 51525380 "Job Requirement"
             NotBlank = true;
             TableRelation = "Company Jobs"."Job ID";
         }
-        field(2; "Qualification Type"; Option)
+        field(2; "Qualification Type"; Code[100])
         {
             NotBlank = false;
-            OptionCaption = ' ,Academic,Professional,Technical,Experience,Personal Attributes,Membership,Proffessional Bodies';
-            OptionMembers = " ",Academic,Professional,Technical,Experience,"Personal Attributes",Membership,"Proffessional Bodies";
+            // OptionCaption = ' ,Academic,Professional,Technical,Experience,Personal Attributes,Membership,Proffessional Bodies';
+            // OptionMembers = " ",Academic,Professional,Technical,Experience,"Personal Attributes",Membership,"Proffessional Bodies";
+            //TableRelation = "Qualification Types".Code;
+
         }
         field(3; "Qualification Code"; Integer)
         {
             Editable = true;
             NotBlank = true;
-            TableRelation = IF ("Qualification Type" = CONST(Academic)) "Academic Certificates".CertificateID WHERE(EducationLevelID = FIELD(Level))
+            TableRelation = IF ("Qualification Type" = CONST('Membership')) "Membership Categories".MembershipCategoryID WHERE(MembershipBodyID = field(Level))
             ELSE
-            IF ("Qualification Type" = CONST(Professional)) "Academic Certificates".CertificateID WHERE(EducationLevelID = CONST(7))
-            ELSE
-            IF ("Qualification Type" = CONST(Membership)) "Membership Categories".MembershipCategoryID WHERE(MembershipBodyID = field(Level));
+            "Academic Certificates".CertificateID;
 
             trigger OnValidate()
             begin
 
-                if "Qualification Type" = "Qualification Type"::Academic then begin
+                if "Qualification Type" = 'Academic' then begin
                     Certific.Reset;
                     Certific.SetRange(EducationLevelID, Level);
                     Certific.SetFilter(CertificateID, Format("Qualification Code"));
                     if Certific.Find('-') then
                         Qualification := Certific.CertificateName;
                 end;
-                if "Qualification Type" = "Qualification Type"::Membership then begin
+                if "Qualification Type" = 'Membership' then begin
                     Membersh.Reset;
                     Membersh.SetRange(MembershipBodyID, Level);
                     Membersh.SetRange(MembershipCategoryID, "Qualification Code");
                     if Membersh.Find('-') then
                         Qualification := Membersh.MembershipCategoryName;
                 end;
-                if "Qualification Type" = "Qualification Type"::Professional then begin
+                if "Qualification Type" = 'Professional' then begin
                     Certific.Reset;
                     Certific.SetRange(EducationLevelID, Level);
                     Certific.SetFilter(CertificateID, Format("Qualification Code"));
@@ -71,30 +71,30 @@ table 51525380 "Job Requirement"
         field(50005; Level; Integer)
         {
             DataClassification = ToBeClassified;
-            TableRelation = IF ("Qualification Type" = CONST(Academic)) "Academic Education Level".EducationLevelID
+            TableRelation = IF ("Qualification Type" = CONST('Academic')) "Academic Education Level".EducationLevelID
             ELSE
-            IF ("Qualification Type" = CONST(Professional)) "Academic Education Level".EducationLevelID WHERE(EducationLevelID = CONST(7))
+            IF ("Qualification Type" = CONST('Professional')) "Academic Education Level".EducationLevelID WHERE(EducationLevelID = CONST(7))
             ELSE
-            IF ("Qualification Type" = CONST(Membership)) "Membership Bodies".MembershipBodyID
+            IF ("Qualification Type" = CONST('Membership')) "Membership Bodies".MembershipBodyID
             ELSE
-            IF ("Qualification Type" = CONST("Proffessional Bodies")) "Professional Bodies".ProfessionalBodyID;
+            IF ("Qualification Type" = CONST('Proffessional Bodies')) "Professional Bodies".ProfessionalBodyID;
 
             trigger OnValidate()
             begin
 
-                if ("Qualification Type" = "Qualification Type"::Academic) or ("Qualification Type" = "Qualification Type"::Professional) then begin
+                if ("Qualification Type" = 'Academic') or ("Qualification Type" = 'Professional') then begin
                     AcademicLevel.Reset;
                     AcademicLevel.SetRange(EducationLevelID, Level);
                     if AcademicLevel.Find('-') then
                         Description := AcademicLevel.Description;
                 end;
-                if "Qualification Type" = "Qualification Type"::Membership then begin
+                if "Qualification Type" = 'Membership' then begin
                     Membersh.Reset;
                     Membersh.SetRange(MembershipBodyID, Level);
                     if Membersh.Find('-') then
                         Description := Membersh."Membership Body Name";
                 end;
-                if "Qualification Type" = "Qualification Type"::"Proffessional Bodies" then begin
+                if "Qualification Type" = 'Proffessional Bodies' then begin
                     ProfBody.Reset;
                     ProfBody.SetRange(ProfessionalBodyID, Level);
                     if ProfBody.Find('-') then

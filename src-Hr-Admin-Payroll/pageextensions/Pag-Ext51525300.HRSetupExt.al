@@ -12,6 +12,22 @@ pageextension 51525300 "HR Setup Ext" extends "Human Resources Setup"
             {
                 ApplicationArea = All;
             }
+            field("HR Head"; Rec."HR Head")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the HR Head field.', Comment = '%';
+            }
+            field("COO Approval"; Rec."COO Approval")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the COO Approval field.', Comment = '%';
+            }
+            field("CEO Approval"; Rec."CEO Approval")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the CEO Approval field.', Comment = '%';
+            }
+
         }
 
         addlast(Numbering)
@@ -28,6 +44,13 @@ pageextension 51525300 "HR Setup Ext" extends "Human Resources Setup"
             {
 
             }
+            field("Compassionate Check Nos."; Rec."Compassionate Check Nos.")
+            {
+            }
+            field("Meal Requisition Nos"; Rec."Meal Requisition Nos")
+            {
+            }
+
             field("Loan Product Type Nos."; Rec."Loan Product Type Nos.")
             {
             }

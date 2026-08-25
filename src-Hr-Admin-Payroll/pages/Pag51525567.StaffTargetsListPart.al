@@ -15,6 +15,9 @@ page 51525567 "Staff Targets ListPart"
                     Visible = true;
                     Editable = false;
                 }
+                field("Department Target No"; Rec."Department Target No")
+                {
+                }
                 field("Objective Code"; Rec."Objective Code")
                 {
                 }
@@ -29,6 +32,7 @@ page 51525567 "Staff Targets ListPart"
                 }
                 field("Due Date"; Rec."Due Date")
                 {
+                    ShowMandatory = true;
                 }
                 field("Due Date Description"; Rec."Due Date Description")
                 {
@@ -63,7 +67,15 @@ page 51525567 "Staff Targets ListPart"
             Rec.Period := HrAppraissalPeriods.Code
         else
             Error('There are no open periods!');
+        if TargetObjectives.Get(Rec."Doc No") then begin
+            Rec."Staff No" := TargetObjectives."Staff No";
+            Rec."Department Code" := TargetObjectives.Department;
 
+            DeptTargetHeader.SetRange(Period, Rec.Period);
+            DeptTargetHeader.SetRange("Department Code", Rec."Department Code");
+            if DeptTargetHeader.FindFirst() then
+                Rec."Department Target No" := DeptTargetHeader.No;
+        end;
         //FRED 5/3/23 Limit modification to within set dates
         if Rec.Period <> '' then begin
             HrAppraissalPeriods.Reset;
@@ -80,4 +92,6 @@ page 51525567 "Staff Targets ListPart"
 
     var
         HrAppraissalPeriods: Record "HR Appraisal Periods";
+        TargetObjectives: Record "Staff Target Objectives";
+        DeptTargetHeader: Record "WB Departmental Targets";
 }

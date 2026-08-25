@@ -1,4 +1,4 @@
-page 52211548 "Self Service"
+﻿page 52211548 "Self Service"
 {
     ApplicationArea = All;
     Caption = 'Self Service';
@@ -46,12 +46,7 @@ page 52211548 "Self Service"
                 Caption = 'Accident / Incident Logs';
                 RunObject = Page "Accident / Incident Logs List";
             }
-            action("My Shifts")
-            {
-                ApplicationArea = Basic, Suite;
-                Caption = 'My Shifts';
-                RunObject = Page "My Shifts";
-            }
         }
     }
 }
+

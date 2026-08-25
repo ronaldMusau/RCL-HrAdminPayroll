@@ -17,12 +17,17 @@ table 51525476 Districts
         field(3; Province; Code[50])
         {
             Caption = 'Province';
-            TableRelation = "Provinces";
+            TableRelation = "Provinces".Name WHERE("Country/Region Code" = FIELD("Country/Region Code"));
+        }
+        field(4; "Country/Region Code"; Code[10])
+        {
+            Caption = 'Country/Region Code';
+            TableRelation = "Country/Region".Code;
         }
     }
     keys
     {
-        key(PK; Name, Province)
+        key(PK; Name, Province, "Country/Region Code")
         {
             Clustered = true;
         }

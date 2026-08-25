@@ -1,7 +1,7 @@
 report 51525310 "Payroll Variance Report"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reports/layouts/PayrollVarianceReport.rdlc';
+    RDLCLayout = 'src-Hr-Admin-Payroll\reports\layouts\PayrollVarianceReport.rdlc';
 
     dataset
     {

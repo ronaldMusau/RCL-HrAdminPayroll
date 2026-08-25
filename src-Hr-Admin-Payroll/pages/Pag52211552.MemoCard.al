@@ -73,6 +73,14 @@ page 52211552 "Memo Card"
 
         }
 
+        area(FactBoxes)
+        {
+            part(ApprovalEntries; "Approval FactBox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Table ID" = const(51525558), "Document No." = field("No.");
+            }
+        }
 
     }
 
@@ -138,7 +146,9 @@ page 52211552 "Memo Card"
                         Error('Document Status has to be open');
                     if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
                         CustomApprovals.OnSendDocForApproval(VarVariant);
+                    Rec.Get(Rec."No.");
                     Message('Approval request has been sent successfully.');
+                    CurrPage.Update(true);
                 end;
             }
             action(MyCancelApproval)
@@ -152,21 +162,25 @@ page 52211552 "Memo Card"
                         VarVariant := Rec;
                         CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
                         Message('Approval request has been Canceled');
-
+                        Rec.Get(Rec."No.");
+                        if Rec."Approval Status" = Rec."Approval Status"::"Pending Approval" then begin
+                            Rec."Approval Status" := Rec."Approval Status"::Open;
+                            Rec.Modify();
+                            CurrPage.Update(true);
+                        end;
                     end;
                 end;
             }
-            action(MyApproval)
+            action(MyApprovals)
             {
-                Caption = 'Approval';
                 ApplicationArea = All;
-
+                Caption = 'Approvals';
                 Image = Approvals;
-                RunPageMode = View;
-
                 trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                 begin
-                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId)
+                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
                 end;
             }
             action(Reopen)
@@ -176,7 +190,9 @@ page 52211552 "Memo Card"
 
                 trigger OnAction()
                 begin
-                    Rec."Approval Status" := Rec."Approval Status"::"Pending Approval";
+                    Rec."Approval Status" := Rec."Approval Status"::Open;
+                    Rec.Modify();
+                    CurrPage.Update(true);
                 end;
             }
 
@@ -189,6 +205,9 @@ page 52211552 "Memo Card"
                 trigger OnAction()
                 begin
                     Rec.posted := true;
+                    Rec.Modify();
+                    SendEmailToAttendees();
+                    Message('Memo posted and attendees have been notified via email.');
                 end;
             }
             action(PrintMemoReport)
@@ -226,7 +245,7 @@ page 52211552 "Memo Card"
 
                 actionref(MySendApprovalRef; MySendApproval) { }
                 actionref(MyApprovalRef; MyCancelApproval) { }
-                actionref(MyApprovalsRef; MyApproval) { }
+                actionref(MyApprovalsRef; MyApprovals) { }
                 actionref(ReopenRef; Reopen) { }
 
             }
@@ -253,9 +272,46 @@ page 52211552 "Memo Card"
         VarVariant: Variant;
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
         CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
-
         RecRef: RecordRef;
 
+    local procedure SendEmailToAttendees()
+    var
+        MemoAttenders: Record "Memo Attenders";
+        Employee: Record Employee;
+        EmailMessage: Codeunit "Email Message";
+        Email: Codeunit Email;
+        EmailSubject: Text;
+        EmailBody: Text;
+    begin
+        MemoAttenders.Reset();
+        MemoAttenders.SetRange("Doc No", Rec."No.");
+        if MemoAttenders.FindSet() then begin
+            repeat
+                if Employee.Get(MemoAttenders."Employee No") then begin
+                    if Employee."Company E-Mail" <> '' then begin
+                        EmailSubject := 'Memo Notification - ' + Rec."No.";
+                        EmailBody := '<html><body>';
+                        EmailBody += '<p>Dear ' + Employee."Full Name" + ',</p>';
+                        EmailBody += '<p>You have been listed as an attendee for the following memo:</p>';
+                        EmailBody += '<ul>';
+                        EmailBody += '<li><strong>Memo No:</strong> ' + Rec."No." + '</li>';
+                        EmailBody += '<li><strong>Purpose:</strong> ' + Rec.Purpose + '</li>';
+                        EmailBody += '<li><strong>Activity Date:</strong> ' + Format(Rec."Activity Date") + '</li>';
+                        if Rec."End Date" <> 0D then
+                            EmailBody += '<li><strong>End Date:</strong> ' + Format(Rec."End Date") + '</li>';
+                        EmailBody += '<li><strong>Department:</strong> ' + Rec."Department Code" + '</li>';
+                        EmailBody += '</ul>';
+                        EmailBody += '<p>Please take note of this activity.</p>';
+                        EmailBody += '<p>Best regards,<br/>' + Rec."Requestor Name" + '</p>';
+                        EmailBody += '</body></html>';
+
+                        EmailMessage.Create(Employee."Company E-Mail", EmailSubject, EmailBody, true);
+                        Email.Send(EmailMessage, Enum::"Email Scenario"::Default);
+                    end;
+                end;
+            until MemoAttenders.Next() = 0;
+        end;
+    end;
 }
 
 

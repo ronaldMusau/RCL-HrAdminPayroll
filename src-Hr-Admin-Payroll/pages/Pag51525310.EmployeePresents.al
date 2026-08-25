@@ -13,12 +13,7 @@ page 51525310 "Employee Presents"
             repeater(Control1000000000)
             {
                 ShowCaption = false;
-                field("Employee No."; Rec."Employee No.")
-                {
-                }
-                field(Name; Rec.Name)
-                {
-                }
+                
                 field(Description; Rec.Description)
                 {
                 }

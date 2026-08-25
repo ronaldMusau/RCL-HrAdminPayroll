@@ -110,9 +110,6 @@ table 51525441 "HR Company or Other Training"
         field(14; Approved; Boolean)
         {
         }
-        field(27; fsdf; Text[30])
-        {
-        }
         field(28; "Training Evaluation"; Text[250])
         {
         }

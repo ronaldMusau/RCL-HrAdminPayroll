@@ -3,6 +3,7 @@ page 51525361 "Disciplinary Cases Card"
     ApplicationArea = All;
     PageType = Card;
     SourceTable = "Disciplinary Cases";
+    PromotedActionCategories = 'New,Process,Report,Approval';
 
     layout
     {
@@ -33,6 +34,34 @@ page 51525361 "Disciplinary Cases Card"
                 field("Employee Name"; Rec."Employee Name")
                 {
                     Editable = false;
+                }
+                group("Warning Summary")
+                {
+                    Caption = 'Disciplinary History';
+                    field(EmpTotalCases; Emp."Total Disciplinary Cases")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Total Cases';
+                        Editable = false;
+                    }
+                    field(EmpOralWarnings; Emp."Total Oral Warnings")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Oral Warnings';
+                        Editable = false;
+                    }
+                    field(EmpWrittenWarnings; Emp."Total Written Warnings")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Written Warnings';
+                        Editable = false;
+                    }
+                    field(EmpFinalWarnings; Emp."Total Final Written Warnings")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Final Written Warnings';
+                        Editable = false;
+                    }
                 }
                 field("Previous Disciplinary Case"; Rec."Previous Disciplinary Case")
                 {
@@ -101,6 +130,7 @@ page 51525361 "Disciplinary Cases Card"
                     field("Board Recommendation"; Rec."Board Recommendation")
                     {
                         MultiLine = true;
+                        Editable = Boardedit;
                     }
                 }
                 group(Control52)
@@ -136,6 +166,7 @@ page 51525361 "Disciplinary Cases Card"
                     field("Court's Decision"; Rec."Court's Decision")
                     {
                         Visible = courtbl;
+                        Editable = CourtDecisionEdit;
                     }
                 }
                 field("Action Taken"; Rec."Action Taken")
@@ -150,11 +181,35 @@ page 51525361 "Disciplinary Cases Card"
                         //  END;
                     end;
                 }
+                field("Warning Type"; Rec."Warning Type")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Warning Type';
+                }
+                field("Date of Action"; Rec."Date of Action")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Date of Action';
+                }
+                field("Appeal Deadline Date"; Rec."Appeal Deadline Date")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Appeal Deadline Date';
+                    Editable = appealedbl;
+                }
             }
             part(Control42; "Previous Cases")
             {
                 Editable = false;
                 SubPageLink = "Employee No" = FIELD("Employee No");
+            }
+        }
+        area(FactBoxes)
+        {
+            part(DocAttachmentFactBox; "Doc. Attachment List Factbox")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Table ID" = CONST(51525322), "No." = FIELD("Case No");
             }
         }
     }
@@ -443,6 +498,8 @@ page 51525361 "Disciplinary Cases Card"
                         Rec."Case Status" := Rec."Case Status"::Appealed;
                     end;
                     Rec."No. of Appeals" += 1;
+                    Rec."Appeal Deadline Date" := CalcDate('14D', Today);
+                    Rec.Modify();
                     CurrPage.Close;
                 end;
             }
@@ -614,10 +671,105 @@ page 51525361 "Disciplinary Cases Card"
 
                 trigger OnAction()
                 begin
-                    if Rec."HOD File Path" <> '' then begin
-                        HyperLink(Rec."HOD File Path");
+                    if Rec."Board Decision File Path" <> '' then begin
+                        HyperLink(Rec."Board Decision File Path");
                     end;
                 end;
+            }
+            action(Attachments)
+            {
+                ApplicationArea = All;
+                Caption = 'Attachments';
+                Image = Attach;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = false;
+
+                trigger OnAction()
+                var
+                    DocumentAttachmentDetails: Page "Document Attachment Details";
+                    RecRef: RecordRef;
+                begin
+                    RecRef.GetTable(Rec);
+                    DocumentAttachmentDetails.OpenForRecRef(RecRef);
+                    DocumentAttachmentDetails.RunModal();
+                end;
+            }
+            group(ApprovalActions)
+            {
+                Caption = 'Approval';
+                action(SendDisciplinaryCaseForApproval)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Send for Approval';
+                    Image = SendApprovalRequest;
+                    Promoted = true;
+                    PromotedCategory = Category4;
+                    PromotedIsBig = true;
+                    Enabled = (Rec."Case Status" = Rec."Case Status"::New);
+                    trigger OnAction()
+                    var
+                        CustomApprovalsHR: Codeunit "Custom Approvals Mgmt HR";
+                        Variant: Variant;
+                    begin
+                        Rec.TestField("Case No");
+                        Variant := Rec;
+                        if CustomApprovalsHR.CheckApprovalsWorkflowEnabled(Variant) then
+                            CustomApprovalsHR.OnSendDocForApproval(Variant);
+                    end;
+                }
+                action(CancelDisciplinaryCaseApproval)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Cancel Approval Request';
+                    Image = CancelApprovalRequest;
+                    Promoted = true;
+                    PromotedCategory = Category4;
+                    trigger OnAction()
+                    var
+                        CustomApprovalsHR: Codeunit "Custom Approvals Mgmt HR";
+                        Variant: Variant;
+                    begin
+                        if Rec."Case Status" <> Rec."Case Status"::Ongoing then
+                            Error('Only cases pending approval can be canceled');
+                        Variant := Rec;
+                        CustomApprovalsHR.OnCancelDocApprovalRequest(Variant);
+                    end;
+                }
+                action(ReopenDisciplinaryCase)
+                {
+                    Caption = 'Reopen';
+                    ApplicationArea = All;
+                    Image = ReOpen;
+                    Promoted = true;
+                    PromotedCategory = Category4;
+                    PromotedIsBig = true;
+                    Enabled = (Rec."Case Status" = Rec."Case Status"::Closed);
+                    trigger OnAction()
+                    var
+                        VarVariant: Variant;
+                        CustomApprovalsHR: Codeunit "Custom Approvals Mgmt HR";
+                    begin
+                        VarVariant := Rec;
+                        CustomApprovalsHR.OnReopenDocument(VarVariant);
+                        Rec.Get(Rec."Case No");
+                        CurrPage.Update(false);
+                    end;
+                }
+                action(ViewDisciplinaryApprovals)
+                {
+                    ApplicationArea = All;
+                    Caption = 'View Approvals';
+                    Image = Approvals;
+                    Promoted = true;
+                    PromotedCategory = Category4;
+                    trigger OnAction()
+                    var
+                        ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                    begin
+                        ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
+                    end;
+                }
             }
         }
     }
@@ -749,9 +901,32 @@ page 51525361 "Disciplinary Cases Card"
             SupEdit := false;
             Boardedit := false;
         end;
+        if Rec."Case Status"= Rec."Case Status"::Court then begin
+            CourtDecisionEdit := true;
+        end;
+
+        ShowAttach := (Rec."HOD File Path" <> '') or
+                      (Rec."HR File Path" <> '') or
+                      (Rec."Committe File Path" <> '') or
+                      (Rec."Committee File-After Appeal" <> '') or
+                      (Rec."Action Taken File Path" <> '');
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        if Emp.Get(Rec."Employee No") then begin
+            Emp.CalcFields("Total Disciplinary Cases", "Total Oral Warnings",
+                           "Total Written Warnings", "Total Final Written Warnings");
+        end;
+        ShowAttach := (Rec."HOD File Path" <> '') or
+                      (Rec."HR File Path" <> '') or
+                      (Rec."Committe File Path" <> '') or
+                      (Rec."Committee File-After Appeal" <> '') or
+                      (Rec."Action Taken File Path" <> '');
     end;
 
     var
+        Emp: Record Employee;
         ongoingbl: Boolean;
         appealedbl: Boolean;
         closedbl: Boolean;
@@ -785,4 +960,5 @@ page 51525361 "Disciplinary Cases Card"
         Boardedit: Boolean;
         SupEdit: Boolean;
         AppealEdit: Boolean;
+        CourtDecisionEdit: Boolean;
 }

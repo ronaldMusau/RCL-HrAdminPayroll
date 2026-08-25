@@ -414,9 +414,6 @@ page 51525372 "Employee Leave Balances"
                 {
                     Visible = false;
                 }
-                field("Disciplinary Actions"; Rec."Disciplinary Actions")
-                {
-                }
                 field(Status; Rec.Status)
                 {
                 }

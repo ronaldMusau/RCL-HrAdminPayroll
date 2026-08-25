@@ -220,9 +220,6 @@ query 51525308 "All Employees Data"
             column(Disabled; Disabled)
             {
             }
-            column(DisciplinaryActions; "Disciplinary Actions")
-            {
-            }
             column(District; District)
             {
             }

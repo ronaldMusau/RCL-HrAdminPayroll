@@ -1,4 +1,4 @@
-query 51525317 "Recruitment Needs"
+﻿query 51525317 "Recruitment Needs"
 {
     elements
     {
@@ -180,6 +180,9 @@ query 51525317 "Recruitment Needs"
             {
             }
             column(Closed; Closed)
+            {
+            }
+            column(Requisition_Type; "Requisition Type")
             {
             }
         }

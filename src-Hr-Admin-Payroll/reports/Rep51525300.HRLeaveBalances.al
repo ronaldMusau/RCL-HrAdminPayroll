@@ -1,7 +1,7 @@
 report 51525300 "HR Leave Balances"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reports/layouts/HRLeaveBalances.rdlc';
+    RDLCLayout = 'src-Hr-Admin-Payroll\reports\layouts\HRLeaveBalances.rdlc';
     PreviewMode = PrintLayout;
 
     dataset

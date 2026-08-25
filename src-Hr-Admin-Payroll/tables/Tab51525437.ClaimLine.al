@@ -21,18 +21,25 @@ table 51525437 "Claim Line"
         }
         field(3; "Patient No"; Integer)
         {
-            TableRelation = "Medical Scheme Lines"."Line No." WHERE("Employee Code" = FIELD("Employee No"),
-                                                                     "Fiscal Year" = FIELD("Fiscal Year"));
-
+            // TableRelation = "Medical Scheme Lines"."Line No." WHERE("Employee Code" = FIELD("Employee No"),
+            //                                                          "Fiscal Year" = FIELD("Fiscal Year"));
+            TableRelation = "Employee Beneficiaries"."Line No." WHERE("Employee Code" = FIELD("Employee No"));
             trigger OnValidate()
+            var
+            BeneficiariesRec: Record "Employee Beneficiaries";
             begin
                 TestField("Visit Date");
-                MedSchemeLines.Reset;
-                MedSchemeLines.SetRange(MedSchemeLines."Employee Code", "Employee No");
-                MedSchemeLines.SetFilter(MedSchemeLines."Line No.", '%1', "Patient No");
-                if MedSchemeLines.Find('+') then
-                    "Patient Name" := MedSchemeLines."Other Names" + ' ' + MedSchemeLines.SurName;
-                Relationship := MedSchemeLines.Relationship;
+                if BeneficiariesRec.Get("Employee No", "Patient No") then begin
+                    "Patient Name" := BeneficiariesRec."Other Names" + ' ' + BeneficiariesRec.SurName;
+                    Relationship := BeneficiariesRec.Relationship;
+                end;
+
+                // MedSchemeLines.Reset;
+                // MedSchemeLines.SetRange(MedSchemeLines."Employee Code", "Employee No");
+                // MedSchemeLines.SetFilter(MedSchemeLines."Line No.", '%1', "Patient No");
+                // if MedSchemeLines.Find('+') then
+                //     "Patient Name" := MedSchemeLines."Other Names" + ' ' + MedSchemeLines.SurName;
+                // Relationship := MedSchemeLines.Relationship;
             end;
         }
         field(4; "Patient Name"; Text[80])
@@ -140,7 +147,7 @@ table 51525437 "Claim Line"
         }
         field(19; Relationship; Code[20])
         {
-            TableRelation = "Medical Scheme Header";
+            //TableRelation = "Medical Scheme Header";
         }
         field(21; "Policy Start Date"; Date)
         {

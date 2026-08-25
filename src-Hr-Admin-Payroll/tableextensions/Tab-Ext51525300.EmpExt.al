@@ -1450,11 +1450,12 @@ tableextension 51525300 "Emp Ext" extends Employee
         {
             DataClassification = ToBeClassified;
         }
-        field(51525544; "Disciplinary Actions"; Option)
+        field(51525544; "Total Disciplinary Cases"; Integer)
         {
-            DataClassification = ToBeClassified;
-            OptionCaption = 'None,Suspension,Interdiction';
-            OptionMembers = "None",Suspension,Interdiction;
+            Caption = 'Total Disciplinary Cases';
+            FieldClass = FlowField;
+            CalcFormula = Count("Disciplinary Cases" WHERE("Employee No" = FIELD("No.")));
+            Editable = false;
         }
         field(51525545; "Establishment Name"; Text[100])
         {
@@ -1674,23 +1675,68 @@ tableextension 51525300 "Emp Ext" extends Employee
         }
         field(51525579; Province; Code[50])
         {
-            TableRelation = "Provinces";
+            Caption = 'Province';
+            TableRelation = Provinces.Name WHERE("Country/Region Code" = FIELD("Country/Region Code"));
+
+            trigger OnValidate()
+            begin
+                District := '';
+                Sector := '';
+                Cell := '';
+                Village := '';
+            end;
         }
         field(51525580; District; Code[50])
         {
-            TableRelation = "Districts";
+            Caption = 'District';
+            TableRelation = Districts.Name WHERE(
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
+
+            trigger OnValidate()
+            begin
+                Sector := '';
+                Cell := '';
+                Village := '';
+            end;
         }
         field(51525581; Sector; Code[50])
         {
-            TableRelation = "Sectors";
+            Caption = 'Sector';
+            TableRelation = Sectors.Name WHERE(
+                District = FIELD(District),
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
+
+            trigger OnValidate()
+            begin
+                Cell := '';
+                Village := '';
+            end;
         }
         field(51525582; Cell; Code[50])
         {
-            TableRelation = "Cells";
+            Caption = 'Cell';
+            TableRelation = Cells.Name WHERE(
+                Sector = FIELD(Sector),
+                District = FIELD(District),
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
+
+            trigger OnValidate()
+            begin
+                Village := '';
+            end;
         }
         field(51525583; Village; Code[50])
         {
-            TableRelation = "Villages";
+            Caption = 'Village';
+            TableRelation = Villages.Name WHERE(
+                Cell = FIELD(Cell),
+                Sector = FIELD(Sector),
+                District = FIELD(District),
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
         }
         field(51525584; "Plot No."; Code[50])
         {
@@ -1711,10 +1757,18 @@ tableextension 51525300 "Emp Ext" extends Employee
             end;
         }
         // *** Supervisor Name is read-only on Employee Card - changes go through Change Request ***
-        field(51525588; "Supervisor Name"; Code[20])
+        field(51525588; "Supervisor Name"; Text[100])
         {
             Editable = true;
+        }
+        field(52211452; "Supervisor No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
             TableRelation = Employee."No.";
+        }
+        field(52211453; "Manager Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
         }
         field(51525589; "Payroll Country Filter"; Code[50])
         {
@@ -1908,6 +1962,36 @@ tableextension 51525300 "Emp Ext" extends Employee
         }
         field(52211451; "Ineligible for Airtime"; Boolean)
         { }
+        field(52211454; "Total Oral Warnings"; Integer)
+        {
+            Caption = 'Total Oral Warnings';
+            FieldClass = FlowField;
+            CalcFormula = Count("Disciplinary Cases" WHERE("Employee No" = FIELD("No."),
+                                                           "Warning Type" = CONST("Oral Warning")));
+            Editable = false;
+        }
+        field(52211455; "Total Written Warnings"; Integer)
+        {
+            Caption = 'Total Written Warnings';
+            FieldClass = FlowField;
+            CalcFormula = Count("Disciplinary Cases" WHERE("Employee No" = FIELD("No."),
+                                                           "Warning Type" = CONST("Written Warning")));
+            Editable = false;
+        }
+        field(52211456; "Total Final Written Warnings"; Integer)
+        {
+            Caption = 'Total Final Written Warnings';
+            FieldClass = FlowField;
+            CalcFormula = Count("Disciplinary Cases" WHERE("Employee No" = FIELD("No."),
+                                                           "Warning Type" = CONST("Final Written Warning")));
+            Editable = false;
+        }
+        field(52211457; "Biometric ID"; Text[200])
+        {
+
+        }
+
+
     }
     var
         HumanResSetup: Record "Human Resources Setup";

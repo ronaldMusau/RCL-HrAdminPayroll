@@ -13,6 +13,17 @@ page 51525463 "Job Requirement Lines"
                 ShowCaption = false;
                 field("Qualification Type"; Rec."Qualification Type")
                 {
+                    trigger OnLookup(var Text: Text): Boolean
+                    var
+                        QualTypes: Page "Qualification Types";
+                        QualRec: Record "Qualification Types";
+                    begin
+                        QualTypes.LookupMode(true);
+                        if QualTypes.RunModal() = Action::LookupOK then begin
+                            QualTypes.GetRecord(QualRec);
+                            Rec."Qualification Type" := QualRec.Code;
+                        end;
+                    end;
                 }
                 field(Level; Rec.Level)
                 {
@@ -22,6 +33,7 @@ page 51525463 "Job Requirement Lines"
                 }
                 field("Qualification Code"; Rec."Qualification Code")
                 {
+                    Visible = false;
                 }
                 field(Qualification; Rec.Qualification)
                 {

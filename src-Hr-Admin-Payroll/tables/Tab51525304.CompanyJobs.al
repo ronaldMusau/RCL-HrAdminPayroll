@@ -8,7 +8,7 @@ table 51525304 "Company Jobs"
         field(1; "Job ID"; Code[150])
         {
             //NotBlank = true;
-            Editable = false;
+            //Editable = false;
         }
         field(2; "Job Description"; Text[250])
         {
@@ -29,12 +29,18 @@ table 51525304 "Company Jobs"
             trigger OnValidate()
             var
                 job: Record "Company Jobs";
+                Emp: Record Employee;
             begin
                 if "Position Reporting to" <> '' then begin
                     job.Reset();
                     job.SetRange("Job ID", "Position Reporting to");
                     if job.FindFirst() then
                         "Supervisor Position" := job."Job Description";
+                    Emp.Reset();
+                    Emp.SetRange("Job ID", "Position Reporting to");
+                    if Emp.FindFirst() then begin
+                        "Department Name" := Emp."Responsibility Center Name";
+                    end;
                 end;
             end;
         }
@@ -68,21 +74,29 @@ table 51525304 "Company Jobs"
                 DimensionRec.SetRange("Global Dimension No.", 1);
                 DimensionRec.SetRange(DimensionRec.Code, "Dimension 1");
                 if DimensionRec.Find('-') then
-                    "Directorate Name" := DimensionRec.Name;
+                    "Department Name" := DimensionRec.Name;
             end;
         }
         field(9; "Dimension 2"; Code[30])
         {
-            CaptionClass = '1,1,2';
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
-
+            //CaptionClass = '1,1,2';
+            //TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
+            TableRelation = "Sub Responsibility Center".Code where("Responsibility Center Name" = field("Department Name"));
+            Caption = 'Section Code';
             trigger OnValidate()
+            var
+                SubResponsibilityCenter: Record "Sub Responsibility Center";
             begin
-                DimensionRec.Reset;
-                DimensionRec.SetRange("Global Dimension No.", 2);
-                DimensionRec.SetRange(DimensionRec.Code, "Dimension 2");
-                if DimensionRec.Find('-') then
-                    "Department Name" := DimensionRec.Name;
+                SubResponsibilityCenter.Reset();
+                SubResponsibilityCenter.SetRange(Code, "Dimension 2");
+                if SubResponsibilityCenter.FindFirst() then begin
+                    "Section Name" := SubResponsibilityCenter."Responsibility Center Name";
+                end;
+                // DimensionRec.Reset;
+                // DimensionRec.SetRange("Global Dimension No.", 2);
+                // DimensionRec.SetRange(DimensionRec.Code, "Dimension 2");
+                // if DimensionRec.Find('-') then
+                //     "Section Name" := DimensionRec.Name;
             end;
         }
         field(10; "Dimension 3"; Code[30])
@@ -216,6 +230,7 @@ table 51525304 "Company Jobs"
         }
         field(40; "Section Code"; Code[250])
         {
+
             TableRelation = "Sub Responsibility Center"."Code" where("Responsibility Center" = field("Department Code"));
 
             trigger OnValidate()
@@ -236,6 +251,11 @@ table 51525304 "Company Jobs"
         }
         field(42; "Given Transport Allowance"; Boolean)
         { }
+        field(43; "Type"; Option)
+        {
+            OptionCaption = ',Jobs,Job Specification';
+            OptionMembers = "",Jobs,"Job Specification";
+        }
     }
 
     keys
@@ -270,6 +290,7 @@ table 51525304 "Company Jobs"
         if "Job ID" = '' then begin
             CompJob.Reset();
             if CompJob.FindLast then begin
+                //if Type = Type::Jobs then
                 "Job ID" := IncStr(CompJob."Job ID")
             end else begin
                 "Job ID" := 'JOB0001';

@@ -1,4 +1,4 @@
-table 51525300 "HR Cues"
+﻿table 51525300 "HR Cues"
 {
     fields
     {
@@ -129,7 +129,7 @@ table 51525300 "HR Cues"
         }
         field(25; "Completed Trainings"; Integer)
         {
-            CalcFormula = Count("Training Schedules" WHERE(Status = FILTER(Done)));
+            CalcFormula = Count("Training Schedules" WHERE(Status = FILTER(Completed)));
             FieldClass = FlowField;
         }
         field(26; "Ongoing Trainings"; Integer)
@@ -139,7 +139,7 @@ table 51525300 "HR Cues"
         }
         field(27; "Upcoming Trainings"; Integer)
         {
-            CalcFormula = Count("Training Schedules" WHERE(Status = FILTER(Pending)));
+            CalcFormula = Count("Training Schedules" WHERE(Status = FILTER(Open)));
             FieldClass = FlowField;
         }
         field(28; "Active Employees"; Integer)
@@ -317,3 +317,4 @@ table 51525300 "HR Cues"
 
 
 }
+

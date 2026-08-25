@@ -5,7 +5,7 @@ page 52211561 "Claim List"
     PageType = List;
     SourceTable = "Medical Claim Header";
     CardPageId = "Medical Claim Header";
-    SourceTableView = where(Posted = const(false));
+    SourceTableView = where("Approval Status" = filter(Open | "Pending Approval" | Rejected));
 
     layout
     {

@@ -22,6 +22,14 @@ table 51525527 "Appraisal Periods"
         {
             DataClassification = ToBeClassified;
         }
+        field(6; "Financial Year"; Code[100])
+        {
+
+        }
+        field(7; "Strategic Plan"; Code[100])
+        {
+
+        }
     }
 
     keys

@@ -10,7 +10,7 @@ report 51525347 "Departmental Training History"
         dataitem(TrainingScheduleLines; "Training Schedule Lines")
         {
             RequestFilterHeading = 'Departmental Training History';
-            DataItemTableView = SORTING("End Date") where(Status = const(Done));
+            DataItemTableView = SORTING("End Date") where(Status = const(Completed));
             RequestFilterFields = "Department Code", "Training No.", "End Date", "Renew By", "Trainer Name";
 
             column(CompanyName; CompanyInformation.Name)

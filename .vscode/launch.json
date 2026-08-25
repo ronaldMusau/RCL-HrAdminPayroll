@@ -1,4 +1,4 @@
-{
+﻿{
     "version": "0.2.0",
     "configurations": [
         {
@@ -17,8 +17,9 @@
             "enableSqlInformationDebugger": true,
             "tenant": "default",
             "usePublicURLFromServer": true,
-            "port": 5049,
-             "schemaUpdateMode": "ForceSync"
+            "port": 7149,
+            "schemaUpdateMode": "ForceSync",
+            "dependencyPublishingOption": "Ignore"
         }
     ]
 }

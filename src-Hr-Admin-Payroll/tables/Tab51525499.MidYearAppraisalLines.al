@@ -94,6 +94,23 @@ table 51525499 "MidYear Appraisal Lines"
 
         field(20; "Review Date"; Date)
         { }
+        field(21; "Scale"; Integer)
+        {
+            DataClassification = CustomerContent;
+            TableRelation = "Appraisal Remarks";
+            trigger OnValidate()
+            var
+                AppraisalRemarks: Record "Appraisal Remarks";
+            begin
+                "Success Measure" := '';
+                if Scale <> 0 then begin
+                    AppraisalRemarks.Reset();
+                    AppraisalRemarks.SetRange("Entry No", Scale);
+                    if AppraisalRemarks.FindFirst() then
+                        "Success Measure" := AppraisalRemarks.Remarks;
+                end;
+            end;
+        }
     }
 
     keys

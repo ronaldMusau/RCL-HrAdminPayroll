@@ -375,9 +375,6 @@ page 51525340 "HR Employee list All data"
                 {
                     Visible = false;
                 }
-                field("Disciplinary Actions"; Rec."Disciplinary Actions")
-                {
-                }
                 field(Status; Rec.Status)
                 {
                 }

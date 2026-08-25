@@ -1,7 +1,7 @@
 report 51525372 "Performance Planning"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reports/layouts/PerformancePlanning.rdlc';
+    RDLCLayout = 'src-Hr-Admin-Payroll\reports\layouts\PerformancePlanning.rdlc';
 
     dataset
     {

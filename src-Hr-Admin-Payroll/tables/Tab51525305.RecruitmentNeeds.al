@@ -133,9 +133,22 @@ table 51525305 "Recruitment Needs"
         }
         field(14; "Start Date"; Date)
         {
+            trigger OnValidate()
+            begin
+                if "Start Date" > "End Date" then
+                    if "End Date" <> 0D then
+                        Error('Start Date cannot be after End Date.');
+            end;
         }
         field(15; "End Date"; Date)
         {
+            trigger OnValidate()
+            begin
+                if "End Date" < Today then
+                    Error('End Date cannot be in the past.');
+                if ("Start Date" <> 0D) and ("End Date" < "Start Date") then
+                    Error('End Date must be after Start Date.');
+            end;
         }
         field(16; "Documentation Link"; Text[200])
         {
@@ -180,8 +193,10 @@ table 51525305 "Recruitment Needs"
             //temporarily
             trigger OnValidate()
             begin
-                if Status = Status::Released then
+                if Status = Status::Released then begin
                     Advertise := true;
+                    Closed := false;
+                end;
             end;
         }
         field(25; "Recruitment Cycle"; Code[30])
@@ -390,8 +405,9 @@ table 51525305 "Recruitment Needs"
         field(62; "Requisition Type"; Option)
         {
             DataClassification = ToBeClassified;
-            OptionCaption = 'Open,Internal,External';
-            OptionMembers = Open,Internal,External;
+            Caption = 'Advertisement Type';
+            OptionCaption = ' ,Internal,External,Both';
+            OptionMembers = Open,Internal,External,Both;
         }
         field(63; "Employee No."; Code[20])
         {

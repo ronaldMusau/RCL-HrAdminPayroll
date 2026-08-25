@@ -1,4 +1,4 @@
-table 51525345 "Training Participants"
+﻿table 51525345 "Training Participants"
 {
     fields
     {
@@ -15,6 +15,8 @@ table 51525345 "Training Participants"
             TableRelation = Employee;
 
             trigger OnValidate()
+            var
+                CourseDeptLine: Record "Training Master Plan Lines";
             begin
                 if empl.Get("Employee No") then begin
                     "Employee Name" := empl."First Name" + ' ' + empl."Middle Name" + ' ' + empl."Last Name";
@@ -23,6 +25,18 @@ table 51525345 "Training Participants"
                     Designation := empl."Job Title";
                     Glsetup.Get;
                     //"Current Budget" := Glsetup."Current Budget";
+                end;
+                if "Course Code" <> '' then begin
+                    CourseDeptLine.Reset();
+                    CourseDeptLine.SetRange("No.", "Course Code");
+                    CourseDeptLine.SetRange("Dept Code", Department);
+                    if not CourseDeptLine.FindFirst() then
+                        if not Confirm('Employee %1 department %2 is not in the departments for course %3. Continue anyway?',
+                                      false, "Employee No", Department, "Course Code") then begin
+                            "Employee No" := '';
+                            "Employee Name" := '';
+                            exit;
+                        end;
                 end;
             end;
         }
@@ -156,7 +170,7 @@ table 51525345 "Training Participants"
         {
             Caption = 'Trainer Name';
             DataClassification = ToBeClassified;
-            Editable = false;
+            Editable = true;
         }
         field(23; "Current Budget"; Code[10])
         {
@@ -164,23 +178,42 @@ table 51525345 "Training Participants"
         }
         field(24; "Course Code"; Code[50])
         {
-            TableRelation = "Training Master Plan Header"."No.";
-
+            Caption = 'Course Code';
+            TableRelation = "Annual Training Plan Line"."Course No." where("Plan No." = field("Training Master Plan No."));
             trigger OnValidate()
             var
-                Course: Record "Training Master Plan Header";
+                PlanLine: Record "Annual Training Plan Line";
+                TrainingReq: Record "Training Request";
+                ATPlan: Record "Annual Training Plan";
             begin
-                "Training Course" := '';
-                "Training  Description" := '';
-                if "Course Code" <> '' then begin
-                    Course.Reset();
-                    Course.SetRange("No.", "Course Code");
-                    if Course.FindFirst() then begin
-                        "Training Course" := Course.Title;
-                        "Training  Description" := Course.Description;
-                    end;
+                if "Course Code" = '' then
+                    exit;
+                // Populate Training Master Plan No. from parent Training Request
+                if TrainingReq.Get("Training Request") then
+                    "Training Master Plan No." := TrainingReq."Training Master Plan No.";
+                // Validate course belongs to this plan
+                PlanLine.Reset();
+                PlanLine.SetRange("Plan No.", "Training Master Plan No.");
+                PlanLine.SetRange("Course No.", "Course Code");
+                if not PlanLine.FindFirst() then
+                    Error('Course %1 is not part of the selected Training Master Plan %2. Please select a course from the plan.',
+                          "Course Code", "Training Master Plan No.");
+                // Check budget
+                // Check budget at plan level
+                if ATPlan.Get("Training Master Plan No.") then begin
+                ATPlan.CalcFields("Total Committed", "Total Used");
+                if (ATPlan."Total Budget" - ATPlan."Total Used") <= 0 then
+                    Error('The Annual Training Plan %1 has no remaining budget. Available: %2',
+                          ATPlan."No.", ATPlan."Total Budget" - ATPlan."Total Used");
                 end;
+                // Auto-fill course title
+                "Training Course" := PlanLine."Course Title";
             end;
+        }
+        field(27; "Training Master Plan No."; Code[20])
+        {
+            Caption = 'Training Master Plan No.';
+            Editable = false;
         }
         field(25; "Trainer Category"; Option)
         {
@@ -228,6 +261,14 @@ table 51525345 "Training Participants"
     {
     }
 
+    trigger OnInsert()
+    var
+        TrainingReq: Record "Training Request";
+    begin
+        if TrainingReq.Get("Training Request") then
+            "Training Master Plan No." := TrainingReq."Training Master Plan No.";
+    end;
+
     var
         empl: Record Employee;
         //HODTrainingNeeds: Record "HR Organisation";
@@ -235,3 +276,4 @@ table 51525345 "Training Participants"
         Glsetup: Record "General Ledger Setup";
     //Train: Record "Human Capital Development";
 }
+

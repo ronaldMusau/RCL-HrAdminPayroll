@@ -6,7 +6,7 @@ page 51525316 "Job Responsibilties List"
     PageType = List;
     UsageCategory = Lists;
     SourceTable = "Company Jobs";
-
+    InsertAllowed = false;
     layout
     {
         area(content)

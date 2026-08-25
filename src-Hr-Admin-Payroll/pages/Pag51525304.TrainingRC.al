@@ -87,6 +87,11 @@ page 51525304 "Training R.C"
                 Caption = 'Events History';
                 RunObject = Page "Training Events History";
             }
+            action("Training Evaluations")
+            {
+                Caption = 'Training Evaluations';
+                RunObject = Page "Training Evaluation List";
+            }
             action("Departmental Contracts")
             {
                 ApplicationArea = Basic, Suite;
@@ -185,6 +190,11 @@ page 51525304 "Training R.C"
                 {
                     Caption = 'Events History';
                     RunObject = Page "Training Events History";
+                }
+                action("Training Evaluations 1")
+                {
+                    Caption = 'Training Evaluations';
+                    RunObject = Page "Training Evaluation List";
                 }
             }
 

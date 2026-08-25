@@ -12,60 +12,60 @@ table 51525335 "WB Departmental Targets"
                 "Objective Code" := No;
             end;*/
         }
-        field(2; "Main Objective Code"; Code[20])
+        field(2; "Main Objective Code"; Text[250])
         {
-            Caption = 'Org. Target Code';
+            Caption = 'Objective';
             DataClassification = ToBeClassified;
-            TableRelation = "Performance Objectives".No where(Period = field(Period));
+            //TableRelation = "Performance Objectives".No where(Period = field(Period));
 
-            trigger OnValidate()
-            var
-                PerfObjectives: Record "Performance Objectives";
-                MaxValue: Integer;
-                CurrentValueText: Text[250];
-                CurrentValue: Integer;
-                Number: Code[250];
-            begin
-                if No = '' then begin
-                    // DeptTargets.Reset;
-                    // if DeptTargets.FindLast then begin
-                    //     No := IncStr(DeptTargets.No);
-                    // end else begin
-                    //     No := 'DPOBJ-001';
-                    // end;
-                    MaxValue := 0;
-                    DeptTargets.RESET;
-                    IF DeptTargets.FINDSET THEN
-                        REPEAT
-                            CurrentValueText := DELCHR(DeptTargets.No, '=', DELCHR(DeptTargets.No, '=', '1234567890'));
-                            EVALUATE(CurrentValue, CurrentValueText);
-                            IF CurrentValue > MaxValue THEN
-                                MaxValue := CurrentValue;
-                        UNTIL DeptTargets.NEXT = 0;
+            // trigger OnValidate()
+            // var
+            //     PerfObjectives: Record "Performance Objectives";
+            //     MaxValue: Integer;
+            //     CurrentValueText: Text[250];
+            //     CurrentValue: Integer;
+            //     Number: Code[250];
+            // begin
+            //     if No = '' then begin
+            //         // DeptTargets.Reset;
+            //         // if DeptTargets.FindLast then begin
+            //         //     No := IncStr(DeptTargets.No);
+            //         // end else begin
+            //         //     No := 'DPOBJ-001';
+            //         // end;
+            //         MaxValue := 0;
+            //         DeptTargets.RESET;
+            //         IF DeptTargets.FINDSET THEN
+            //             REPEAT
+            //                 CurrentValueText := DELCHR(DeptTargets.No, '=', DELCHR(DeptTargets.No, '=', '1234567890'));
+            //                 EVALUATE(CurrentValue, CurrentValueText);
+            //                 IF CurrentValue > MaxValue THEN
+            //                     MaxValue := CurrentValue;
+            //             UNTIL DeptTargets.NEXT = 0;
 
-                    Number := 'DPOBJ-' + FORMAT(MaxValue + 1);
-                    No := Number;
-                end;
+            //         Number := 'Objective-' + FORMAT(MaxValue + 1);
+            //         No := Number;
+            //     end;
 
-                PerfObjectives.Reset();
-                PerfObjectives.SetRange(No, "Main Objective Code");
-                if PerfObjectives.FindFirst() then begin
-                    "Main Objective Description" := PerfObjectives."Objective Description";
-                    "Success Measure" := PerfObjectives."Success Measure";
-                    "Specific Action Plan" := PerfObjectives."Specific Action Plan";
-                    Theme := PerfObjectives.Theme;
-                end;
-            end;
+            // PerfObjectives.Reset();
+            // PerfObjectives.SetRange(No, "Main Objective Code");
+            // if PerfObjectives.FindFirst() then begin
+            //     "Main Objective Description" := PerfObjectives."Objective Description";
+            //     "Success Measure" := PerfObjectives."Success Measure";
+            //     "Specific Action Plan" := PerfObjectives."Specific Action Plan";
+            //     Theme := PerfObjectives.Theme;
+            // end;
+            // end;
         }
         field(3; "Main Objective Description"; Text[250])
         {
-            Caption = 'Org. Target Description';
-            Editable = false;
+            Caption = 'Goal Statement';
+            //Editable = false;
             DataClassification = ToBeClassified;
         }
         field(4; "Success Measure"; Text[250])
         {
-            Editable = false;
+            //Editable = false;
             DataClassification = ToBeClassified;
         }
         field(5; "Due Date"; Date)
@@ -117,9 +117,9 @@ table 51525335 "WB Departmental Targets"
         }
         field(13; Theme; Text[100])
         {
-            Caption = 'Theme';
-            TableRelation = "Performance Management Themes".Title;
-            Editable = false;
+            Caption = 'Action';
+            //TableRelation = "Performance Management Themes".Title;
+            //Editable = false;
         }
         field(14; "Departmental Objective"; Text[100])
         {
@@ -132,6 +132,28 @@ table 51525335 "WB Departmental Targets"
         field(16; "Created By"; Code[240])
         {
             TableRelation = User;
+            Editable = false;
+        }
+        field(17; "Responsible Person Code"; Code[50])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Company Jobs"."Job ID";
+            trigger OnValidate()
+            var
+                CompanyJobsRec: Record "Company Jobs";
+            begin
+                CompanyJobsRec.Reset();
+                CompanyJobsRec.SetRange("Job ID", Rec."Responsible Person Code");
+                if CompanyJobsRec.FindFirst() then begin
+                    Rec."Responsible Person Name" := CompanyJobsRec."Job Description";
+                end else begin
+                    Rec."Responsible Person Name" := '';
+                end;
+            end;
+        }
+        field(18; "Responsible Person Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
             Editable = false;
         }
     }
@@ -205,6 +227,20 @@ table 51525335 "WB Departmental Targets"
             if not EmpRec."Is HoD" then
                 Error('Only department heads are allowed to edit departmental targets!');
         end;
+    end;
+
+    trigger OnDelete()
+    var
+        TargetLines: Record "Target Lines";
+        DeptTargetObjectives: Record "WB Dept Target Objective";
+    begin
+        DeptTargetObjectives.SetRange("Document No", Rec.No);
+        if not DeptTargetObjectives.IsEmpty() then
+            DeptTargetObjectives.DeleteAll();
+
+        TargetLines.SetRange("Document No", Rec.No);
+        if not TargetLines.IsEmpty() then
+            TargetLines.DeleteAll();
     end;
 
     var

@@ -1,4 +1,4 @@
-page 51525311 "Rules & Regulations"
+﻿page 51525311 "Rules & Regulations"
 {
     ApplicationArea = All;
     PageType = List;
@@ -33,12 +33,124 @@ page 51525311 "Rules & Regulations"
                 field(Attachement; Rec.Attachement)
                 {
                 }
+
             }
         }
     }
 
     actions
     {
+        area(processing)
+        {
+            action(ViewAttachments)
+            {
+                Caption = 'View Attachments';
+                Image = Documents;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Scope = Repeater;
+
+                trigger OnAction()
+                var
+                    RulesAttPage: Page "Rules Reg Attachments";
+                begin
+                    RulesAttPage.SetCode(Rec.Code);
+                    RulesAttPage.RunModal();
+                end;
+            }
+
+            
+            action(ViewDistribution)
+            {
+                Caption = 'View Distribution';
+                Image = Entries;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Scope = Repeater;
+                trigger OnAction()
+                var
+                    PortalDocDist: Record "Portal Doc Distribution";
+                    DistPage: Page "Portal Doc Distribution";
+                begin
+                    PortalDocDist.SetRange("Document Code", Rec.Code);
+                    DistPage.SetTableView(PortalDocDist);
+                    DistPage.RunModal();
+                end;
+            }
+            action(SendToPortal)
+            {
+                Caption = 'Send to Portal';
+                Image = SendTo;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Scope = Repeater;
+
+                trigger OnAction()
+                var
+                    SendPortalPage: Page "Send To Portal Selection";
+                    DocAttachment: Record "Document Attachment";
+                begin
+                    if Rec.Attachement = Rec.Attachement::No then
+                        Error('Please attach a document first before sending to portal.');
+
+                    DocAttachment.Reset();
+                    DocAttachment.SetRange("Table ID", 51525375);
+                    DocAttachment.SetRange("No.", Rec.Code);
+                    if not DocAttachment.FindLast() then
+                        Error('No attachment found for this document.');
+
+                    SendPortalPage.SetDocument(
+                        Rec.Code,
+                        Rec."Rules & Regulations",
+                        DocAttachment.ID,
+                        DocAttachment."File Name",
+                        DocAttachment."File Extension");
+                    SendPortalPage.RunModal();
+                end;
+            }
+            action(Attachments)
+            {
+                Caption = 'Attachments';
+                Image = Attach;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Scope = Repeater;
+
+                trigger OnAction()
+                var
+                    DocAttachment: Record "Document Attachment";
+                    TempBlob: Codeunit "Temp Blob";
+                    FileManagement: Codeunit "File Management";
+                    InStream: InStream;
+                    FileName: Text;
+                    RecRef: RecordRef;
+                    FilterTxt: Label '*.jpg;*.jpeg;*.png;*.pdf;*.docx;*.doc;*.xlsx;*.xls;*.pptx;*.ppt;*.*', Locked = true;
+                begin
+                    RecRef.GetTable(Rec);
+                    FileName := FileManagement.BLOBImportWithFilter(TempBlob, 'Select Document', FileName, StrSubstNo('Attachments (%1)|%1', FilterTxt), FilterTxt);
+                    if FileName = '' then
+                        exit;
+
+                    DocAttachment.Init();
+                    DocAttachment."Table ID" := 51525375;
+                    DocAttachment."No." := Rec.Code;
+                    DocAttachment."File Name" := CopyStr(FileManagement.GetFileName(FileName), 1, MaxStrLen(DocAttachment."File Name"));
+                    DocAttachment."File Extension" := CopyStr(FileManagement.GetExtension(FileName), 1, MaxStrLen(DocAttachment."File Extension"));
+                    DocAttachment.User := CopyStr(UserId(), 1, MaxStrLen(DocAttachment.User));
+                    DocAttachment."Attached Date" := CurrentDateTime();
+                    TempBlob.CreateInStream(InStream);
+                    DocAttachment.SaveAttachmentFromStream(InStream, RecRef, CopyStr(FileManagement.GetFileName(FileName), 1, 250));
+
+                    Rec.Attachement := Rec.Attachement::Yes;
+                    Rec.Modify();
+                    Message('Document uploaded successfully.');
+                end;
+            }
+        }
         area(navigation)
         {
             /*group("&Attachment")

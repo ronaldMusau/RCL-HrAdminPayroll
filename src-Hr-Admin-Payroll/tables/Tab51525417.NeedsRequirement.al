@@ -10,10 +10,12 @@ table 51525417 "Needs Requirement"
             NotBlank = true;
             TableRelation = "Recruitment Needs"."No.";
         }
-        field(2; "Qualification Type"; Option)
+        field(2; "Qualification Type"; Code[100])
         {
             NotBlank = false;
-            OptionMembers = " ",Academic,Professional,Technical,Experience,"Personal Attributes";
+            //OptionMembers = " ",Academic,Professional,Technical,Experience,"Personal Attributes";
+            TableRelation = "Qualification Types";
+
         }
         field(3; "Qualification Code"; Code[30])
         {

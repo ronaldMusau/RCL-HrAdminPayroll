@@ -3,7 +3,7 @@ page 51525317 "J. Responsiblities"
     ApplicationArea = All;
     PageType = Card;
     SourceTable = "Company Jobs";
-
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -14,9 +14,19 @@ page 51525317 "J. Responsiblities"
                 Editable = false;
                 field("Job ID"; Rec."Job ID")
                 {
+                    TableRelation = "Company Jobs";
+                    trigger OnValidate()
+                    var
+                        CompJobs: Record "Company Jobs";
+                    begin
+                        if CompJobs.Get(Rec."Job ID") then begin
+                            Rec."Job Description" := CompJobs."Job Description";
+                        end;
+                    end;
                 }
                 field("Job Description"; Rec."Job Description")
                 {
+                    Editable = false;
                 }
             }
             label(Control1000000006)

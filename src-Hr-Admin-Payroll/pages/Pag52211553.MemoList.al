@@ -6,8 +6,7 @@ page 52211553 "Memo List"
     ApplicationArea = All;
     UsageCategory = Lists;
     CardPageId = "Memo Card";
-    SourceTableView = where(posted = const(false))
-;
+    SourceTableView = where("Approval Status" = filter(Open | "Pending Approval" | Rejected));
 
     layout
     {

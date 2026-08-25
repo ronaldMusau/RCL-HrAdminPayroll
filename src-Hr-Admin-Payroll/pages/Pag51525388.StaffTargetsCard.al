@@ -76,152 +76,91 @@ page 51525388 "Staff Targets Card"
             action("Performance Planning")
             {
                 Image = "Report";
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
 
                 trigger OnAction()
                 begin
                     Targets.Reset;
                     Targets.SetRange(No, Rec.No);
                     if Targets.Find('-') then
-                        REPORT.Run(51525260, true, false, Targets);
+                        REPORT.Run(Report::"Performance Planning", true, false, Targets);
                 end;
             }
-            action("Send to Supervisor")
+        }
+        area(Processing)
+        {
+            action(MySendApproval)
             {
-                Image = SendTo;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                Caption = 'Send Approval Request';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Targets already approved!');
-                    if Rec."Sent to Supervisor" then
-                        Error('Targets already sent for approval!');
-                    Rec.CalcFields("Supervisor Name");
-                    if Confirm('Are you sure you want to send these targets for review to ' + Rec."Supervisor Name" + '? ', false) = true then begin
-                        Rec."Sent to Supervisor" := true;
-                        Rec."DateTime Submitted" := CurrentDateTime();
-                        Rec.Modify;
-
-                        //FRED 5/3/23 - Send email notification
-                        /*Employee.Reset;
-                        Employee.SetRange("No.", "Staff No");
-                        if Employee.FindFirst then begin
-                            SenderStaffID := Employee."User ID";
-                        end;*/
-
-                        /*Employee.Reset;
-                        Employee.SetRange("No.", Supervisor);
-                        if Employee.FindFirst then begin
-                            SupervisorID := Employee."User ID";
-                        end;*/
-                        //MESSAGE('%1, %2, %3, %4',SenderStaffID,SupervisorID,"Staff Name","Supervisor Name"); EXIT;
-                        SendEmailNotification(Rec.No, Rec."Staff No", Rec.Supervisor, Rec."Staff Name", Rec."Supervisor Name", 'UP', 'REQUEST');
-
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    VarVariant := Rec;
+                    if (Rec."Approval Status" <> Rec."Approval Status"::Open) and (Rec."Approval Status" <> Rec."Approval Status"::Rejected) then
+                        Error('Document Status has to be open');
+                    if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
+                        CustomApprovals.OnSendDocForApproval(VarVariant);
+                    Message('Approval request has been sent successfully.');
                 end;
             }
-            action(Reject)
+            action(MyCancelApproval)
             {
-                Image = Reject;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                Caption = 'Cancel Approval Request';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Targets already approved!');
-                    if Rec."Sent to Supervisor" then
-                        Error('Targets already sent for approval!');
-
-                    Rec.CalcFields("Supervisor Name");
-                    //TESTFIELD("Approved By Supervisor",FALSE);
-                    if Confirm('Send Back to staff ' + Rec."Staff Name" + '? ', false) = true then begin
-                        Rec."Sent to Supervisor" := false;
-                        Rec."DateTime Approved" := CurrentDateTime();
-                        Rec.Modify;
-
-                        //FRED 5/3/23 - Send email notification
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec."Staff No");
-                        if Employee.FindFirst then begin
-                            SenderStaffID := Employee."User ID";
+                    if Rec."Approval Status" <> Rec."Approval Status"::Approved then begin
+                        VarVariant := Rec;
+                        CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
+                        Message('Approval request has been Canceled');
+                        Rec.Get(Rec.No);
+                        if Rec."Approval Status" = Rec."Approval Status"::"Pending Approval" then begin
+                            Rec."Approval Status" := Rec."Approval Status"::Open;
+                            Rec.Modify();
                         end;
-
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec.Supervisor);
-                        if Employee.FindFirst then begin
-                            SupervisorID := Employee."User ID";
-                        end;
-                        //MESSAGE('%1, %2, %3, %4',SenderStaffID,SupervisorID,"Staff Name","Supervisor Name"); EXIT;
-                        SendEmailNotification(Rec.No, SenderStaffID, SupervisorID, Rec."Staff Name", Rec."Supervisor Name", 'DOWN', 'REJECTED');
-
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    end;
                 end;
             }
-            action("Approve Targets")
+            action(MyApprovals)
             {
-                Image = SendTo;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                ApplicationArea = All;
+                Caption = 'Approvals';
+                Image = Approvals;
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
+                end;
+            }
+            action(Reopen)
+            {
+                Caption = 'Reopen';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 begin
-                    if Rec."Approved By Supervisor" then
-                        Error('Targets already approved!');
-                    if Rec."Sent to Supervisor" then
-                        Error('Targets already sent for approval!');
-
-                    Rec.CalcFields("Supervisor Name");
-                    /*UserSetup.Reset;
-                    //UserSetup.SETRANGE("User ID",USERID);
-                    UserSetup.SetRange("Employee No.", Supervisor);
-                    if not UserSetup.FindFirst then begin
-                        //ERROR('Approval targets can only be approved by Supervisor %1',"Supervisor Name");
-                        Error('User setup data for Supervisor %1 not found. Ask the System Admin to set it up before proceeding!', "Supervisor Name");
-                    end;*/
-
-
-                    //IF CONFIRM('Are you sure you want to send these targets for review to '+"Supervisor Name"+'? ', FALSE) = TRUE THEN
-                    if Confirm('Are you sure you want to approve these targets? ', false) = true then begin
-                        Rec."Sent to Supervisor" := true;
-                        Rec."Approved By Supervisor" := true;
-                        Rec."DateTime Approved" := CurrentDateTime();
-                        Rec.Modify;
-
-                        //FRED 5/3/23 - Send email notification
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec."Staff No");
-                        if Employee.FindFirst then begin
-                            SenderStaffID := Employee."User ID";
-                        end;
-
-                        Employee.Reset;
-                        Employee.SetRange("No.", Rec.Supervisor);
-                        if Employee.FindFirst then begin
-                            SupervisorID := Employee."User ID";
-                        end;
-                        //MESSAGE('%1, %2, %3, %4',SenderStaffID,SupervisorID,"Staff Name","Supervisor Name"); EXIT;
-                        SendEmailNotification(Rec.No, SenderStaffID, SupervisorID, Rec."Staff Name", Rec."Supervisor Name", 'DOWN', 'APPROVED');
-
-
-                        Message('Success');
-                        CurrPage.Update
-                    end else
-                        Error('Process Aborted');
+                    if Rec."Approval Status" <> Rec."Approval Status"::Approved then
+                        Error('The document must be approved to reopen.');
+                    Rec."Approval Status" := Rec."Approval Status"::Open;
+                    Rec.Modify();
+                    CurrPage.Update(false);
                 end;
+            }
+        }
+        area(Promoted)
+        {
+            group(Approvall)
+            {
+                Caption = 'Approval';
+
+                actionref(MySendApprovalRef; MySendApproval) { }
+                actionref(MyCancelRef; MyCancelApproval) { }
+                actionref(MyApprovalsRef; MyApprovals) { }
+                actionref(ReopenRef; Reopen) { }
+                actionref(PerformancePlanningRef; "Performance Planning") { }
             }
         }
     }
@@ -247,8 +186,7 @@ page 51525388 "Staff Targets Card"
 
     trigger OnOpenPage()
     begin
-        if Rec."Approved By Supervisor" then
-            CurrPage.Editable := false;
+        CurrPage.Editable := Rec."Approval Status" = Rec."Approval Status"::Open;
     end;
 
     var
@@ -264,6 +202,8 @@ page 51525388 "Staff Targets Card"
         SenderStaffID: Code[30];
         SupervisorID: Code[30];
         HrAppraissalPeriods: Record "HR Appraisal Periods";
+        VarVariant: Variant;
+        CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
 
     [ServiceEnabled]
     procedure SendEmailNotification(DocNo: Code[20]; SenderEmpNo: Code[30]; ApproverEmpNo: Code[30]; SenderName: Text[100]; ApproverName: Text[100]; Direction: Code[70]; Verdict: Code[70])

@@ -243,6 +243,13 @@ table 51525339 "Staff Appraisal Header"
         { }
         field(22; "Date-Time Approved"; DateTime)
         { }
+        field(23; "Approval Status"; Option)
+        {
+            Caption = 'Approval Status';
+            DataClassification = ToBeClassified;
+            OptionMembers = Open,"Pending Approval",Released,Rejected;
+            OptionCaption = 'Open,Pending Approval,Released,Rejected';
+        }
     }
 
     keys

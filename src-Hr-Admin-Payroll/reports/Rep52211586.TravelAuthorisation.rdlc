@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>PBIRB</am:Name>
+      <am:Version>15.7.1815.334</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>PBIRB</am:Name>
+      <am:Version>15.7.1815.334</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-02-06T08:38:48.0186515Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>7f4cb4ff-cc6c-492e-bd27-5ac7f99a4857</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Rectangle Name="HeaderSection">
+            <ReportItems>
+              <Image Name="CompanyLogo">
+                <Source>Database</Source>
+                <Value>=First(Fields!Logo.Value, "DataSet_Result")</Value>
+                <MIMEType>image/png</MIMEType>
+                <Sizing>FitProportional</Sizing>
+                <Top>0.1in</Top>
+                <Left>0.5in</Left>
+                <Height>0.8in</Height>
+                <Width>2in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Image>
+              <Textbox Name="ReportTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>TRAVEL AUTHORISATION</Value>
+                        <Style>
+                          <FontSize>16pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <TextDecoration>Underline</TextDecoration>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.2in</Top>
+                <Left>0.5in</Left>
+                <Height>0.4in</Height>
+                <Width>7in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingTop>0.1in</PaddingTop>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>0in</Top>
+            <Left>0in</Left>
+            <Height>1.8in</Height>
+            <Width>8in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="DetailsSection">
+            <ReportItems>
+              <Textbox Name="CountryOfOriginLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Country of Origin:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="CountryOfOriginValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!CountryofOrigin.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DestinationLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Destination:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.45in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DestinationValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!Destination.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.45in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="NameLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Name:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.8in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="NameValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!Name.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <TextDecoration>Underline</TextDecoration>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.8in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="TitleLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Title:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.15in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>6</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="TitleValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!Title.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.15in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>7</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PurposeLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Purpose of travel:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.5in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>8</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="PurposeValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!PurposeOfTravel.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.5in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>9</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DateOfDepartureLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Date of Departure:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.85in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>10</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DateOfDepartureValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(Last(Fields!StartDate.Value), "dd") &amp; IIF(Day(Last(Fields!StartDate.Value)) = 1 Or Day(Last(Fields!StartDate.Value)) = 21 Or Day(Last(Fields!StartDate.Value)) = 31, "st", IIF(Day(Last(Fields!StartDate.Value)) = 2 Or Day(Last(Fields!StartDate.Value)) = 22, "nd", IIF(Day(Last(Fields!StartDate.Value)) = 3 Or Day(Last(Fields!StartDate.Value)) = 23, "rd", "th"))) &amp; " " &amp; Format(Last(Fields!StartDate.Value), "MMMM, yyyy")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.85in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>11</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ExpectedReturnLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Expected date of return:</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>2.2in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>2in</Width>
+                <ZIndex>12</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ExpectedReturnValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(Last(Fields!EndDate.Value), "dd") &amp; IIF(Day(Last(Fields!EndDate.Value)) = 1 Or Day(Last(Fields!EndDate.Value)) = 21 Or Day(Last(Fields!EndDate.Value)) = 31, "st", IIF(Day(Last(Fields!EndDate.Value)) = 2 Or Day(Last(Fields!EndDate.Value)) = 22, "nd", IIF(Day(Last(Fields!EndDate.Value)) = 3 Or Day(Last(Fields!EndDate.Value)) = 23, "rd", "th"))) &amp; " " &amp; Format(Last(Fields!EndDate.Value), "MMMM, yyyy")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>2.2in</Top>
+                <Left>2.7in</Left>
+                <Height>0.25in</Height>
+                <Width>4.5in</Width>
+                <ZIndex>13</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>1.9in</Top>
+            <Left>0in</Left>
+            <Height>2.6in</Height>
+            <Width>8in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="AuthorizationSection">
+            <ReportItems>
+              <Textbox Name="AuthorizationText">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>I hereby certify that the above mentioned is a staff of RwandAir Catering Ltd and is authorized to travel to the above - mentioned Country.</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.3in</Top>
+                <Left>0.5in</Left>
+                <Height>0.5in</Height>
+                <Width>7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="AuthorizerName">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!TravelAuthorizer.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.2in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>3in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="AuthorizerTitleBox">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Last(Fields!AuthorizerTitle.Value)</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Left</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.5in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>3in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>4.6in</Top>
+            <Left>0in</Left>
+            <Height>2in</Height>
+            <Width>8in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="FooterSection">
+            <ReportItems>
+              <Textbox Name="CompanyFooter">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>RwandAir Catering Ltd, KN 5RD Kanombe, Kigali International Airport, Kigali - Rwanda</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Tel : +250 783 721 776 / +250 735 633 722</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.1in</Top>
+                <Left>0.5in</Left>
+                <Height>0.5in</Height>
+                <Width>7in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>6.7in</Top>
+            <Left>0in</Left>
+            <Height>0.7in</Height>
+            <Width>8in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>7.5in</Height>
+        <Style />
+      </Body>
+      <Width>8in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="Address_CompanyInformation">
+          <DataField>Address_CompanyInformation</DataField>
+        </Field>
+        <Field Name="PhoneNo_CompanyInformation">
+          <DataField>PhoneNo_CompanyInformation</DataField>
+        </Field>
+        <Field Name="PhoneNo2_CompanyInformation">
+          <DataField>PhoneNo2_CompanyInformation</DataField>
+        </Field>
+        <Field Name="Logo">
+          <DataField>Logo</DataField>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+        </Field>
+        <Field Name="StartDate">
+          <DataField>StartDate</DataField>
+        </Field>
+        <Field Name="EndDate">
+          <DataField>EndDate</DataField>
+        </Field>
+        <Field Name="CountryofOrigin">
+          <DataField>CountryofOrigin</DataField>
+        </Field>
+        <Field Name="Destination">
+          <DataField>Destination</DataField>
+        </Field>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+        </Field>
+        <Field Name="PurposeOfTravel">
+          <DataField>PurposeOfTravel</DataField>
+        </Field>
+        <Field Name="TravelAuthorizer">
+          <DataField>TravelAuthorizer</DataField>
+        </Field>
+        <Field Name="AuthorizerTitle">
+          <DataField>AuthorizerTitle</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

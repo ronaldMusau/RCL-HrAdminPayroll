@@ -215,6 +215,13 @@ table 51525336 "Staff Target Objectives"
         {
             Editable = false;
         }
+        field(21; "Approval Status"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = Open,"Pending Approval",Approved,Rejected;
+            Editable = false;
+        }
+        
     }
 
     keys

@@ -19,10 +19,11 @@ page 51525544 "Claim Lines"
                 field("Employee No"; Rec."Employee No")
                 {
                     NotBlank = true;
-                    Visible = true;
+                    Visible = false;
                 }
                 field("Employee Name"; Rec."Employee Name")
                 {
+                    Visible = false;
                     NotBlank = true;
                 }
                 field("Visit Date"; Rec."Visit Date")
@@ -66,9 +67,11 @@ page 51525544 "Claim Lines"
                 }
                 field(Settled; Rec.Settled)
                 {
+                    Visible = false;
                 }
                 field("Cheque No"; Rec."Cheque No")
                 {
+                    Visible = false;
                 }
             }
         }

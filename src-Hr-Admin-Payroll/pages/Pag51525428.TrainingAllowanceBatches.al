@@ -331,7 +331,7 @@ page 51525428 "Training Allowance Batches"
 
         Classes.Reset();
         Classes.SetRange("Trainer Category", Classes."Trainer Category"::Internal);
-        Classes.SetRange(Status, Classes.Status::Done);
+        Classes.SetRange(Status, Classes.Status::Completed);
         Classes.SetFilter("Start Date", '%1..%2', StartDate, EndDate);
         Classes.SetFilter("Trainer No.", '<>%1', '');
         Classes.SetFilter("Instructor Allowance", '<>%1', 0);
@@ -394,7 +394,8 @@ page 51525428 "Training Allowance Batches"
             until Classes.Next() = 0;
         end else
             if showMessages then
-                Error('There are no classes with status Done, trainer category Internal, Trainer No. not blank, instructor allowance not 0, and schedule date between %1 and %2', Format(StartDate, 0, '<Day,2> <Month Text> <Year4>'), Format(EndDate, 0, '<Day,2> <Month Text> <Year4>'));
+                Message('Done');
+        //Error('There are no classes with status Done, trainer category Internal, Trainer No. not blank, instructor allowance not 0, and schedule date between %1 and %2', Format(StartDate, 0, '<Day,2> <Month Text> <Year4>'), Format(EndDate, 0, '<Day,2> <Month Text> <Year4>'));
     end;
 
     procedure sendToPayroll(batchDate: Date)

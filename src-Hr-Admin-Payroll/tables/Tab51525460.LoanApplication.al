@@ -1,74 +1,14 @@
 table 51525460 "Loan Application"
 {
-    // // Flat Rate
-    // LineNoInt := 1;
-    // //IF LoanTypeRec."Interest Calculation Method"=LoanTypeRec."Interest Calculation Method"::"Flat Rate" THEN
-    // IF "Interest Calculation Method"="Interest Calculation Method"::"Flat Rate" THEN
-    // BEGIN
-    // 
-    // //
-    // EVALUATE(GP,FORMAT("Grace Period"));
-    // //
-    // RemainingPrincipalAmountDec :="Approved Amount";
-    // IF "Pays Interest During GP"=FALSE THEN BEGIN
-    //  IF GP<>'' THEN
-    //   RunningDate:=CALCDATE("Grace Period",RunningDate)
-    //  ELSE
-    //   RunningDate:=CALCDATE("Instalment Period",RunningDate);
-    // END ELSE
-    //   RunningDate:=CALCDATE("Instalment Period",RunningDate);
-    // IF LineNoInt <Installments+1 THEN BEGIN
-    //  REPEAT
-    //   NewSchedule."Instalment No":= LineNoInt;
-    //   NewSchedule."Member No." :="Client Code";
-    //   NewSchedule."Loan No." :="Loan  No.";
-    //   NewSchedule."Repayment Date" := RunningDate;
-    //   NewSchedule."Monthly Interest" := "Flat rate Interest";
-    //   NewSchedule."Monthly Repayment":=Repayment;
-    //   NewSchedule."Loan Category":="Loan product type";
-    //   NewSchedule."Loan Amount":="Approved Amount";
-    //   NewSchedule."Group Code":="Group Code";
-    //   NewSchedule."Loan Application No":="Loan  No.";
-    //   NewSchedule."Principal Repayment" := "Flat Rate Principal";
-    //   IF Installments=1 THEN
-    //    RemainingPrincipalAmountDec:="Approved Amount"-Repayment
-    //   ELSE
-    //    RemainingPrincipalAmountDec:=RemainingPrincipalAmountDec-Repayment;
-    // 
-    //   NewSchedule."Remaining Debt" :=RemainingPrincipalAmountDec;
-    // 
-    //   NewSchedule."Instalment No" := LineNoInt;
-    //   EVALUATE(ScheduleCode, FORMAT(LineNoInt));
-    //   NewSchedule."Repayment Code":=ScheduleCode;
-    // 
-    //   LineNoInt:=LineNoInt+1;
-    //    IF InstalmentDays<>0 THEN
-    //     RunningDate:=RunningDate+InstalmentDays
-    //    ELSE
-    //     RunningDate:=CALCDATE("Instalment Period",RunningDate);
-    //  NewSchedule.INSERT;
-    //  UNTIL LineNoInt>Installments
-    //  END;
-    // 
-    // END;
 
-    DrillDownPageID = "Pay Periods";
-    LookupPageID = "Pay Periods";
+
+    DrillDownPageID = "Loan Application List";
+    LookupPageID = "Loan Application List";
 
     fields
     {
         field(1; "Loan No"; Code[20])
         {
-
-            trigger OnValidate()
-            begin
-                if "Loan No" <> xRec."Loan No" then begin
-                    if LoanType.Get("Loan Product Type") then begin
-                        NoSeriesMgt.TestManual(LoanType."Loan No Series");
-                        "No Series" := '';
-                    end;
-                end;
-            end;
         }
         field(2; "Application Date"; Date)
         {
@@ -86,6 +26,13 @@ table 51525460 "Loan Application"
                     "Interest Rate" := LoanType."Interest Rate";
                     "Interest Calculation Method" := LoanType."Interest Calculation Method";
 
+                end;
+                // Auto-assign Loan No from No Series if not already set
+                if "Loan No" = '' then begin
+                    if LoanType."Loan No Series" <> '' then begin
+                        "Loan No" := NoSeriesMgt.GetNextNo(LoanType."Loan No Series");
+                        "No Series" := LoanType."Loan No Series";
+                    end;
                 end;
             end;
         }
@@ -161,6 +108,7 @@ table 51525460 "Loan Application"
         {
             OptionCaption = 'Application,Being Processed,Rejected,Approved,Issued,Being Repaid,Repaid';
             OptionMembers = Application,"Being Processed",Rejected,Approved,Issued,"Being Repaid",Repaid;
+            Editable = false;
         }
         field(7; "Issued Date"; Date)
         {
@@ -170,20 +118,17 @@ table 51525460 "Loan Application"
         {
 
             trigger OnValidate()
+            var
+                LoanProductTypeRec: Record "Loan Product Type";
             begin
-                /*
-                IF "Approved Amount"<>0 THEN
-                BEGIN
-                 IF LoanType.GET("Loan Product Type") THEN
-                 BEGIN
-                   IF "Interest Calculation Method" = "Interest Calculation Method"::"Reducing Balance" THEN
-                   BEGIN
-                    Repayment := ROUND("Approved Amount"/ Installments,0.0001,'>');
-                   END;
-                 END;
-                END;
-                */
+                if "Loan Product Type" = '' then
+                    Error('Please select a Loan Product Type first.');
 
+                if LoanProductTypeRec.Get("Loan Product Type") then begin
+                    if Instalment > LoanProductTypeRec."No of Instalment" then
+                        Error('Instalment cannot be greater than %1, the maximum number of instalments allowed for this loan product type.',
+                              LoanProductTypeRec."No of Instalment");
+                end;
             end;
         }
         field(9; Repayment; Decimal)
@@ -310,13 +255,13 @@ table 51525460 "Loan Application"
         }
         field(36; "Stop Loan"; Boolean)
         {
-            Editable = true;
+            // Editable = true;
 
-            trigger OnValidate()
-            begin
-                if "Stop Loan" then
-                    Error('The loan is already stopped');
-            end;
+            // trigger OnValidate()
+            // begin
+            //     if "Stop Loan" then
+            //         Error('The loan is already stopped');
+            // end;
         }
         field(37; Select; Boolean)
         {
@@ -371,13 +316,19 @@ table 51525460 "Loan Application"
                 "Loan No" := NoSeriesMgt.GetNextNo(LoanType."Loan No Series");
                 //NoSeriesMgt.InitSeries(LoanType."Loan No Series", xRec."No Series", 0D, "Loan No", "No Series");
             end;
-        end
+        end;
+        "Application Date" := Today();
+        EmpRec.Reset;
+        EmpRec.SetRange("User ID", USERID);
+        if EmpRec.FindFirst() then
+            Validate("Employee No", EmpRec."No.");
     end;
 
     trigger OnModify()
     begin
         AssMatrix.Reset;
-        AssMatrix.SetRange(AssMatrix."Employee No", "Loan No", AssMatrix."Reference No");
+        AssMatrix.SetRange("Employee No", "Employee No");
+        AssMatrix.SetRange("Reference No", "Loan No");
         AssMatrix.SetRange(AssMatrix.Closed, true);
         if AssMatrix.Find('-') then
             Error('Cannot modify a running loan');

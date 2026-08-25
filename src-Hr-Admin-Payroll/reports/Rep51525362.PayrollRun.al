@@ -2820,8 +2820,10 @@ report 51525362 "Payroll Run"
                 EmpPeriodBankDetailsInit.Indicatif := Employee.Indicatif;
                 EmpPeriodBankDetailsInit."Code B.I.C." := Employee."Code B.I.C.";
                 EmpPeriodBankDetailsInit."Payroll Country" := Employee."Payroll Country";
-                EmpPeriodBankDetailsInit.Insert();
-
+                // EmpPeriodBankDetailsInit.Insert();
+                if not EmpPeriodBankDetailsInit.Insert() then begin
+                    EmpPeriodBankDetailsInit.Modify();
+                end;
                 ExtraPayrollBanks.Reset();
                 ExtraPayrollBanks.SetRange("Payroll Period", Month);
                 ExtraPayrollBanks.SetRange("Emp No.", Employee."No.");
@@ -2848,7 +2850,10 @@ report 51525362 "Payroll Run"
                         EmpPeriodBankDetailsInit."Code B.I.C." := ExtraPayrollBanks."Code B.I.C.";
                         EmpPeriodBankDetailsInit.Amount := ExtraPayrollBanks.Amount;
                         EmpPeriodBankDetailsInit."Payroll Country" := Employee."Payroll Country";
-                        EmpPeriodBankDetailsInit.Insert();
+                        //EmpPeriodBankDetailsInit.Insert();
+                        if not EmpPeriodBankDetailsInit.Insert() then begin
+                            EmpPeriodBankDetailsInit.Modify();
+                        end;
                     until ExtraPayrollBanks.Next() = 0;
             end;
 
@@ -2999,15 +3004,15 @@ report 51525362 "Payroll Run"
                 TrainingAllowanceBatchPage: Page "Training Allowance Batches";
             begin
                 //Window.Open('Calculating Payroll For ##############################1', EmployeeName);
-
-                PayrollPeriod.SetRange(Closed, false);
-                if PayrollPeriod.Find('-') then
-                    Month := PayrollPeriod."Starting Date";
+                if DateSpecified = 0D then begin
+                    PayrollPeriod.SetRange(Closed, false);
+                    if PayrollPeriod.Find('-') then
+                        Month := PayrollPeriod."Starting Date";
+                    DateSpecified := Month;
+                end else
+                    Month := DateSpecified;
                 LastMonth := CalcDate('-1M', Month);
-                DateSpecified := Month;
-
                 //Ensure instructor allowance is added here
-                TrainingAllowanceBatches.Reset();
                 TrainingAllowanceBatches.SetRange("Payroll Period", Month);
                 TrainingAllowanceBatches.SetRange(Status, TrainingAllowanceBatches.Status::"Sent to Payroll");
                 if TrainingAllowanceBatches.FindFirst() then begin
@@ -3108,19 +3113,19 @@ report 51525362 "Payroll Run"
 
     trigger OnPreReport()
     begin
-
-        PayrollPeriod.SetRange(Closed, false);
-        if PayrollPeriod.FindFirst then
-            Month := PayrollPeriod."Starting Date";
+        if DateSpecified = 0D then begin
+            PayrollPeriod.SetRange(Closed, false);
+            if PayrollPeriod.FindFirst then
+                Month := PayrollPeriod."Starting Date";
+            DateSpecified := Month;
+        end else
+            Month := DateSpecified;
         LastMonth := CalcDate('-1M', Month);
-        DateSpecified := Month;
-
         if PayPeriod.Get(DateSpecified) then
             PayPeriodtext := PayPeriod.Name;
         EndDate := CalcDate('1M', DateSpecified) - 1;
         CompRec.Get;
         TaxCode := CompRec."Tax Table";
-
         GenLedgerSetup.Get();
         localCurrencyCode := '';
         localCurrencyCode := GenLedgerSetup."LCY Code";
@@ -7463,7 +7468,8 @@ report 51525362 "Payroll Run"
         Assignmentsx: Record "Assignment Matrix";
     begin
         if EmpX.Get(EmployeeNo) then begin
-            if EmpX."Disciplinary Actions" <> EmpX."Disciplinary Actions"::None then begin
+            EmpX.CalcFields("Total Disciplinary Cases");
+            if EmpX."Total Disciplinary Cases" > 0 then begin
                 //MESSAGE(FORMAT(EmpX."No."));
                 Assignments.Reset;
                 Assignments.SetRange(Assignments."Employee No", EmployeeNo);
@@ -7546,4 +7552,6 @@ report 51525362 "Payroll Run"
     end;
 
 }
+
+
 

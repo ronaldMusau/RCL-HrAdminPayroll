@@ -2,7 +2,7 @@ report 51525309 "Payroll Bank Advice - Simp"
 {
     Caption = 'Payroll Bank Advice';
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reports/layouts/PayrollBankAdviceSimplified.rdlc';
+    RDLCLayout = 'src-Hr-Admin-Payroll\reports\layouts\PayrollBankAdviceSimplified.rdlc';
 
     dataset
     {

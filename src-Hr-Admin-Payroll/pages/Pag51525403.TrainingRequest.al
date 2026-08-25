@@ -1,8 +1,9 @@
-page 51525403 "Training Request"
+﻿page 51525403 "Training Request"
 {
     ApplicationArea = All;
     PageType = Card;
     SourceTable = "Training Request";
+    PromotedActionCategories = 'New,Process,Report,Approval';
 
     layout
     {
@@ -34,10 +35,36 @@ page 51525403 "Training Request"
                 field("Department Name"; Rec."Department Name")
                 {
                 }
-                field("Employee Name"; Rec."Employee Name")
+                field("Training Master Plan No."; Rec."Training Master Plan No.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Annual Training Plan';
+                    Editable = EnableEditing;
+                }
+                field(AvailableBudget; AvailableBudget)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Available Budget';
+                    Editable = false;
+                }
+                field("Employee No"; Rec."Employee No")
                 {
                     Caption = 'Requested By';
-                    Enabled = false;
+                    Editable = false;
+                    trigger OnValidate()
+                    var
+                        Emp: Record Employee;
+                    begin
+                        if Rec."Employee No" <> '' then begin
+                            if Emp.Get(Rec."Employee No") then begin
+                                Rec."Department Code" := Emp."Global Dimension 2 Code";
+                                Rec.Validate("Department Code");
+                            end;
+                        end else begin
+                            Rec."Department Code" := '';
+                            Rec."Department Name" := '';
+                        end;
+                    end;
                 }
                 field("Tuition Fee"; Rec."Tuition Fee")
                 {
@@ -77,6 +104,17 @@ page 51525403 "Training Request"
                 Editable = EnableEditing;
             }
         }
+        area(factboxes)
+        {
+            part("Attached Documents List"; "Doc. Attachment List Factbox")
+            {
+                ApplicationArea = All;
+                Caption = 'Documents';
+                UpdatePropagation = Both;
+                SubPageLink = "Table ID" = const(Database::"Training Request"),
+                              "No." = field("Request No.");
+            }
+        }
     }
 
     actions
@@ -87,10 +125,14 @@ page 51525403 "Training Request"
             {
                 Image = Approve;
                 Promoted = true;
-                PromotedCategory = Process;
+                PromotedCategory = Category4;
                 PromotedIsBig = true;
+                Enabled = Rec.Status = Rec.Status::Open;
 
                 trigger OnAction()
+                var
+                    CustomApprovalsHR: Codeunit "Custom Approvals Mgmt HR";
+                    Variant: Variant;
                 begin
                     /*GLSetup.RESET;
                     GLSetup.GET;
@@ -120,25 +162,61 @@ page 51525403 "Training Request"
                     IF ApprovalsMgmt.CheckTrainingApprovalPossible(Rec) THEN
                        ApprovalsMgmt.OnSendTrainingDocForApproval(Rec);
                     */
-                    Rec.Status := Rec.Status::Released;
-                    Message(('Approved successfully!'));
-                    Rec.Modify;
 
+                    Rec.CalcFields("Total Cost");
+                    if Rec."Total Cost" = 0 then
+                        Error('Training Request %1 has no costs entered. Please add participant costs before sending for approval.',
+                              Rec."Request No.");
+                    if Rec."Training Master Plan No." = '' then
+                        Error('Please select an Annual Training Plan before sending for approval.');
+                    Variant := Rec;
+                    if CustomApprovalsHR.CheckApprovalsWorkflowEnabled(Variant) then
+                        CustomApprovalsHR.OnSendDocForApproval(Variant);
                 end;
             }
             action("Cancel Approval Request.")
             {
                 Image = CancelApprovalRequest;
                 Promoted = true;
-                PromotedCategory = Process;
+                PromotedCategory = Category4;
                 PromotedIsBig = true;
-                Visible = OpenApprovalEntriesExistForCurrUser2;
+                Visible = true;
+                Enabled = Rec.Status = Rec.Status::"Pending Approval";
+
+                trigger OnAction()
+                var
+                    CustomApprovalsHR: Codeunit "Custom Approvals Mgmt HR";
+                    Variant: Variant;
+                begin
+
+                    if Rec.Status <> Rec.Status::"Pending Approval" then
+                        Error('Only requests pending approval can be canceled');
+                    Variant := Rec;
+                    CustomApprovalsHR.OnCancelDocApprovalRequest(Variant);
+                    Rec.Get(Rec."Request No.");
+                    if Rec.Status = Rec.Status::"Pending Approval" then begin
+                        Rec.Status := Rec.Status::Open;
+                        Rec.Modify();
+                    end;
+                end;
+            }
+            action(Reopen)
+            {
+                ApplicationArea = All;
+                Caption = 'Reopen';
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                Enabled = (Rec.Status = Rec.Status::Released) or (Rec.Status = Rec.Status::Rejected);
 
                 trigger OnAction()
                 begin
-
-                    //IF Status<>Status::Released THEN
-                    //approvalsmgmt.GetApprovalCommentERC(Rec,0,"Request No.");
+                    if Rec.Status <> Rec.Status::Released then
+                        Error('The document must be released to reopen.');
+                    Rec.Status := Rec.Status::Open;
+                    Rec.Modify();
+                    CurrPage.Update(false);
                 end;
             }
             action(Revise)
@@ -179,19 +257,24 @@ page 51525403 "Training Request"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                RunObject = Page "Document Attachment Details";
-                RunPageLink = "Table ID" = CONST(Database::"Training Request"), "No." = FIELD("Request No.");
                 Visible = true;
+                trigger OnAction()
+                var
+                    DocAttachmentDetails: Page "Document Attachment Details";
+                    RecRef: RecordRef;
+                begin
+                    RecRef.GetTable(Rec);
+                    DocAttachmentDetails.OpenForRecRef(RecRef);
+                    DocAttachmentDetails.RunModal();
+                end;
             }
             action("Approval Entries")
             {
                 Caption = 'Approvals';
                 Image = Approvals;
-                Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Process;
-                //The property 'PromotedIsBig' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedIsBig = true;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
                 RunPageMode = View;
 
                 trigger OnAction()
@@ -291,9 +374,8 @@ page 51525403 "Training Request"
                     var
                         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                     begin
-                        //ApprovalsMgmt.RejectRecordApprovalRequest(RECORDID);
-                        //ApprovalsMgmt.GetApprovalCommentERC(Rec,1,"Request No.");
-                        //CurrPage.CLOSE;
+                        ApprovalsMgmt.RejectRecordApprovalRequest(Rec.RecordId);
+                        CurrPage.Close();
                     end;
                 }
                 action(Delegate)
@@ -333,6 +415,26 @@ page 51525403 "Training Request"
         }
     }
 
+    trigger OnAfterGetRecord()
+    begin
+        Rec.CalcFields("Total Cost", "Per Diem", "Air Ticket", "Tuition Fee");
+        if IsNewRecord then begin
+            IsNewRecord := false;
+            Rec."Department Code" := '';
+            Rec."Department Name" := '';
+            if Rec.Modify() then;
+        end;
+        if Rec."Training Master Plan No." <> '' then begin
+            if AnnualPlan.Get(Rec."Training Master Plan No.") then begin
+                AnnualPlan.CalcFields("Courses Budget", "Total Used");
+                AvailableBudget := (AnnualPlan."Courses Budget" + AnnualPlan."Extra Budget") - AnnualPlan."Total Used";
+            end;
+        end else
+            AvailableBudget := 0;
+        OpenApprovalEntriesExistForCurrUser := ApprovalsMgmt.HasOpenApprovalEntriesForCurrentUser(Rec.RecordId);
+        OpenApprovalEntriesExistForCurrUser2 := ApprovalsMgmt.HasOpenApprovalEntries(Rec.RecordId);
+    end;
+
     trigger OnModifyRecord(): Boolean
     begin
 
@@ -359,6 +461,14 @@ page 51525403 "Training Request"
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
         Rec.Currency := 'USD';
+        IsNewRecord := true;
+        Emp.Reset();
+        Emp.SetRange("User ID", UserId);
+        if Emp.FindFirst() then begin
+            Rec."Employee No" := Emp."No.";
+            Rec."Department Code" := Emp."Global Dimension 2 Code";
+            Rec.Validate("Department Code");
+        end;
     end;
 
     trigger OnOpenPage()
@@ -369,23 +479,8 @@ page 51525403 "Training Request"
         EnableEditing := true;
         if TrainingMasterRec.IsAReadOnlyUser() then
             EnableEditing := false;//CurrPage.Editable(false);
-        /*approvalentry.RESET;
-        approvalentry.SETFILTER(approvalentry.Status,'%1',approvalentry.Status::Open);
-        approvalentry.SETFILTER(approvalentry."Document Type",'%1',approvalentry."Document Type"::Training);
-        approvalentry.SETFILTER(approvalentry."Approver ID",'%1',USERID);
-        approvalentry.SETFILTER(approvalentry."Document No.","Request No.");
-        IF approvalentry.FINDSET THEN BEGIN
-           OpenApprovalEntriesExistForCurrUser:=TRUE;
-          //MESSAGE('Approver...');
-        END;
-        IF NOT approvalentry.FINDSET THEN BEGIN
-           OpenApprovalEntriesExistForCurrUser2:=TRUE;
-          // MESSAGE('Not an Approver...');
-        END;
-        IF OpenApprovalEntriesExistForCurrUser=TRUE THEN BEGIN
-           OpenApprovalEntriesExistForCurrUser2:=FALSE;
-        END;
-        */
+        OpenApprovalEntriesExistForCurrUser := ApprovalsMgmt.HasOpenApprovalEntriesForCurrentUser(Rec.RecordId);
+        OpenApprovalEntriesExistForCurrUser2 := ApprovalsMgmt.HasOpenApprovalEntries(Rec.RecordId);
         seerevise := false;
 
 
@@ -456,4 +551,9 @@ page 51525403 "Training Request"
         seeInvoice: Boolean;
         HRSetup: Record "Human Resources Setup";
         EnableEditing: Boolean;
+        AvailableBudget: Decimal;
+        AnnualPlan: Record "Annual Training Plan";
+        IsNewRecord: Boolean;
+        Emp: Record Employee;
 }
+

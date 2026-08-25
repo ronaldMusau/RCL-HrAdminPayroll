@@ -1,4 +1,4 @@
-page 51525480 "Email Candidates"
+﻿page 51525480 "Email Candidates"
 {
     ApplicationArea = All;
     DeleteAllowed = false;
@@ -208,7 +208,7 @@ page 51525480 "Email Candidates"
                                 '<p>We hope this email finds you well.</p>' +
                                 '<p>' + ExternalInternalRegretMessage + '</p>' +
                                 '<p>After careful review and consideration, we regret to inform you that we will not be proceeding with your application.</p>' +
-                                '<p>Unfortunately, due to the high level of applications, we are unable to provide individual feedback. Should you wish to apply for a different vacancy, please do so through our <a href="https://erecruitment.rwandair.com/" target="_blank">e-recruitment portal</a>.</p>' +
+                                '<p>Unfortunately, due to the high level of applications, we are unable to provide individual feedback. Should you wish to apply for a different vacancy, please do so through our <a href="https://recruitment.rwandaircatering.rw/" target="_blank">e-recruitment portal</a>.</p>' +
                                 '<p>We wish you every success in your future endeavours.</p>' +
                                 '<p>Best Wishes,</p>' +
                                 '<p>RwandAir Talent Acquisition</p>';
@@ -918,7 +918,7 @@ page 51525480 "Email Candidates"
                                 '<p>We hope this email finds you well.</p>' +
                                 '<p>' + ExternalInternalRegretMessage + '</p>' +
                                 '<p>After careful review and consideration, we regret to inform you that we will not be proceeding with your application.</p>' +
-                                '<p>Unfortunately, due to the high level of applications, we are unable to provide individual feedback. Should you wish to apply for a different vacancy, please do so through our <a href="https://erecruitment.rwandair.com/" target="_blank">e-recruitment portal</a>.</p>' +
+                                '<p>Unfortunately, due to the high level of applications, we are unable to provide individual feedback. Should you wish to apply for a different vacancy, please do so through our <a href="https://recruitment.rwandaircatering.rw/" target="_blank">e-recruitment portal</a>.</p>' +
                                 '<p>We wish you every success in your future endeavours.</p>' +
                                 '<p>Best Wishes,</p>' +
                                 '<p>RwandAir Talent Acquisition</p>';

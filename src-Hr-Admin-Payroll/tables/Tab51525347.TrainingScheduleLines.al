@@ -158,7 +158,7 @@ table 51525347 "Training Schedule Lines"
         }
         field(36; Status; Option)
         {
-            OptionMembers = Pending,Postponed,Ongoing,Done;
+            OptionMembers = Open,Ongoing,Completed;
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = lookup("Training Schedules".Status where("No." = field("Schedule No.")));
@@ -179,6 +179,44 @@ table 51525347 "Training Schedule Lines"
         field(39; Type; Option)
         {
             OptionMembers = Initial,Refresher;
+        }
+        field(40; "Certificate Expiry Date"; Date)
+        {
+            Caption = 'Certificate Expiry Date';
+        }
+        field(41; "Notification Days"; Integer)
+        {
+            Caption = 'Notification Days';
+            InitValue = 30;
+        }
+        field(42; "Permit Type"; Option)
+        {
+            Caption = 'Permit Type';
+            OptionMembers = " ","Airside Driving Permit","Airside Vehicle Permit","Driver License",Other;
+            OptionCaption = ' ,Airside Driving Permit,Airside Vehicle Permit,Driver License,Other';
+        }
+        field(43; "Notification Sent"; Boolean)
+        {
+            Caption = 'Notification Sent';
+            Editable = false;
+        }
+        field(44; Attended; Option)
+        {
+            Caption = 'Attended';
+            OptionMembers = " ",Attended,"Not Attended";
+            OptionCaption = ' ,Attended,Not Attended';
+        }
+        field(45; "Course Name"; Text[250])
+        {
+            Caption = 'Course';
+        }
+        field(46; Venue; Text[250])
+        {
+            Caption = 'Venue';
+        }
+        field(47; Trainer; Text[250])
+        {
+            Caption = 'Trainer Name';
         }
 
     }
@@ -209,7 +247,7 @@ table 51525347 "Training Schedule Lines"
 
         ScheduleHeader.Reset();
         ScheduleHeader.SetRange("No.", "Schedule No.");
-        ScheduleHeader.SetRange(Status, ScheduleHeader.Status::Done);
+        ScheduleHeader.SetRange(Status, ScheduleHeader.Status::Completed);
         if ScheduleHeader.FindFirst() then
             Error('You cannot add participants to a completed (Done) class!');
     end;
@@ -223,7 +261,7 @@ table 51525347 "Training Schedule Lines"
     begin
         ScheduleHeader.Reset();
         ScheduleHeader.SetRange("No.", "Schedule No.");
-        ScheduleHeader.SetRange(Status, ScheduleHeader.Status::Done);
+        ScheduleHeader.SetRange(Status, ScheduleHeader.Status::Completed);
         if ScheduleHeader.FindFirst() then
             Error('You cannot remove participants from a completed (Done) class!');
     end;

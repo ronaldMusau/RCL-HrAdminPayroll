@@ -127,53 +127,8 @@ End Function
         <Field Name="TrainingLocation">
           <DataField>TrainingLocation</DataField>
         </Field>
-        <Field Name="InstructorAllowance">
-          <DataField>InstructorAllowance</DataField>
-        </Field>
-        <Field Name="InstructorAllowanceFormat">
-          <DataField>InstructorAllowanceFormat</DataField>
-        </Field>
-        <Field Name="FacilityCosts">
-          <DataField>FacilityCosts</DataField>
-        </Field>
-        <Field Name="FacilityCostsFormat">
-          <DataField>FacilityCostsFormat</DataField>
-        </Field>
-        <Field Name="CertificatesIssued">
-          <DataField>CertificatesIssued</DataField>
-        </Field>
-        <Field Name="FacilityLunch">
-          <DataField>FacilityLunch</DataField>
-        </Field>
-        <Field Name="FacilityLunchFormat">
-          <DataField>FacilityLunchFormat</DataField>
-        </Field>
-        <Field Name="HeadofficeLunch">
-          <DataField>HeadofficeLunch</DataField>
-        </Field>
-        <Field Name="HeadofficeLunchFormat">
-          <DataField>HeadofficeLunchFormat</DataField>
-        </Field>
-        <Field Name="OtherCosts">
-          <DataField>OtherCosts</DataField>
-        </Field>
-        <Field Name="OtherCostsFormat">
-          <DataField>OtherCostsFormat</DataField>
-        </Field>
         <Field Name="ReportTitle">
           <DataField>ReportTitle</DataField>
-        </Field>
-        <Field Name="AllOtherCosts">
-          <DataField>AllOtherCosts</DataField>
-        </Field>
-        <Field Name="AllOtherCostsFormat">
-          <DataField>AllOtherCostsFormat</DataField>
-        </Field>
-        <Field Name="TotalCosts">
-          <DataField>TotalCosts</DataField>
-        </Field>
-        <Field Name="TotalCostsFormat">
-          <DataField>TotalCostsFormat</DataField>
         </Field>
       </Fields>
       <Query>

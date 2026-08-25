@@ -41,10 +41,11 @@ table 51525322 "Disciplinary Cases"
             begin
                 if emprec.Get("Employee No") then begin
                     "Employee Name" := emprec."First Name" + ' ' + emprec."Middle Name" + ' ' + emprec."Last Name";
+                    "HOD Name" := emprec."Supervisor Name";
                     RespCenter.Reset;
                     RespCenter.SetFilter(RespCenter.Code, emprec."Responsibility Center");
                     if RespCenter.FindFirst() then begin
-                        "HOD Name" := RespCenter."HoD Name";
+                        //"HOD Name" := RespCenter."HoD Name";
                     end;
                     //get previous case
                     DisciplinaryCasesRec.Reset;
@@ -155,6 +156,28 @@ table 51525322 "Disciplinary Cases"
         {
             DataClassification = ToBeClassified;
             TableRelation = "Disciplinary Actions".Code;
+        }
+        field(30; "Warning Type"; Option)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Warning Type';
+            OptionCaption = ' ,Oral Warning,Written Warning,Final Written Warning';
+            OptionMembers = " ","Oral Warning","Written Warning","Final Written Warning";
+        }
+        field(31; "Date of Action"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Date of Action';
+        }
+        field(32; "Appeal Deadline Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Appeal Deadline Date';
+        }
+        field(33; "Board Decision File Path"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Board Decision File Path';
         }
     }
 

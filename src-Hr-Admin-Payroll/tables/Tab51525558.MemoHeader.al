@@ -11,9 +11,10 @@ table 51525558 "Memo Header"
             Editable = false;
             trigger OnValidate()
             begin
+                Emp.Reset();
                 Emp.SetRange("User ID", UserId);
-                Emp.Get(UserId);
-                Rec."Requestor User ID" := Emp."No.";
+                if Emp.FindFirst() then
+                    Rec."Requestor User ID" := Emp."No.";
             end;
         }
         field(2; "Requestor User ID"; Code[50])
@@ -96,25 +97,27 @@ table 51525558 "Memo Header"
     var
         empl: Record Employee;
     begin
-        if "No." = '' then
+        if "No." = '' then begin
             HumanResSetup.Get;
-        HumanResSetup.TestField(HumanResSetup."Memo Nos");
-        "No." := NoSeriesManagement.GetNextNo(HumanResSetup."Memo Nos");
+            HumanResSetup.TestField(HumanResSetup."Memo Nos");
+            "No." := NoSeriesManagement.GetNextNo(HumanResSetup."Memo Nos");
+        end;
 
 
         //"Requestor User ID" := UserId;
         //  if "User ID" = '' then
         //   "User ID" := UserId;
-
-        empl.Reset();
-        empl.SetRange("User ID", UserId);
-        if (empl.FindFirst) then begin
-            "Requestor User ID" := empl."No.";
-            "Department Code" := empl."Responsibility Center";
-            //Validate(Directorate);
-            Validate("Department Code");
-            "Created Date" := Today;
-            "Approval Status" := "Approval Status"::Released;
+        if "Requestor User ID" = '' then begin
+            empl.Reset();
+            empl.SetRange("User ID", UserId);
+            if (empl.FindFirst) then begin
+                "Requestor User ID" := empl."No.";
+                "Department Code" := empl."Responsibility Center";
+                //Validate(Directorate);
+                Validate("Department Code");
+                "Created Date" := Today;
+                //"Approval Status" := "Approval Status"::Released;
+            end;
         end;
     end;
 

@@ -25,6 +25,18 @@ table 51525375 "Rules & Regulations"
         {
             OptionMembers = No,Yes;
         }
+        field(8; "Document"; Blob)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(9; "Document Name"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(10; "Document MIME Type"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

@@ -330,6 +330,7 @@ tableextension 51525301 "HR Setup Ext" extends "Human Resources Setup"
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account";
         }
+
         field(51525379; "JobApplication Nos"; Code[20])
         {
             DataClassification = ToBeClassified;
@@ -752,11 +753,31 @@ tableextension 51525301 "HR Setup Ext" extends "Human Resources Setup"
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
         }
-        /* field(51525477;  "Transport Request Nos"; Code[10])
+        field(51525477; "Compassionate Check Nos."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series".Code;
+        }
+        field(51525600; "Meal Requisition Nos"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
-        } */
+        }
+        field(51525601; "HR Head"; Code[20])
+        {
+            TableRelation = Employee."No.";
+            DataClassification = ToBeClassified;
+        }
+        field(51525602; "COO Approval"; Text[100])
+        {
+            //TableRelation = Employee."No.";
+            DataClassification = ToBeClassified;
+        }
+        field(51525603; "CEO Approval"; Text[100])
+        {
+            //TableRelation = Employee."No.";
+            DataClassification = ToBeClassified;
+        }
 
     }
 }

@@ -13,6 +13,7 @@ page 51525313 "Company Jobs"
                 Caption = 'General';
                 field("Job ID"; Rec."Job ID")
                 {
+                    Editable = false;
                 }
                 field("Job Description"; Rec."Job Description")
                 {
@@ -24,36 +25,31 @@ page 51525313 "Company Jobs"
                 }
                 field("Supervisor Position"; Rec."Supervisor Position")
                 { }
-                field("Department Code"; Rec."Department Code")
-                { }
+                field("Department Code"; Rec."Dimension 1")
+                {
+                    Visible = false;
+                }
                 field("Department Name"; Rec."Department Name")
                 {
                     Editable = false;
-                    Visible = true;
+
                 }
-                field("Section Code"; Rec."Section Code")
-                { }
+                field("Section Code"; Rec."Dimension 2")
+                {
+
+                }
                 field("Section Name"; Rec."Section Name")
                 { }
                 field("Dimension 1"; Rec."Dimension 1")
                 {
                     Visible = false;
                 }
-                field("Directorate Name"; Rec."Directorate Name")
-                {
-                    Caption = 'Directorate Name.';
-                    Editable = false;
-                    Visible = false;
-                }
-                field("Dimension 2"; Rec."Dimension 2")
-                {
-                    Visible = false;
-                }
-                field(Grade; Rec.Grade)
-                {
-                }
-                field("Given Transport Allowance"; Rec."Given Transport Allowance")
-                { }
+
+                // field(Grade; Rec.Grade)
+                // {
+                // }
+                // field("Given Transport Allowance"; Rec."Given Transport Allowance")
+                // { }
                 field(Objective; Rec.Objective)
                 {
                     Caption = 'Job Purpose';
@@ -71,25 +67,25 @@ page 51525313 "Company Jobs"
                     Caption = 'Vacant Positions';
                     Editable = false;
                 }
-                field("Notice Period"; Rec."Notice Period")
-                {
-                    Caption = 'Notice Period (D,W,M,Y)';
-                    Tooltip = 'Specify the notice period number followed by D for day, W for week, M for month and Y for year';
-                }
-                field("Probation Period"; Rec."Probation Period")
-                {
-                    Caption = 'Probation Period (D,W,M,Y)';
-                    Tooltip = 'Specify the probation period number followed by D for day, W for week, M for month and Y for year';
-                }
-                field("Date Active"; Rec."Date Active")
-                {
-                }
-                field(Status; Rec.Status)
-                {
-                }
-                field("Salary Allocation %"; Rec."Salary Allocation %")
-                {
-                }
+                // field("Notice Period"; Rec."Notice Period")
+                // {
+                //     Caption = 'Notice Period (D,W,M,Y)';
+                //     Tooltip = 'Specify the notice period number followed by D for day, W for week, M for month and Y for year';
+                // }
+                // field("Probation Period"; Rec."Probation Period")
+                // {
+                //     Caption = 'Probation Period (D,W,M,Y)';
+                //     Tooltip = 'Specify the probation period number followed by D for day, W for week, M for month and Y for year';
+                // }
+                // field("Date Active"; Rec."Date Active")
+                // {
+                // }
+                // field(Status; Rec.Status)
+                // {
+                // }
+                // field("Salary Allocation %"; Rec."Salary Allocation %")
+                // {
+                // }
             }
         }
     }

@@ -15,21 +15,27 @@ table 51525497 "Staff Target Lines"
         field(2; "Objective Code"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "WB Departmental Targets".No where(Period = field(Period), "Department Code" = field("Department Code"));
+            TableRelation = "WB Dept Target Objective"."Objective No" where("Document No" = field("Department Target No"));
 
             trigger OnValidate()
             var
-                PerfObjectives: Record "WB Departmental Targets";//"Performance Objectives";
+                DeptTargetObjective: Record "WB Dept Target Objective";
+                TargetLine: Record "Target Lines";
             begin
-                PerfObjectives.Reset();
-                PerfObjectives.SetRange(No, "Objective Code");
-                if PerfObjectives.FindFirst() then begin
-                    Objective := PerfObjectives."Departmental Objective";
-                    "Success Measure" := PerfObjectives."Success Measure";
-                    "Specific Action Plan" := PerfObjectives."Specific Action Plan";
-                    Theme := PerfObjectives.Theme;
-                    "Due Date" := PerfObjectives."Due Date";
-                    "Due Date Description" := PerfObjectives."Due Date Description";
+                DeptTargetObjective.SetRange("Document No", "Department Target No");
+                DeptTargetObjective.SetRange("Objective No", "Objective Code");
+                if DeptTargetObjective.FindFirst() then begin
+                    Objective := DeptTargetObjective.Objective;
+
+                    TargetLine.SetRange("Document No", "Department Target No");
+                    TargetLine.SetRange("Objective No", "Objective Code");
+                    if TargetLine.FindFirst() then begin
+                        "Success Measure" := TargetLine."Success Measures";
+                        "Specific Action Plan" := TargetLine.Description;
+                        Theme := TargetLine.Action;
+                        "Due Date" := TargetLine."Due Date";
+                        "Due Date Description" := TargetLine.Timelines;
+                    end;
                 end;
             end;
         }
@@ -96,6 +102,17 @@ table 51525497 "Staff Target Lines"
             Editable = false;
             DataClassification = ToBeClassified;
             TableRelation = "Responsibility Center".Code;
+        }
+        field(16; "Department Target No"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "WB Departmental Targets".No where(Period = field(Period), "Department Code" = field("Department Code"));
+
+            trigger OnValidate()
+            begin
+                "Objective Code" := '';
+                Objective := '';
+            end;
         }
     }
 

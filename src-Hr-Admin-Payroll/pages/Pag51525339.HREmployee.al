@@ -2,7 +2,7 @@ page 51525339 "HR Employee"
 {
     ApplicationArea = All;
     Caption = 'Employee Card';
-    DeleteAllowed = false;
+    DeleteAllowed = true;
     SourceTable = Employee;
 
     layout
@@ -73,6 +73,7 @@ page 51525339 "HR Employee"
                 {
                     Visible = false;
                 }
+
                 field("Last Date Modified"; Rec."Last Date Modified")
                 {
                 }
@@ -99,10 +100,40 @@ page 51525339 "HR Employee"
                 }
                 field("Manager No."; Rec."Manager No.")
                 {
+                    trigger OnValidate()
+                    var
+                        EmpRec: Record Employee;
+                    begin
+                        if EmpRec.Get(Rec."Manager No.") then
+                            Rec."Manager Name" := EmpRec."First Name" + ' ' + EmpRec."Last Name"
+                        else
+                            Rec."Manager Name" := '';
+                    end;
+                }
+                field("Manager Name"; Rec."Manager Name")
+                {
+                    Editable = false;
+                    Caption = 'Manager Name';
+                }
+                field("Supervisor No."; Rec."Supervisor No.")
+                {
+                    Editable = SupervisorEditable;
+                    Caption = 'Supervisor No.';
+
+                    trigger OnValidate()
+                    var
+                        EmpRec: Record Employee;
+                    begin
+                        if EmpRec.Get(Rec."Supervisor No.") then
+                            Rec."Supervisor Name" := EmpRec."First Name" + ' ' + EmpRec."Last Name"
+                        else
+                            Rec."Supervisor Name" := '';
+                    end;
                 }
                 field("Supervisor Name"; Rec."Supervisor Name")
                 {
-                    Editable = SupervisorEditable;
+                    Editable = false;
+                    Caption = 'Supervisor Name';
                 }
                 field("Is Seconded"; Rec."Is Seconded")
                 {
@@ -129,6 +160,10 @@ page 51525339 "HR Employee"
                 }
                 field("MyID Eligibility"; Rec."MyID Eligibility")
                 { }
+                field("Biometric ID"; Rec."Biometric ID")
+                {
+
+                }
             }
             part(Control53; "Employee Disability Info")
             {
@@ -161,18 +196,40 @@ page 51525339 "HR Employee"
                 }
                 field(Province; Rec.Province)
                 {
-
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
                 }
                 field(District; Rec.District)
                 {
-
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
                 }
                 field(Sector; Rec.Sector)
-                { }
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field(Cell; Rec.Cell)
-                { }
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field(Village; Rec.Village)
-                { }
+                {
+                    ApplicationArea = All;
+                }
                 /*field("Ethnic Group"; Rec."Ethnic Group")
                 {
                 }
@@ -230,7 +287,7 @@ page 51525339 "HR Employee"
                 }
                 field("Job Title"; Rec."Job Title")
                 {
-                    //Editable = false;
+                    Editable = false;
                 }
                 field("Annual Leave Entitlement"; Rec."Annual Leave Entitlement")
                 {
@@ -613,9 +670,6 @@ page 51525339 "HR Employee"
             {
                 Caption = 'Disciplinary';
                 //Editable = CanEditCard;
-                field("Disciplinary Actions"; Rec."Disciplinary Actions")
-                {
-                }
             }
             group(Separation)
             {
@@ -760,6 +814,25 @@ page 51525339 "HR Employee"
                     RecRef.GetTable(Rec);
                     HRLettersAttachmentDetails.OpenForRecRef(RecRef);
                     HRLettersAttachmentDetails.RunModal;
+                end;
+            }
+            action(EmpDocuments)
+            {
+                ApplicationArea = All;
+                Caption = 'Employee Documents';
+                Image = Documents;
+                Promoted = true;
+                PromotedCategory = "Report";
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ToolTip = 'View and upload categorised documents for this employee.';
+
+                trigger OnAction()
+                var
+                    EmpDocUpload: Page "Employee Document Upload";
+                begin
+                    EmpDocUpload.SetEmployeeNo(Rec."No.");
+                    EmpDocUpload.RunModal();
                 end;
             }
             action("Update Movement")
@@ -1160,14 +1233,15 @@ page 51525339 "HR Employee"
                         RunObject = Page "Misc. Article Info.";
                         RunPageLink = "No." = FIELD("No.");
                         Visible = false;
-                    }
+                    }*/
                     action("Medical Info.")
                     {
                         Caption = 'Medical Info.';
+                        ApplicationArea = All;
+                        Image = Document;
                         RunObject = Page "Employee Medical Information";
                         RunPageLink = "No." = FIELD("No.");
-                        Visible = false;
-                    }*/
+                    }
                     separator(Action115)
                     {
                     }
@@ -1267,6 +1341,19 @@ page 51525339 "HR Employee"
             }
         }
     }
+    trigger OnDeleteRecord(): Boolean
+    var
+        UserSetup: Record "User Setup";
+    begin
+        UserSetup.Reset();
+        UserSetup.SetRange("User ID", UserId);
+        if UserSetup.FindFirst() then begin
+            if UserSetup."Can Edit Emp Card" = false then begin
+                Error('You do not have the rights to edit the employee card! Please contact HR Admin');
+            end;
+        end;
+    end;
+
     trigger OnAfterGetRecord()
     begin
         Rec.Validate(Position);
@@ -1351,6 +1438,7 @@ page 51525339 "HR Employee"
         CanEditLeaveInfo: Boolean;
         CanViewHR: Boolean;
 }
+
 
 
 

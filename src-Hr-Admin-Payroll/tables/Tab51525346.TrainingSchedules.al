@@ -1,4 +1,4 @@
-table 51525346 "Training Schedules"
+﻿table 51525346 "Training Schedules"
 {
     Caption = 'Training Schedules';
     DataClassification = ToBeClassified;
@@ -46,7 +46,7 @@ table 51525346 "Training Schedules"
         {
             Caption = 'Course No.';
             //TableRelation = "Training Master Plan Lines"."No." where(Position = FIELD(Position));
-            TableRelation = "Training Master Plan Header"."No.";
+            //TableRelation = "Training Master Plan Header"."No.";
 
             trigger OnValidate()
             var
@@ -116,7 +116,8 @@ table 51525346 "Training Schedules"
         field(9; Status; Option)
         {
             Caption = 'Status';
-            OptionMembers = Pending,Postponed,Ongoing,Done;
+            OptionMembers = Open,Ongoing,Completed;
+            OptionCaption = 'Open,Ongoing,Completed';
 
             trigger OnValidate()
             var
@@ -126,7 +127,7 @@ table 51525346 "Training Schedules"
             begin
                 ParticipantLineNo := 0;
                 CourseAbbreviation := '';
-                if (Status = Status::Done) and ("Trainer Category" = "Trainer Category"::Internal) then begin
+                if (Status = Status::Completed) and ("Trainer Category" = "Trainer Category"::Internal) then begin
                     ScheduleLines.Reset();
                     ScheduleLines.SetRange("Schedule No.", "No.");
                     if ScheduleLines.FindSet() then begin
@@ -331,6 +332,46 @@ table 51525346 "Training Schedules"
             FieldClass = FlowField;
             CalcFormula = sum("Additional Instructors".Allowance where("Class No." = field("No.")));
         }
+        field(36; "Training Request No."; Code[20])
+        {
+            Caption = 'Training Request No.';
+            TableRelation = "Training Request"."Request No." where(Status = const(Released));
+            trigger OnValidate()
+            var
+                TrainingReq: Record "Training Request";
+                TrainingPart: Record "Training Participants";
+                SchedLine: Record "Training Schedule Lines";
+            begin
+                if "Training Request No." = '' then
+                    exit;
+                if not TrainingReq.Get("Training Request No.") then
+                    exit;
+                // Auto-populate header info from request
+                "Training No." := TrainingReq."Course Title";
+                "Training Title" := TrainingReq."Course Title";
+                // Delete ALL existing schedule lines for this schedule first
+                SchedLine.Reset();
+                SchedLine.SetRange("Schedule No.", "No.");
+                SchedLine.DeleteAll(false);
+                // Auto-populate lines from Training Participants
+                TrainingPart.Reset();
+                TrainingPart.SetRange("Training Request", "Training Request No.");
+                if TrainingPart.FindSet() then
+                    repeat
+                        SchedLine.Init();
+                        SchedLine."Schedule No." := "No.";
+                        SchedLine."Emp No." := TrainingPart."Employee No";
+                        SchedLine."Employee Name" := TrainingPart."Employee Name";
+                        SchedLine."Department Code" := TrainingPart.Department;
+                        SchedLine."Start Date" := "Start Date";
+                        SchedLine."End Date" := "End Date";
+                        SchedLine."Course Name" := TrainingPart."Training Course";
+                        SchedLine.Trainer := TrainingPart.Trainer;
+                        SchedLine.Venue := TrainingPart.Venue;
+                        if SchedLine.Insert(false) then;
+                    until TrainingPart.Next() = 0;
+            end;
+        }
     }
     keys
     {
@@ -344,6 +385,8 @@ table 51525346 "Training Schedules"
     begin
         if TrainingMasterPlan.IsAReadOnlyUser() then
             Error('You are not authorized to modify these records!');
+
+        "Status" := "Status"::Open;
 
         if "No." = '' then begin
             TraingScheds.Reset();

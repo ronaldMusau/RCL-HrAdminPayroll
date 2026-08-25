@@ -68,4 +68,43 @@ codeunit 51525311 "Event Subs HR"
                 end;
         end;
     end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Doc. Attachment List Factbox", OnAfterGetRecRefFail, '', false, false)]
+    local procedure "Doc. Attachment List Factbox_OnAfterGetRecRefFail"(var Sender: Page "Doc. Attachment List Factbox"; var DocumentAttachment: Record "Document Attachment"; var RecRef: RecordRef)
+    var
+        TrainingRequest: Record "Training Request";
+    begin
+        case DocumentAttachment."Table ID" of
+
+            DATABASE::"Training Request":
+
+                begin
+
+                    RecRef.Open(DATABASE::"Training Request");
+                    if TrainingRequest.Get(DocumentAttachment."No.") then
+                        RecRef.GetTable(TrainingRequest);
+
+                end;
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Document Attachment", OnAfterInitFieldsFromRecRef, '', false, false)]
+    local procedure "Document Attachment_OnAfterInitFieldsFromRecRef"(var DocumentAttachment: Record "Document Attachment"; var RecRef: RecordRef)
+    var
+        FieldRef: FieldRef;
+        RecNo: Code[20];
+    begin
+        case RecRef.Number of
+
+            DATABASE::"Training Request":
+                begin
+                    FieldRef := RecRef.Field(1);
+                    RecNo := FieldRef.Value;
+                    DocumentAttachment.Validate("No.", RecNo);
+                end;
+
+        end;
+    end;
+
+
 }

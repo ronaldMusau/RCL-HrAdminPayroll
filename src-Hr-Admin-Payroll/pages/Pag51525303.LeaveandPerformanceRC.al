@@ -96,6 +96,30 @@ page 51525303 "Leave and Performance R.C"
                         Image = "Report";
                         RunObject = Report "Monthly Leave Analysis";
                     }
+                    action("Employee Leave Statement")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Employee Leave Statement';
+                        Image = "Report";
+                        RunObject = Report "Employee Leave Statement";
+                        ToolTip = 'Print leave statement per employee showing allocated, accrued, taken and balance per leave type.';
+                    }
+                    action("Leave Balance Summary")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Leave Balance Summary';
+                        Image = "Report";
+                        RunObject = Report "Leave Balance Summary";
+                        ToolTip = 'Print summary of leave balances for all employees.';
+                    }
+                    action("Leave Taken Report")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Leave Taken Report';
+                        Image = "Report";
+                        RunObject = Report "Leave Taken Report";
+                        ToolTip = 'Print detailed list of all approved leave applications taken.';
+                    }
                 }
             }
             group(Action85)
@@ -196,6 +220,30 @@ page 51525303 "Leave and Performance R.C"
                 {
                     RunObject = Page "Leave Types Setup";
                 }
+                action("Employee Leave Statement2")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Employee Leave Statement';
+                    Image = "Report";
+                    RunObject = Report "Employee Leave Statement";
+                    ToolTip = 'Print leave statement per employee.';
+                }
+                action("Leave Balance Summary2")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Leave Balance Summary';
+                    Image = "Report";
+                    RunObject = Report "Leave Balance Summary";
+                    ToolTip = 'Print summary of leave balances for all employees.';
+                }
+                action("Leave Taken Report2")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Leave Taken Report';
+                    Image = "Report";
+                    RunObject = Report "Leave Taken Report";
+                    ToolTip = 'Print detailed list of all leave taken.';
+                }
             }
             group(Action77)
             {
@@ -248,19 +296,6 @@ page 51525303 "Leave and Performance R.C"
                 {
                     Caption = 'Mid-Year Review';
                     RunObject = Page "Mid Year Appraisal";
-                    RunPageView = where("Sent to Supervisor" = const(false), "Approved By Supervisor" = const(false));
-                }
-                action("Pending Mid Year Appraisal")
-                {
-                    Caption = 'Pending Mid-Year Reviews'; //'Mid-Period Review';
-                    RunObject = Page "Mid Year Appraisal";
-                    RunPageView = where("Sent to Supervisor" = const(true), "Approved By Supervisor" = const(false));
-                }
-                action("Approved Mid Year Appraisal")
-                {
-                    Caption = 'Approved Mid-Year Reviews'; //'Mid-Period Review';
-                    RunObject = Page "Mid Year Appraisal";
-                    RunPageView = where("Approved By Supervisor" = const(true));
                 }
                 action("Peer Appraisal Selection")
                 {
@@ -276,7 +311,7 @@ page 51525303 "Leave and Performance R.C"
                 {
                     Caption = 'End Year Appraisals';
                     RunObject = Page "Staff Appraisal Lists";
-                    RunPageView = where("Sent to Supervisor" = const(false), "Approved By Supervisor" = const(false));
+                    RunPageView = where("Approval Status" = filter(Open | "Pending Approval" | Rejected));
                 }
                 action(PendingAppraisals)
                 {
@@ -284,11 +319,11 @@ page 51525303 "Leave and Performance R.C"
                     RunObject = Page "Staff Appraisal Lists";
                     RunPageView = where("Sent to Supervisor" = const(true), "Approved By Supervisor" = const(false));
                 }
-                action(ApprovedAppraisals)
+                action(PostedAppraisals)
                 {
                     Caption = 'Approved Appraisals';
                     RunObject = Page "Staff Appraisal Lists";
-                    RunPageView = where("Approved By Supervisor" = const(true));
+                    RunPageView = where("Approval Status" = const(Released));
                 }
             }
         }

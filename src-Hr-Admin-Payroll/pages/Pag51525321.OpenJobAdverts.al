@@ -57,6 +57,10 @@ page 51525321 "Open Job Adverts"
                 field("End Date"; Rec."End Date")
                 {
                 }
+                field("Requisition Type"; Rec."Requisition Type")
+                {
+                    Caption = 'Advertisement Type';
+                }
                 // field(isInternship; Rec. isInternship)
                 // {
                 // }
@@ -73,9 +77,15 @@ page 51525321 "Open Job Adverts"
     }
     trigger OnAfterGetRecord()
     begin
-        /*Setfilter("Start Date", '<=%1', TODAY);
-        Setfilter("End Date", '>=%1', TODAY);
-        SetRange(Closed, false);*/
+        if Rec."End Date" < Today then begin
+            Rec.Closed := true;
+            Rec.Modify();
+        end else begin
+            if Rec.Closed and (Rec.Status = Rec.Status::Released) then begin
+                Rec.Closed := false;
+                Rec.Modify();
+            end;
+        end;
     end;
 
     trigger OnOpenPage()

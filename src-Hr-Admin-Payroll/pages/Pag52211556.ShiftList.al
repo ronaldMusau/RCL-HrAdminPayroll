@@ -21,6 +21,16 @@ page 52211556 "Shift List"
                 {
 
                 }
+                field("Week No."; Rec."Week No.")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
+                field(Year; Rec."Year")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
                 field("Created by"; Rec."Created by")
                 {
 

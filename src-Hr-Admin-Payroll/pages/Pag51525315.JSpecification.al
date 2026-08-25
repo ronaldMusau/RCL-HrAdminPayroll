@@ -3,7 +3,7 @@ page 51525315 "J. Specification"
     ApplicationArea = All;
     PageType = Card;
     SourceTable = "Company Jobs";
-
+    InsertAllowed = false;
     layout
     {
         area(content)
@@ -14,9 +14,20 @@ page 51525315 "J. Specification"
                 Editable = false;
                 field("Job ID"; Rec."Job ID")
                 {
+                    Editable = true;
+                    TableRelation = "Company Jobs";
+                    trigger OnValidate()
+                    var
+                        CompJobs: Record "Company Jobs";
+                    begin
+                        if CompJobs.Get(Rec."Job ID") then begin
+                            Rec."Job Description" := CompJobs."Job Description";
+                        end;
+                    end;
                 }
                 field("Job Description"; Rec."Job Description")
                 {
+                    Editable = false;
                 }
                 field("Total Score"; Rec."Total Score")
                 {

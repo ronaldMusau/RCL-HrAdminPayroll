@@ -1,4 +1,4 @@
-page 51525318 "Recruitment Needs"
+﻿page 51525318 "Recruitment Needs"
 {
     ApplicationArea = All;
     CardPageID = "Recruitment Request";
@@ -6,7 +6,7 @@ page 51525318 "Recruitment Needs"
     PageType = List;
     UsageCategory = Lists;
     SourceTable = "Recruitment Needs";
-    SourceTableView = WHERE(Closed = CONST(false), Status = filter(Open | Rejected)/*"Short Listing Done?" = CONST (true),
+    SourceTableView = WHERE(Closed = CONST(false), Status = filter(Open | Rejected | "Pending Approval" | Released)/*"Short Listing Done?" = CONST (true),
                             "In Oral Test" = CONST (true),
                             "Past Oral Test" = CONST (true),
                             "Closed Applications" = CONST (true)*/);
@@ -84,3 +84,4 @@ page 51525318 "Recruitment Needs"
             exit(false);
     end;
 }
+

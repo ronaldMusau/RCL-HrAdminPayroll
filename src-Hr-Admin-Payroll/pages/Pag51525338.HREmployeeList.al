@@ -54,6 +54,10 @@ page 51525338 "HR Employee List"
                 }
                 field("MyID Eligibility"; Rec."MyID Eligibility")
                 { }
+                field("Biometric ID"; Rec."Biometric ID")
+                {
+
+                }
                 field("Job Title"; Rec."Job Title")
                 {
                     ToolTip = 'Specifies the employee''s job title.';
@@ -319,6 +323,18 @@ page 51525338 "HR Employee List"
 
         }
     }
+    trigger OnDeleteRecord(): Boolean
+    var
+        UserSetup: Record "User Setup";
+    begin
+        UserSetup.Reset();
+        UserSetup.SetRange("User ID", UserId);
+        if UserSetup.FindFirst() then begin
+            if UserSetup."Can Edit Emp Card" = false then begin
+                Error('You do not have the rights to edit the employee card! Please contact HR Admin');
+            end;
+        end;
+    end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin

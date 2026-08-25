@@ -19,70 +19,46 @@ page 51525409 "Training Schedule Lines"
                 {
                     ToolTip = 'Specifies the value of the Employee Name field.';
                 }
-                field("Job Title"; Rec."Job Title")
-                {
-                    ToolTip = 'Specifies the value of the Job Title field.';
-                }
-                field("Certificate Serial No."; Rec."Certificate Serial No.")
-                { }
-                field("Renew By"; Rec."Renew By")
-                { }
-                field(Type; Rec.Type)
-                { }
-                field(Section; Rec.Section)
-                {
-                    Visible = false;
-                    ToolTip = 'Specifies the value of the Section field.';
-                }
-                field("Training Report"; Rec."Training Report")
-                {
-                    ToolTip = 'Specifies the value of the Training Report field.';
-                }
-                field("Line_No"; Rec."Line No.")
-                {
-                    Visible = false;
-                }
-                field("Print Cert"; 'Print Cert')
+                field("Course Name"; Rec."Course Name")
                 {
                     ApplicationArea = All;
-                    Editable = false;
-
-                    trigger OnDrillDown()
-                    var
-                        ScheduleLine: Record "Training Schedule Lines";
-                    begin
-                        ScheduleLine.Reset();
-                        ScheduleLine.SetRange("Schedule No.", Rec."Schedule No.");
-                        ScheduleLine.SetRange("Emp No.", Rec."Emp No.");
-                        if ScheduleLine.FindFirst() then begin
-                            ScheduleLine.CalcFields("Trainer Category");
-                            if ScheduleLine."Trainer Category" = ScheduleLine."Trainer Category"::Internal then
-                                Report.Run(Report::"Training Certificate Designed", true, false, ScheduleLine)
-                            else
-                                Error('You cannot generate certificate for external classes!');
-                        end;
-                    end;
+                    Caption = 'Course';
+                    ToolTip = 'Specifies the course name for this participant.';
                 }
-                field(Attachments; Rec.CountCertificates())
+                field(Trainer; Rec.Trainer)
                 {
                     ApplicationArea = All;
-                    Editable = false;
-
-                    trigger OnDrillDown()
-                    var
-                        DocumentAttachmentDetails: Page "Document Attachment Details";
-                        RecRef: RecordRef;
-                    begin
-                        RecRef.GetTable(Rec);
-                        DocumentAttachmentDetails.OpenForRecRef(RecRef);
-                        DocumentAttachmentDetails.RunModal;
-                    end;
+                    Caption = 'Trainer Name';
                 }
-                field("Legacy Certificate Link"; Rec."Certificate Link")
+                field(Venue; Rec.Venue)
                 {
-                    Caption = 'Legacy Certificate Link';
-                    Visible = true;
-                    ExtendedDatatype = URL;
+                    ApplicationArea = All;
+                    Caption = 'Venue';
+                }
+                field("Start Date"; Rec."Start Date")
+                {
+                    ToolTip = 'Specifies the value of the Start Date field.';
+                }
+                field("End Date"; Rec."End Date")
+                {
+                    ToolTip = 'Specifies the value of the End Date field.';
+                }
+                field("Certificate Expiry Date"; Rec."Certificate Expiry Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Notification Days"; Rec."Notification Days")
+                {
+                    ApplicationArea = All;
+                }
+                field("Permit Type"; Rec."Permit Type")
+                {
+                    ApplicationArea = All;
+                }
+                field(Attended; Rec.Attended)
+                {
+                    ApplicationArea = All;
+                    Editable = IsOngoing;
                 }
             }
         }
@@ -91,6 +67,23 @@ page 51525409 "Training Schedule Lines"
     {
         area(Processing)
         {
+            action(DuplicateLine)
+            {
+                Caption = 'Duplicate Line';
+                ApplicationArea = All;
+                Image = Copy;
+
+                trigger OnAction()
+                var
+                    NewLine: Record "Training Schedule Lines";
+                begin
+                    NewLine := Rec;
+                    NewLine."Line No." := 0;
+                    NewLine.Insert(true);
+                    CurrPage.Update(false);
+                    Message('Line duplicated successfully.');
+                end;
+            }
             action(DocAttach)
             {
                 ApplicationArea = All;
@@ -115,4 +108,12 @@ page 51525409 "Training Schedule Lines"
             }
         }
     }
+
+    var
+        IsOngoing: Boolean;
+
+    procedure SetOngoing(Value: Boolean)
+    begin
+        IsOngoing := Value;
+    end;
 }

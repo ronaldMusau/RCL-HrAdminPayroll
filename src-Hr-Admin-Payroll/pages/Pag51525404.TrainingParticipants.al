@@ -14,14 +14,21 @@ page 51525404 "Training Participants"
                 {
                     Visible = false;
                 }
+                field("Course Code"; Rec."Course Code")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Course';
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field("Employee No"; Rec."Employee No")
                 {
                 }
                 field("Employee Name"; Rec."Employee Name")
                 {
                 }
-                field("Course Code"; Rec."Course Code")
-                { }
                 field("Training Course"; Rec."Training Course")
                 {
                 }
@@ -30,8 +37,6 @@ page 51525404 "Training Participants"
                     Visible = true;
                 }
                 field("Trainer Category"; Rec."Trainer Category")
-                { }
-                field("Trainer No."; Rec."Trainer No.")
                 { }
                 field(Trainer; Rec.Trainer)
                 {
@@ -70,4 +75,12 @@ page 51525404 "Training Participants"
     actions
     {
     }
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    var
+        TrainingReq: Record "Training Request";
+    begin
+        if TrainingReq.Get(Rec."Training Request") then
+            Rec."Training Master Plan No." := TrainingReq."Training Master Plan No.";
+    end;
 }

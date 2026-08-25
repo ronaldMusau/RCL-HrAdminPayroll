@@ -1,4 +1,4 @@
-page 51525320 "Recruitment Request"
+﻿page 51525320 "Recruitment Request"
 {
     ApplicationArea = All;
     PageType = Card;
@@ -30,6 +30,7 @@ page 51525320 "Recruitment Request"
                 }
                 field("Requisition Type"; Rec."Requisition Type")
                 {
+                    Caption = 'Advertisement Type';
                     Editable = FieldsEditable;
                 }
                 field("Appointment Type"; Rec."Appointment Type")
@@ -65,9 +66,11 @@ page 51525320 "Recruitment Request"
                 { }
                 field("Start Date"; Rec."Start Date")
                 {
+                    ShowMandatory = true;
                 }
                 field("End Date"; Rec."End Date")
                 {
+                    ShowMandatory = true;
                 }
                 field("Applicable Interviews"; Rec."Applicable Interview(s)")
                 {
@@ -1982,17 +1985,25 @@ page 51525320 "Recruitment Request"
                     Image = SendApprovalRequest;
                     Promoted = true;
                     PromotedCategory = Category4;
-
+                    Visible = IsSendForApprovalVisible;
                     trigger OnAction()
                     var
                         ReqNeeds: Record "Recruitment Needs";
                     begin
+                        if Rec.Status = Rec.Status::"Pending Approval" then Error('An approval request already exists for this record.');
+                        if Rec."Start Date" = 0D then
+                            Error('Please fill in the Start Date before sending for approval.');
+                        if Rec."End Date" = 0D then
+                            Error('Please fill in the End Date before sending for approval.');
+                        if Rec."End Date" < Rec."Start Date" then
+                            Error('End Date must be after Start Date.');
+                        if Rec."End Date" < Today then
+                            Error('End Date cannot be in the past.');
                         VarVariant := Rec;
                         if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
                             CustomApprovals.OnSendDocForApproval(VarVariant);
-                        //Rec.Status := Rec.Status::Released;
-                        //Rec.Modify;                        
-                        //message('Approved!');
+                        Rec.Get(Rec."No.");
+                        CurrPage.Update(false);
                     end;
                 }
                 action("Cancel Approval Request")
@@ -2001,11 +2012,14 @@ page 51525320 "Recruitment Request"
                     Image = CancelApprovalRequest;
                     Promoted = true;
                     PromotedCategory = Category4;
-
+                    Visible = IsCancelVisible;
                     trigger OnAction()
                     begin
+                        if Rec.Status <> Rec.Status::"Pending Approval" then Error('There is no pending approval request to cancel.');
                         VarVariant := Rec;
                         CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
+                        Rec.Get(Rec."No.");
+                        CurrPage.Update(false);
                     end;
                 }
                 action(Approvals)
@@ -2050,6 +2064,11 @@ page 51525320 "Recruitment Request"
         }
     }
 
+    trigger OnAfterGetCurrRecord()
+    begin
+        UpdateControls();
+    end;
+
     trigger OnOpenPage()
     begin
         ClosedEnabled := false;
@@ -2069,6 +2088,7 @@ page 51525320 "Recruitment Request"
             LetterSending := true;
         end;
         FieldsEditable := true;
+        UpdateControls();
         if Rec.Advertise then begin //Rec.Status <> Rec.Status::Open
             FieldsEditable := false;
         end;
@@ -2182,6 +2202,9 @@ page 51525320 "Recruitment Request"
         seeoriginalmembers: Boolean;
         seeoriginalmembers2: Boolean;
         LetterSending: Boolean;
+        SendEnabled: Boolean;
+        IsSendForApprovalVisible: Boolean;
+        IsCancelVisible: Boolean;
         JobApplicationsTable: Record "Job Applications";
         CompanyInfo: Record "Company Information";
         SenderAddress: Text[100];
@@ -2205,4 +2228,19 @@ page 51525320 "Recruitment Request"
         VarVariant: Variant;
         CustomApprovals: Codeunit "Custom Approvals Mgmt HR";
     // SharePointHandler: Codeunit SharePointHandler;
+    local procedure UpdateControls()
+    begin
+        if Rec.Status = Rec.Status::Open then
+            IsSendForApprovalVisible := true
+        else
+            IsSendForApprovalVisible := false;
+        if Rec.Status = Rec.Status::"Pending Approval" then
+            IsCancelVisible := true
+        else
+            IsCancelVisible := false;
+        FieldsEditable := false;
+        if ((Rec.Status = Rec.Status::Open) or (Rec.Status = Rec.Status::Rejected)) = true then
+            FieldsEditable := true;
+    end;
 }
+

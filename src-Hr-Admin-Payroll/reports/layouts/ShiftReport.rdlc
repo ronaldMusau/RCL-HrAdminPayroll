@@ -1,0 +1,2078 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>c3d4e5f6-a7b8-9012-cdef-012345678901</rd:ReportID>
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.1.30001.02</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>MSRB</am:Name>
+      <am:Version>15.1.30001.02</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-06-09T00:00:00.0000000Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <rd:SecurityType>None</rd:SecurityType>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>d4e5f6a7-b8c9-0123-defa-123456789012</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!--  HEADER SECTION                                             -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <Rectangle Name="HeaderSection">
+            <ReportItems>
+              <Image Name="CompanyLogo">
+                <Source>Database</Source>
+                <Value>=First(Fields!CompanyLogo.Value, "DataSet_Result")</Value>
+                <MIMEType>image/png</MIMEType>
+                <Sizing>FitProportional</Sizing>
+                <Top>0.08in</Top>
+                <Left>0.5in</Left>
+                <Height>0.85in</Height>
+                <Width>1.8in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Image>
+              <Textbox Name="CompanyNameTB">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyName.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>11pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <Color>#005b96</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.08in</Top>
+                <Left>2.5in</Left>
+                <Height>0.35in</Height>
+                <Width>9.2in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+              <Textbox Name="ReportTitle">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>OPERATION'S DISPATCH ROSTER</Value>
+                        <Style>
+                          <FontSize>13pt</FontSize>
+                          <FontWeight>Bold</FontWeight>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.52in</Top>
+                <Left>2.5in</Left>
+                <Height>0.45in</Height>
+                <Width>9.2in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <VerticalAlign>Middle</VerticalAlign>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Height>1.1in</Height>
+            <Width>12in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!--  DETAILS SECTION  (Shift No, Dept, Dates, Week, Status)    -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <Rectangle Name="DetailsSection">
+            <ReportItems>
+              <!-- Row 1: Shift No | Department -->
+              <Textbox Name="ShiftNoLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Shift No:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="ShiftNoValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!No.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartmentLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Department:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="DepartmentValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!ShiftDepartment.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.06in</Top>
+                <Left>5.8in</Left>
+                <Height>0.28in</Height>
+                <Width>2.5in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <!-- Row 2: Start Date | End Date -->
+              <Textbox Name="StartDateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Start Date:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StartDateValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(First(Fields!ShiftStartDate.Value, "DataSet_Result"), "dd/MM/yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>5</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="EndDateLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>End Date:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>6</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="EndDateValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Format(First(Fields!ShiftEndDate.Value, "DataSet_Result"), "dd/MM/yyyy")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.38in</Top>
+                <Left>5.8in</Left>
+                <Height>0.28in</Height>
+                <Width>2.5in</Width>
+                <ZIndex>7</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <!-- Row 3: Week No / Year -->
+              <Textbox Name="WeekNoLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Week No / Year:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>8</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="WeekNoValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!WeekNo.Value, "DataSet_Result") &amp; " / " &amp; First(Fields!Year.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.7in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>5.7in</Width>
+                <ZIndex>9</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <!-- Row 4: Status | Created By -->
+              <Textbox Name="StatusLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Status:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>0.5in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>10</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="StatusValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!ApprovalStatus.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>2in</Left>
+                <Height>0.28in</Height>
+                <Width>2in</Width>
+                <ZIndex>11</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="CreatedByLabel">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>Created By:</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>4.3in</Left>
+                <Height>0.28in</Height>
+                <Width>1.4in</Width>
+                <ZIndex>12</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <Textbox Name="CreatedByValue">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!Createdby.Value, "DataSet_Result")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>1.02in</Top>
+                <Left>5.8in</Left>
+                <Height>0.28in</Height>
+                <Width>2.5in</Width>
+                <ZIndex>13</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>1.15in</Top>
+            <Height>1.42in</Height>
+            <Width>12in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!--  LINES SECTION  — Weekly Grid Tablix                       -->
+          <!--  Columns: No | Names | P.H | MON | TUE | WED | THU | FRI  -->
+          <!--           | SAT | SUN                                       -->
+          <!--  Grouped by Employee_No_ (one row per employee)            -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <Rectangle Name="LinesSection">
+            <ReportItems>
+              <Textbox Name="LinesHeading">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>SHIFT LINES</Value>
+                        <Style>
+                          <FontWeight>Bold</FontWeight>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.25in</Height>
+                <Width>11in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+              <!-- ─── Weekly Grid Tablix ─────────────────────────────── -->
+              <!--
+                Column widths (total ≈ 11in inside 0.5in left margin):
+                  No:    0.45in
+                  Names: 1.5in
+                  P.H:   0.55in
+                  Mon:   1.2in  (repeated × 7 days)
+                  ...
+                  Sun:   1.2in
+                Total: 0.45+1.5+0.55+(7×1.2) = 10.9in  ✓
+              -->
+              <Tablix Name="WeeklyRosterTablix">
+                <TablixBody>
+                  <TablixColumns>
+                    <!-- No -->
+                    <TablixColumn>
+                      <Width>0.45in</Width>
+                    </TablixColumn>
+                    <!-- Names -->
+                    <TablixColumn>
+                      <Width>1.5in</Width>
+                    </TablixColumn>
+                    <!-- P.H (Public Holiday flag) -->
+                    <TablixColumn>
+                      <Width>0.55in</Width>
+                    </TablixColumn>
+                    <!-- MON -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- TUE -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- WED -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- THU -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- FRI -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- SAT -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                    <!-- SUN -->
+                    <TablixColumn>
+                      <Width>1.2in</Width>
+                    </TablixColumn>
+                  </TablixColumns>
+                  <TablixRows>
+                    <!-- ── HEADER ROW ───────────────────────────────── -->
+                    <TablixRow>
+                      <Height>0.32in</Height>
+                      <TablixCells>
+                        <!-- No -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_No">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>No</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- Names -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Names">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>NAMES</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- P.H -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_PH">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>P.H</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- MON -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Mon">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>MON</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- TUE -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Tue">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>TUE</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- WED -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Wed">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>WED</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- THU -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Thu">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>THU</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- FRI -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Fri">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>FRI</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- SAT -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Sat">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>SAT</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- SUN -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="H_Sun">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>SUN</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <Color>White</Color>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#004c8c</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>#003366</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <!-- ── DATA ROW (grouped by Employee_No_) ─────────── -->
+                    <!--
+                      Each day cell shows:
+                        Line 1: Shift label  (DAY / P.M / NIGHT / OFF / S.LEAVE / A.LEAVE …)
+                        Line 2: Start time   (HH\H00 format, e.g. 06H00)
+                        Line 3: End time     (HH\H00 format, e.g. 14H00)
+                      Background colour matches Excel:
+                        DAY    → #F4A460  (sandy orange)
+                        P.M    → #FFD700  (yellow)
+                        NIGHT  → #87CEEB  (sky blue)
+                        OFF    → White
+                        *LEAVE → #90EE90  (light green)
+                        P.H    → #FFA07A  (light salmon / public holiday)
+                        default→ White
+                    -->
+                    <TablixRow>
+                      <Height>0.65in</Height>
+                      <TablixCells>
+                        <!-- No (row number) -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_No">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=RowNumber("EmployeeGroup")</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber("EmployeeGroup") Mod 2 = 0, "#f0f0f0", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- Employee Name -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Name">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Employee_Name.Value</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(RowNumber("EmployeeGroup") Mod 2 = 0, "#f0f0f0", "White")</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                                <PaddingLeft>3pt</PaddingLeft>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- P.H count for the week -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_PH">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(Fields!Is_Public_Holiday.Value, "1", "")</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=IIF(Fields!Is_Public_Holiday.Value, "#FFA07A", IIF(RowNumber("EmployeeGroup") Mod 2 = 0, "#f0f0f0", "White"))</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── MON ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Mon">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Mon_Shift.Value) OR Fields!Mon_Shift.Value = "", "OFF", Fields!Mon_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Mon_Start_Time.Value) OR Fields!Mon_Shift.Value = "" OR Fields!Mon_Shift.Value = "OFF", "", Format(Fields!Mon_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Mon_End_Time.Value) OR Fields!Mon_Shift.Value = "" OR Fields!Mon_Shift.Value = "OFF", "", Format(Fields!Mon_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Mon_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Mon_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Mon_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Mon_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Mon_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── TUE ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Tue">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Tue_Shift.Value) OR Fields!Tue_Shift.Value = "", "OFF", Fields!Tue_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Tue_Start_Time.Value) OR Fields!Tue_Shift.Value = "" OR Fields!Tue_Shift.Value = "OFF", "", Format(Fields!Tue_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Tue_End_Time.Value) OR Fields!Tue_Shift.Value = "" OR Fields!Tue_Shift.Value = "OFF", "", Format(Fields!Tue_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Tue_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Tue_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Tue_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Tue_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Tue_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── WED ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Wed">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Wed_Shift.Value) OR Fields!Wed_Shift.Value = "", "OFF", Fields!Wed_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Wed_Start_Time.Value) OR Fields!Wed_Shift.Value = "" OR Fields!Wed_Shift.Value = "OFF", "", Format(Fields!Wed_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Wed_End_Time.Value) OR Fields!Wed_Shift.Value = "" OR Fields!Wed_Shift.Value = "OFF", "", Format(Fields!Wed_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Wed_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Wed_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Wed_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Wed_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Wed_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── THU ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Thu">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Thu_Shift.Value) OR Fields!Thu_Shift.Value = "", "OFF", Fields!Thu_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Thu_Start_Time.Value) OR Fields!Thu_Shift.Value = "" OR Fields!Thu_Shift.Value = "OFF", "", Format(Fields!Thu_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Thu_End_Time.Value) OR Fields!Thu_Shift.Value = "" OR Fields!Thu_Shift.Value = "OFF", "", Format(Fields!Thu_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Thu_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Thu_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Thu_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Thu_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Thu_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── FRI ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Fri">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Fri_Shift.Value) OR Fields!Fri_Shift.Value = "", "OFF", Fields!Fri_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Fri_Start_Time.Value) OR Fields!Fri_Shift.Value = "" OR Fields!Fri_Shift.Value = "OFF", "", Format(Fields!Fri_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Fri_End_Time.Value) OR Fields!Fri_Shift.Value = "" OR Fields!Fri_Shift.Value = "OFF", "", Format(Fields!Fri_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Fri_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Fri_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Fri_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Fri_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Fri_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── SAT ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Sat">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sat_Shift.Value) OR Fields!Sat_Shift.Value = "", "OFF", Fields!Sat_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sat_Start_Time.Value) OR Fields!Sat_Shift.Value = "" OR Fields!Sat_Shift.Value = "OFF", "", Format(Fields!Sat_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sat_End_Time.Value) OR Fields!Sat_Shift.Value = "" OR Fields!Sat_Shift.Value = "OFF", "", Format(Fields!Sat_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Sat_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Sat_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Sat_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Sat_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Sat_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                        <!-- ── SUN ── -->
+                        <TablixCell>
+                          <CellContents>
+                            <Textbox Name="D_Sun">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sun_Shift.Value) OR Fields!Sun_Shift.Value = "", "OFF", Fields!Sun_Shift.Value)</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sun_Start_Time.Value) OR Fields!Sun_Shift.Value = "" OR Fields!Sun_Shift.Value = "OFF", "", Format(Fields!Sun_Start_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(IsNothing(Fields!Sun_End_Time.Value) OR Fields!Sun_Shift.Value = "" OR Fields!Sun_Shift.Value = "OFF", "", Format(Fields!Sun_End_Time.Value, "HH\H00"))</Value>
+                                      <Style>
+                                        <FontSize>7pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <Style>
+                                <Border>
+                                  <Color>#cccccc</Color>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>=Switch(
+                                Fields!Sun_Shift.Value = "DAY",   "#F4A460",
+                                Fields!Sun_Shift.Value = "P.M",   "#FFD700",
+                                Fields!Sun_Shift.Value = "NIGHT", "#87CEEB",
+                                InStr(Fields!Sun_Shift.Value, "LEAVE") &gt; 0, "#90EE90",
+                                Fields!Sun_Shift.Value = "P.H",   "#FFA07A",
+                                True, "White"
+                              )</BackgroundColor>
+                                <VerticalAlign>Middle</VerticalAlign>
+                              </Style>
+                            </Textbox>
+                          </CellContents>
+                        </TablixCell>
+                      </TablixCells>
+                    </TablixRow>
+                    <!-- ── END DATA ROW ──────────────────────────────── -->
+                  </TablixRows>
+                </TablixBody>
+                <TablixColumnHierarchy>
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixColumnHierarchy>
+                <TablixRowHierarchy>
+                  <TablixMembers>
+                    <!-- Header row member -->
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                      <RepeatOnNewPage>true</RepeatOnNewPage>
+                    </TablixMember>
+                    <!-- Data row member — grouped by Employee_No_ -->
+                    <TablixMember>
+                      <Group Name="EmployeeGroup">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!Employee_No_.Value</GroupExpression>
+                        </GroupExpressions>
+                        <Filters>
+                          <Filter>
+                            <FilterExpression>=IIF(IsNothing(Fields!Employee_No_.Value), "", Fields!Employee_No_.Value)</FilterExpression>
+                            <Operator>NotEqual</Operator>
+                            <FilterValues>
+                              <FilterValue />
+                            </FilterValues>
+                          </Filter>
+                        </Filters>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!Employee_Name.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixRowHierarchy>
+                <DataSetName>DataSet_Result</DataSetName>
+                <Top>0.38in</Top>
+                <Left>0.5in</Left>
+                <Height>0.97in</Height>
+                <Width>10.9in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Tablix>
+              <!-- ── END Weekly Grid Tablix ─────────────────────────── -->
+              <!-- ── Colour Legend ──────────────────────────────────── -->
+              <Rectangle Name="LegendBox">
+                <ReportItems>
+                  <Textbox Name="LegendTitle">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Legend:</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>0in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.6in</Width>
+                    <Style>
+                      <Border>
+                        <Style>None</Style>
+                      </Border>
+                    </Style>
+                  </Textbox>
+                  <!-- DAY swatch -->
+                  <Textbox Name="Leg_Day">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>DAY</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>0.65in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#F4A460</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                  <!-- P.M swatch -->
+                  <Textbox Name="Leg_PM">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>P.M</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>1.4in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#FFD700</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                  <!-- NIGHT swatch -->
+                  <Textbox Name="Leg_Night">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>NIGHT</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>2.15in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#87CEEB</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                  <!-- OFF swatch -->
+                  <Textbox Name="Leg_Off">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>OFF</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>2.9in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>White</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                  <!-- LEAVE swatch -->
+                  <Textbox Name="Leg_Leave">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>LEAVE</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>3.65in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#90EE90</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                  <!-- P.H swatch -->
+                  <Textbox Name="Leg_PH">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>P.H</Value>
+                            <Style>
+                              <FontSize>7pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <Top>0.05in</Top>
+                    <Left>4.4in</Left>
+                    <Height>0.2in</Height>
+                    <Width>0.7in</Width>
+                    <Style>
+                      <Border>
+                        <Color>#cccccc</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#FFA07A</BackgroundColor>
+                      <VerticalAlign>Middle</VerticalAlign>
+                    </Style>
+                  </Textbox>
+                </ReportItems>
+                <Top>1.42in</Top>
+                <Left>0.5in</Left>
+                <Height>0.32in</Height>
+                <Width>5.5in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Rectangle>
+            </ReportItems>
+            <Top>2.62in</Top>
+            <Height>1.85in</Height>
+            <Width>12in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <!--  FOOTER SECTION                                             -->
+          <!-- ═══════════════════════════════════════════════════════════ -->
+          <Rectangle Name="FooterSection">
+            <ReportItems>
+              <Textbox Name="CompanyFooter">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyName.Value, "DataSet_Result") &amp; "  |  " &amp; First(Fields!CompanyAddress.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!CompanyPhone.Value, "DataSet_Result")</Value>
+                        <Style>
+                          <FontSize>9pt</FontSize>
+                          <Color>#0070c0</Color>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Center</TextAlign>
+                    </Style>
+                  </Paragraph>
+                </Paragraphs>
+                <Top>0.05in</Top>
+                <Left>0.5in</Left>
+                <Height>0.45in</Height>
+                <Width>11in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <Top>4.6in</Top>
+            <Height>0.55in</Height>
+            <Width>12in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>5.25in</Height>
+        <Style />
+      </Body>
+      <Width>12in</Width>
+      <Page>
+        <PageWidth>12.5in</PageWidth>
+        <PageHeight>8.5in</PageHeight>
+        <LeftMargin>0.25in</LeftMargin>
+        <RightMargin>0.25in</RightMargin>
+        <TopMargin>0.25in</TopMargin>
+        <BottomMargin>0.25in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="CompanyName">
+          <DataField>CompanyName</DataField>
+        </Field>
+        <Field Name="CompanyAddress">
+          <DataField>CompanyAddress</DataField>
+        </Field>
+        <Field Name="CompanyLogo">
+          <DataField>CompanyLogo</DataField>
+        </Field>
+        <Field Name="CompanyPhone">
+          <DataField>CompanyPhone</DataField>
+        </Field>
+        <Field Name="No">
+          <DataField>No</DataField>
+        </Field>
+        <Field Name="ShiftDepartment">
+          <DataField>ShiftDepartment</DataField>
+        </Field>
+        <Field Name="ShiftStartDate">
+          <DataField>ShiftStartDate</DataField>
+        </Field>
+        <Field Name="ShiftEndDate">
+          <DataField>ShiftEndDate</DataField>
+        </Field>
+        <Field Name="WeekNo">
+          <DataField>WeekNo</DataField>
+        </Field>
+        <Field Name="Year">
+          <DataField>Year</DataField>
+        </Field>
+        <Field Name="ShiftType">
+          <DataField>ShiftType</DataField>
+        </Field>
+        <Field Name="Department">
+          <DataField>Department</DataField>
+        </Field>
+        <Field Name="Createdby">
+          <DataField>Createdby</DataField>
+        </Field>
+        <Field Name="DocumentDate">
+          <DataField>DocumentDate</DataField>
+        </Field>
+        <Field Name="SupervisorUserID">
+          <DataField>SupervisorUserID</DataField>
+        </Field>
+        <Field Name="ApprovalStatus">
+          <DataField>ApprovalStatus</DataField>
+        </Field>
+        <Field Name="Employee_No_">
+          <DataField>Employee_No_</DataField>
+        </Field>
+        <Field Name="Employee_Name">
+          <DataField>Employee_Name</DataField>
+        </Field>
+        <Field Name="Shift_Type">
+          <DataField>Shift_Type</DataField>
+        </Field>
+        <Field Name="Shift_Date">
+          <DataField>Shift_Date</DataField>
+        </Field>
+        <Field Name="Shift_Start_Time">
+          <DataField>Shift_Start_Time</DataField>
+        </Field>
+        <Field Name="Shift_End_Time">
+          <DataField>Shift_End_Time</DataField>
+        </Field>
+        <Field Name="Task_Assigned">
+          <DataField>Task_Assigned</DataField>
+        </Field>
+        <Field Name="Meal_Order">
+          <DataField>Meal_Order</DataField>
+        </Field>
+        <Field Name="Meal_Order_Description">
+          <DataField>Meal_Order_Description</DataField>
+        </Field>
+        <Field Name="Is_Public_Holiday">
+          <DataField>Is_Public_Holiday</DataField>
+        </Field>
+        <Field Name="Leave_Allocated">
+          <DataField>Leave_Allocated</DataField>
+        </Field>
+        <Field Name="Mon_Shift">
+          <DataField>Mon_Shift</DataField>
+        </Field>
+        <Field Name="Mon_Start_Time">
+          <DataField>Mon_Start_Time</DataField>
+        </Field>
+        <Field Name="Mon_End_Time">
+          <DataField>Mon_End_Time</DataField>
+        </Field>
+        <Field Name="Tue_Shift">
+          <DataField>Tue_Shift</DataField>
+        </Field>
+        <Field Name="Tue_Start_Time">
+          <DataField>Tue_Start_Time</DataField>
+        </Field>
+        <Field Name="Tue_End_Time">
+          <DataField>Tue_End_Time</DataField>
+        </Field>
+        <Field Name="Wed_Shift">
+          <DataField>Wed_Shift</DataField>
+        </Field>
+        <Field Name="Wed_Start_Time">
+          <DataField>Wed_Start_Time</DataField>
+        </Field>
+        <Field Name="Wed_End_Time">
+          <DataField>Wed_End_Time</DataField>
+        </Field>
+        <Field Name="Thu_Shift">
+          <DataField>Thu_Shift</DataField>
+        </Field>
+        <Field Name="Thu_Start_Time">
+          <DataField>Thu_Start_Time</DataField>
+        </Field>
+        <Field Name="Thu_End_Time">
+          <DataField>Thu_End_Time</DataField>
+        </Field>
+        <Field Name="Fri_Shift">
+          <DataField>Fri_Shift</DataField>
+        </Field>
+        <Field Name="Fri_Start_Time">
+          <DataField>Fri_Start_Time</DataField>
+        </Field>
+        <Field Name="Fri_End_Time">
+          <DataField>Fri_End_Time</DataField>
+        </Field>
+        <Field Name="Sat_Shift">
+          <DataField>Sat_Shift</DataField>
+        </Field>
+        <Field Name="Sat_Start_Time">
+          <DataField>Sat_Start_Time</DataField>
+        </Field>
+        <Field Name="Sat_End_Time">
+          <DataField>Sat_End_Time</DataField>
+        </Field>
+        <Field Name="Sun_Shift">
+          <DataField>Sun_Shift</DataField>
+        </Field>
+        <Field Name="Sun_Start_Time">
+          <DataField>Sun_Start_Time</DataField>
+        </Field>
+        <Field Name="Sun_End_Time">
+          <DataField>Sun_End_Time</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

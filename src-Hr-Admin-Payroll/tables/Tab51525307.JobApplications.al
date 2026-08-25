@@ -610,8 +610,9 @@ table 51525307 "Job Applications"
         field(125; "Requisition Type"; Option)
         {
             CalcFormula = Lookup("Recruitment Needs"."Requisition Type" WHERE("No." = FIELD("Recruitment Need Code")));
-            OptionCaption = 'Open,Internal,External';
-            OptionMembers = Open,Internal,External;
+            Caption = 'Advertisement Type';
+            OptionCaption = ' ,Internal,External,Both';
+            OptionMembers = Open,Internal,External,Both;
 
             FieldClass = FlowField;
         }

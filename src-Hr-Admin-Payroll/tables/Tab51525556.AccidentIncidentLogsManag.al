@@ -45,6 +45,14 @@ table 51525556 "Accident / Incident Logs Manag"
         {
             Caption = 'Follow-up actions or investigations';
         }
+        field(10; "Approval Status"; Option)
+        {
+            Caption = 'Approval Status';
+            OptionCaption = 'Open,Pending Approval,Approved,Rejected';
+            OptionMembers = Open,"Pending Approval",Approved,Rejected;
+            Editable = false;
+        }
+
     }
     keys
     {

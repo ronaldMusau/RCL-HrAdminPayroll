@@ -18,33 +18,31 @@ page 51525411 "Ongoing Trainings"
             {
                 field("No."; Rec."No.")
                 {
-                    ToolTip = 'Specifies the value of the No. field.';
+                    ToolTip = 'Specifies the schedule number.';
                 }
-                /*field("Emp No."; Rec."Emp No.")
+                field("Training Request No."; Rec."Training Request No.")
                 {
-                    ToolTip = 'Specifies the value of the Emp No. field.';
+                    Caption = 'Request No.';
+                    ToolTip = 'Specifies the linked Training Request.';
                 }
-                field("Employee Name"; Rec."Employee Name")
+                field("Training No."; Rec."Training No.")
                 {
-                    ToolTip = 'Specifies the value of the Employee Name field.';
-                }
-                field(Position; Rec.Position)
-                {
-                    ToolTip = 'Specifies the value of the Position ID field.';
-                }*/
-                field(Department; Rec.Department)
-                { }
-                field("Training Title"; Rec."Training Title")
-                {
-                    ToolTip = 'Specifies the value of the Training Title field.';
+                    Caption = 'Event Title';
+                    ToolTip = 'Specifies the event title entered by HR.';
                 }
                 field("Start Date"; Rec."Start Date")
                 {
-                    ToolTip = 'Specifies the value of the Start Date field.';
+                    Caption = 'Scheduled Date';
+                    ToolTip = 'Specifies the scheduled start date.';
                 }
                 field("End Date"; Rec."End Date")
                 {
-                    ToolTip = 'Specifies the value of the End Date field.';
+                    Caption = 'Completion Date';
+                    ToolTip = 'Specifies the scheduled end date.';
+                }
+                field("Participants Count"; Rec."Participants Count")
+                {
+                    ToolTip = 'Specifies the number of participants.';
                 }
             }
         }

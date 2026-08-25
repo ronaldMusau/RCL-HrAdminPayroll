@@ -34,7 +34,7 @@ table 51525338 "Mid Year Appraisal"
                 if ObjEmp.Find('-') then begin
                     "Staff Name" := ObjEmp."First Name" + ' ' + ObjEmp."Middle Name" + ' ' + ObjEmp."Last Name";
                     Directorate := ObjEmp."Responsibility Center";
-                    Department := ObjEmp."Sub Responsibility Center";
+                    Department := ObjEmp."Responsibility Center";
                     Supervisor := ObjEmp."Manager No.";
                     if Supervisor = '' then
                         Error('Kindly ask the HR department to set the supervisor (Manager No.) for %1', "Staff No");
@@ -74,7 +74,7 @@ table 51525338 "Mid Year Appraisal"
                         StaffTargetsLines.Reset;
                         StaffTargetsLines.SetRange("Staff No", "Staff No");
                         StaffTargetsLines.SetRange(Period, Period);
-                        //StaffTargetsLines.SetRange("Due Date", Date);
+                        StaffTargetsLines.SetRange("Due Date", CalcDate('<-CM>', Date), CalcDate('<CM>', Date));
                         if StaffTargetsLines.FindSet() then begin
                             repeat
                                 StaffTargetsLines.CalcFields("Approved By Supervisor");
@@ -91,7 +91,8 @@ table 51525338 "Mid Year Appraisal"
                                     MidYearAppraisalLines."Success Measure" := StaffTargetsLines."Success Measure";
                                     MidYearAppraisalLines."Review Date" := Date;
                                     MidYearAppraisalLines.Insert;
-                                end;
+                                end
+                                else Message('Target %1 has not been approved by supervisor. Cannot include in Mid Year Appraisal.', StaffTargetsLines.No);
                             until StaffTargetsLines.Next = 0;
                         end else
                             Error('Targets for staff %1 for period %2 due on %3 not found', "Staff No", Period, Date);
@@ -296,6 +297,13 @@ table 51525338 "Mid Year Appraisal"
             DataClassification = ToBeClassified;
             TableRelation = "Sub Responsibility Center".Code WHERE("Responsibility Center" = FIELD(Department));
             Editable = false;
+        }
+        field(25; "Approval Status"; Option)
+        {
+            Caption = 'Approval Status';
+            DataClassification = ToBeClassified;
+            OptionMembers = Open,"Pending Approval",Released,Rejected;
+            OptionCaption = 'Open,Pending Approval,Released,Rejected';
         }
     }
 

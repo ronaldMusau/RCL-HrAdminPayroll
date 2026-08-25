@@ -5,7 +5,7 @@ page 52211565 "Posted Claims List"
     PageType = List;
     SourceTable = "Medical Claim Header";
     CardPageId = "Medical Claim Header";
-    SourceTableView = where(Posted = const(true));
+    SourceTableView = where("Approval Status" = const(Released));
     layout
     {
         area(Content)

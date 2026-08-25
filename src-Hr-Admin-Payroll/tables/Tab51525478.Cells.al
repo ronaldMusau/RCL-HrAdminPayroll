@@ -17,12 +17,32 @@ table 51525478 Cells
         field(3; Sector; Code[50])
         {
             Caption = 'Sector';
-            TableRelation = "Sectors";
+            TableRelation = "Sectors".Name WHERE(
+                District = FIELD(District),
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
+        }
+        field(4; District; Code[50])
+        {
+            Caption = 'District';
+            TableRelation = "Districts".Name WHERE(
+                Province = FIELD(Province),
+                "Country/Region Code" = FIELD("Country/Region Code"));
+        }
+        field(5; Province; Code[50])
+        {
+            Caption = 'Province';
+            TableRelation = "Provinces".Name WHERE("Country/Region Code" = FIELD("Country/Region Code"));
+        }
+        field(6; "Country/Region Code"; Code[10])
+        {
+            Caption = 'Country/Region Code';
+            TableRelation = "Country/Region".Code;
         }
     }
     keys
     {
-        key(PK; Name, Sector)
+        key(PK; Name, Sector, District, Province, "Country/Region Code")
         {
             Clustered = true;
         }

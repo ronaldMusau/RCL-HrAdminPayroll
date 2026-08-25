@@ -12,6 +12,7 @@ table 51525564 "Memo Lines"
         field(2; "Line No"; Integer)
         {
             Caption = 'Line No';
+            AutoIncrement = true;
         }
         field(3; "Activity Description"; Text[200])
         {
@@ -34,7 +35,7 @@ table 51525564 "Memo Lines"
     {
         key(PK; "Doc No", "Line No")
         {
-            Clustered = true;
+            //Clustered = true;
         }
     }
 }

@@ -20,6 +20,7 @@ table 51525327 "Employee Leave Application"
                     "Balance brought forward" := EmpLeave."Balance Brought Forward";
                     "Department Code" := emp."Responsibility Center";//."Global Dimension 2 Code";
                     "Department Name" := emp."Responsibility Center Name";
+
                     "User ID" := emp."User ID";
                     //"Directorate Code" := emp."Global Dimension 1 Code";
                     if UserSertup.Get(emp."User ID") then
@@ -395,7 +396,10 @@ table 51525327 "Employee Leave Application"
                     if DetermineIfIsNonWorking("Start Date") = true then begin
                         Error('Start date must be a working day');
                     end;
-                    Validate("Days Applied");
+                    if ("End Date" <> 0D) and ("End Date" >= "Start Date") then
+                        Validate("Days Applied", ("End Date" - "Start Date") + 1)
+                    else
+                        Validate("Days Applied");
                 end;
 
             end;
@@ -411,6 +415,9 @@ table 51525327 "Employee Leave Application"
                 if "Start Date" <> 0D then
                     Validate("Start Date");
                 Validate("Leave Type");
+                if ("End Date" <> 0D) and ("Start Date" <> 0D) then
+                    if "Days Applied" = 0 then
+                        Validate("Days Applied", ("End Date" - "Start Date") + 1);
             end;
         }
         field(7; "Application Date"; Date)
@@ -623,11 +630,13 @@ table 51525327 "Employee Leave Application"
                 //Send mail to all staff
                 HumanResSetup.Get;
                 if Status = Status::Released then begin
-                    FnPostLeave("Application No");//post leave aytomatically on approval
-                    Posted := true;
-                    "Posted By" := UserId;
-                    "Date Posted" := Today;
-                    "Time Posted" := Time;
+                    if "Approved Days" = 0 then begin
+                        "Approved Days" := "Days Applied";
+                        Modify();
+                    end;
+                    if not Posted then begin
+                        FnPostLeave("Application No");
+                    end;
                     UserSertup.Reset;
                     UserSertup.SetRange("Employee No.", Rec."Employee No");
                     if UserSertup.Find('-') then begin
@@ -786,7 +795,7 @@ table 51525327 "Employee Leave Application"
         }
         field(51; "No. of Approvals"; Integer)
         {
-            CalcFormula = Count("Approval Entry" WHERE("Table ID" = CONST(51525209),
+            CalcFormula = Count("Approval Entry" WHERE("Table ID" = CONST(51525327),
                                                         "Document No." = FIELD("Application No")));
             FieldClass = FlowField;
         }
@@ -870,6 +879,19 @@ table 51525327 "Employee Leave Application"
         {
             Editable = false;
         }
+        field(65; "Combined Request No."; Code[20])
+        {
+            Caption = 'Combined Request No.';
+            TableRelation = "Employee Leave Application"."Application No";
+            Editable = false;
+            ToolTip = 'Groups this application with others submitted together for different leave types in the same request.';
+        }
+        field(51525904; "Sub Responsibility Center"; Code[100])
+        {
+            FieldClass = FlowField;
+            CalcFormula = lookup(Employee."Sub Responsibility Center"
+                         where("No." = field("Employee No")));
+        }
     }
 
     keys
@@ -886,6 +908,9 @@ table 51525327 "Employee Leave Application"
         key(Key3; "Employee No", Status, "Leave Type", "Contract No.")
         {
             SumIndexFields = "Days Applied", "Approved Days";
+        }
+        key(Key4; "Combined Request No.")
+        {
         }
     }
 
@@ -1463,7 +1488,7 @@ table 51525327 "Employee Leave Application"
                 LRegister."Posted By" := UserId;
                 LRegister."Date Posted" := Today;
                 LRegister."Time Posted" := Time;
-                //LRegister.MODIFY;
+                LRegister.Modify();
             end;
         end;
         //END;

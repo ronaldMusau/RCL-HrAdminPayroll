@@ -1,8 +1,6 @@
 page 51525550 "Loan Product Type list"
 {
     ApplicationArea = All;
-    CardPageID = "Loan Product Type list";
-    Editable = false;
     PageType = List;
     UsageCategory = Lists;
     SourceTable = "Loan Product Type";
@@ -24,9 +22,6 @@ page 51525550 "Loan Product Type list"
                 {
                 }
                 field("Interest Calculation Method"; Rec."Interest Calculation Method")
-                {
-                }
-                field("No Series"; Rec."No Series")
                 {
                 }
                 field("No of Instalment"; Rec."No of Instalment")

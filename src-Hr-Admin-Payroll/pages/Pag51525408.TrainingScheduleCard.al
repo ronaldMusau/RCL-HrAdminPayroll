@@ -12,59 +12,23 @@ page 51525408 "Training Schedule Card"
         {
             group(General)
             {
-                Editable = EnableEditing;
                 Caption = 'General';
-
                 field("No."; Rec."No.")
                 {
+                    Editable = false;
                     ToolTip = 'Specifies the value of the No. field.';
                 }
-                field("Emp No."; Rec."Emp No.")
+                field("Training Request No."; Rec."Training Request No.")
                 {
-                    Visible = false;
-                    ToolTip = 'Specifies the value of the Emp No. field.';
-                }
-                field("Employee Name"; Rec."Employee Name")
-                {
-                    Visible = false;
-                    ToolTip = 'Specifies the value of the Employee Name field.';
+                    ApplicationArea = All;
+                    Caption = 'Training Request No.';
+                    ToolTip = 'Links this schedule to an approved Training Request and auto-populates participants.';
                 }
                 field("Training No."; Rec."Training No.")
                 {
+                    Caption = 'Event Title';
+                    Editable = EnableEditing;
                     ToolTip = 'Specifies the value of the Training No. field.';
-                }
-                field("Training Title"; Rec."Training Title")
-                {
-                    ToolTip = 'Specifies the value of the Training Title field.';
-                }
-                field("Training Description"; Rec."Training Description")
-                {
-                    ToolTip = 'Specifies the value of the Training Description field.';
-                }
-                field(Department; Rec.Department)
-                {
-                    Visible = true;
-                }
-                field(Section; Rec.Section)
-                {
-                    Visible = false;
-                }
-                field(Position; Rec.Position)
-                {
-                    Visible = false;
-                    ToolTip = 'Specifies the value of the Position ID field.';
-                }
-                field("Job Title"; Rec."Job Title")
-                {
-                    Visible = false;
-                    ToolTip = 'Specifies the value of the Position Title field.';
-                }
-                field(Frequency; Rec.Frequency)
-                { }
-                field("Duration"; Rec."Duration")
-                {
-                    Caption = 'Duration (H,D,M,Y)';
-                    ToolTip = 'Specify a number then letter H for hours, D-days, M-months, Y-years eg 3M';
                 }
                 field("Start Date"; Rec."Start Date")
                 {
@@ -74,57 +38,30 @@ page 51525408 "Training Schedule Card"
                 {
                     ToolTip = 'Specifies the value of the End Date field.';
                 }
-                field("Training Location"; Rec."Training Location")
-                { }
-                field("Trainer Category"; Rec."Trainer Category")
-                { }
-                field("Trainer No."; Rec."Trainer No.")
-                { }
-                field("Trainer Name"; Rec."Trainer Name")
-                { }
-                field("Talent Dev. No."; Rec."Talent Dev. No.")
-                { }
-                field("Talent Development Specialist"; Rec."Talent Development Specialist")
-                { }
-                field(Objectives; Rec.Objectives)
-                {
-                    MultiLine = true;
-                }
-                group("Costs (RWF)")
-                {
-                    field("Instructor Allowance"; Rec."Instructor Allowance")
-                    { }
-                    field("Facility Costs"; Rec."Facility Costs")
-                    { }
-                    /*field("Facility Lunch"; Rec."Facility Lunch")
-                    { }*/
-                    field("Head office Lunch"; Rec."Head office Lunch")
-                    { }
-                    /*field("Other Costs"; Rec."Other Costs")
-                    { }*/
-                }
-                field("Training Report (Summary)"; Rec."Training Report (Summary)")
-                {
-                    ToolTip = 'Specifies the value of the Training Report (Summary) field.';
-                    MultiLine = true;
-                }
-                field("Certificates Issued?"; Rec."Certificates Issued?")
-                { }
                 field(Status; Rec.Status)
                 {
+                    Editable = false;
                     ToolTip = 'Specifies the value of the Status field.';
                 }
                 field("Participants Count"; Rec."Participants Count")
-                { }
-                field("Legacy Data"; Rec."Legacy Data")
-                { }
+                {
+                    Editable = false;
+                }
+                field("Participants Emailed"; Rec."Participants Emailed")
+                {
+                    Editable = false;
+                }
+                field("Participants Emailed On"; Rec."Participants Emailed On")
+                {
+                    Editable = false;
+                }
             }
             part("Training Schedule Lines"; "Training Schedule Lines")
             {
                 Caption = 'Participants';
                 SubPageLink = "Schedule No." = FIELD("No.");
                 UpdatePropagation = Both;
-                Editable = EnableEditing;
+                Editable = SubpartEditable;
             }
         }
     }
@@ -150,7 +87,6 @@ page 51525408 "Training Schedule Card"
                 begin
                     RecRef.GetTable(Rec);
                     DocumentAttachmentDetails.OpenForRecRef(RecRef);
-                    //DocumentAttachmentDetails.SetFilters(FALSE, Rec."No.");
                     DocumentAttachmentDetails.RunModal;
                 end;
             }
@@ -208,7 +144,6 @@ page 51525408 "Training Schedule Card"
                                 if Emp."Company E-Mail" <> '' then begin
                                     emailbody := 'Dear ' + TrainSchedLines."Employee Name" + ',<br>';
                                     emailbody := emailbody + '<p>Kindly note that you are a participant of this training: <strong>' + Rec."Training Title" + '</strong> which has been scheduled to take place on <strong>' + Format(Rec."Start Date") + '</strong>. Kindly prepare accordingly.<br>';
-                                    //emailbody := emailbody + 'Kindly go through it, sign, then send back to us. <br> For any inquiries, reach us via <b>' + setuprec."Procurement Email" + '</b>. <p>';
                                     emailbody := emailbody + 'Kind Regards.<br><br>';
                                     EmailMessage.Create(Emp."Company E-Mail", 'Training Schedule: ' + Rec."Training Title", emailbody, true);
                                     Email.Send(EmailMessage, Enum::"Email Scenario"::Default);
@@ -228,82 +163,88 @@ page 51525408 "Training Schedule Card"
                         Error('Notifications not sent! Try again later.');
                 end;
             }
-
-            action("Update Records")
+            action(PostSchedule)
             {
-                Image = Email;
+                Caption = 'Post';
+                ApplicationArea = All;
+                Image = Post;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                PromotedOnly = true;
-                Visible = false;
-
+                Enabled = Rec.Status = Rec.Status::Open;
                 trigger OnAction()
                 begin
-                    if UserId = 'RWANDAIR\PORTALUSER' then
-                        UpdateRecords();
+                    if not Confirm('Post this Training Schedule? Status will change to Ongoing.') then
+                        exit;
+                    Rec.Status := Rec.Status::Ongoing;
+                    Rec.Modify(true);
+                    CurrPage.Update(false);
+                end;
+            }
+            action(CompleteSchedule)
+            {
+                Caption = 'Complete';
+                ApplicationArea = All;
+                Image = Completed;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Enabled = Rec.Status = Rec.Status::Ongoing;
+                trigger OnAction()
+                begin
+                    if not Confirm('Mark this Training Schedule as Completed?') then
+                        exit;
+                    Rec.Status := Rec.Status::Completed;
+                    Rec.Modify(true);
+                    CurrPage.Update(false);
+                end;
+            }
+            action(ReopenSchedule)
+            {
+                Caption = 'Reopen';
+                ApplicationArea = All;
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Enabled = (Rec.Status = Rec.Status::Ongoing) or
+                          (Rec.Status = Rec.Status::Completed);
+                trigger OnAction()
+                begin
+                    if not Confirm('Reopen this Training Schedule? Status will reset to Open.') then
+                        exit;
+                    Rec.Status := Rec.Status::Open;
+                    Rec.Modify(true);
+                    CurrPage.Update(false);
                 end;
             }
         }
     }
 
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        Rec.Status := Rec.Status::Open;
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        EnableEditing := Rec.Status = Rec.Status::Open;
+        CurrPage.Editable := (Rec.Status = Rec.Status::Open) or
+                             (Rec.Status = Rec.Status::Ongoing);
+        SubpartEditable := (Rec.Status = Rec.Status::Open) or
+                           (Rec.Status = Rec.Status::Ongoing);
+        CurrPage."Training Schedule Lines".PAGE.SetOngoing(
+            Rec.Status = Rec.Status::Ongoing);
+    end;
+
     trigger OnOpenPage()
     var
-        LineNo: Integer;
         TrainingMasterRec: Record "Training Master Plan Header";
-        OldEmpNo: Code[50];
-        NewEmpNo: Code[50];
-        Update: Boolean;
     begin
         CurrPage.Editable(true);
         EnableEditing := true;
         if TrainingMasterRec.IsAReadOnlyUser() then
-            EnableEditing := false;//CurrPage.Editable(false);
-        /*Classes.Reset();
-        Classes.SetRange("Legacy Data", true);
-        if Classes.FindSet() then
-            repeat
-                //LineNo := 0;
-                Participants.Reset();
-                Participants.SetRange("Schedule No.", Classes."No.");
-                //Participants.SetRange("Emp No.",'WB ');
-                if Participants.FindSet() then
-                    repeat
-                        Update := true;
-                        //LineNo += 1;
-                        //Participants."Line No." := LineNo;
-                        if StrPos(Participants."Emp No.", 'WB ') <> 0 then begin
-                            OldEmpNo := Participants."Emp No.";
-                            NewEmpNo := 'WB' + DelChr(CopyStr(Participants."Emp No.", 3), '=', ' ');
-                            OtherParticipants.Reset();
-                            OtherParticipants.SetRange("Schedule No.", Classes."No.");
-                            OtherParticipants.SetRange("Emp No.", NewEmpNo);
-                            if OtherParticipants.FindFirst() then begin
-                                Update := false;
-                                if (OtherParticipants."Certificate Serial No." = '') and (OtherParticipants."Certificate Link" = '') then begin
-                                    OtherParticipants.delete();
-                                    Update := true;
-                                end;
-                            end;
-                            Participants."Emp No." := NewEmpNo;
-                            EmpRec.Reset();
-                            EmpRec.SetRange("No.", NewEmpNo);
-                            if EmpRec.FindFirst() then begin
-                                Participants."Employee Name" := EmpRec."First Name" + ' ' + EmpRec."Middle Name" + ' ' + EmpRec."Last Name";
-                                Participants."Department Code" := EmpRec."Responsibility Center";
-                                Participants."Job Title" := EmpRec."Job Title";
-                                Participants.Section := EmpRec."Sub Responsibility Center";
-                            end;
-                            //Participants.Validate("Emp No.");
-                            Participants.updateParticipantType();
-                            if Update then
-                            //Delete then add as a new entry
-                                Participants.Rename(NewEmpNo, Classes."No."); //Participants.Modify();
-                        end;
-                    until Participants.Next() = 0;
-            //Classes.Validate("Start Date");
-            //Classes.Validate(Status);
-            until Classes.Next() = 0;*/
+            EnableEditing := false;
     end;
 
     var
@@ -313,6 +254,7 @@ page 51525408 "Training Schedule Card"
         ParticipantInit: Record "Training Schedule Lines";
         EmpRec: Record Employee;
         EnableEditing: Boolean;
+        SubpartEditable: Boolean;
         Window: Dialog;
 
 

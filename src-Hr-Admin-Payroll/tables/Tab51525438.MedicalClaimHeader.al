@@ -56,7 +56,7 @@ table 51525438 "Medical Claim Header"
         }
         field(12; "No. of Approvals"; Integer)
         {
-            CalcFormula = Count("Approval Entry" WHERE("Table ID" = CONST(51525183),
+            CalcFormula = Count("Approval Entry" WHERE("Table ID" = CONST(51525438),
                                                         "Document No." = FIELD("Claim No")));
             FieldClass = FlowField;
         }
@@ -79,6 +79,47 @@ table 51525438 "Medical Claim Header"
         field(17; Posted; Boolean)
         {
 
+        }
+        field(18; "Employee No"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Employee."No." where(Status = const(Active));
+            trigger OnValidate()
+            var
+                Emp: Record Employee;
+            begin
+                if Emp.Get("Employee No") then begin
+                    "Employee Name" := Emp."First Name" + ' ' + Emp."Middle Name" + ' ' + Emp."Last Name";
+                    "Bank Name" := Emp."Bank Name";
+                    "Bank Branch" := Emp."Bank Brach Name";
+                    "Bank Account No" := Emp."Bank Account No";
+                end else begin
+                    "Employee Name" := '';
+                    "Bank Name" := '';
+                    "Bank Branch" := '';
+                    "Bank Account No" := '';
+                end;
+            end;
+        }
+        field(19; "Employee Name"; Text[200])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(20; "Bank Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(21; "Bank Branch"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(22; "Bank Account No"; Code[30])
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
         }
 
     }
@@ -115,7 +156,7 @@ table 51525438 "Medical Claim Header"
         empl.Reset();
         empl.SetRange("User ID", UserId);
         if (empl.FindFirst) then begin
-            "Claim No" := empl."No.";
+            // "Claim No" := empl."No.";
             "Department" := empl."Responsibility Center";
         end;
 

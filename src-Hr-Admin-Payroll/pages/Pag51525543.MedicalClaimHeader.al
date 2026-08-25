@@ -19,6 +19,22 @@ page 51525543 "Medical Claim Header"
                 {
                     NotBlank = true;
                 }
+                field("Employee No"; Rec."Employee No")
+                {
+                    NotBlank = true;
+                }
+                field("Employee Name"; Rec."Employee Name")
+                {
+                }
+                field("Bank Name"; Rec."Bank Name")
+                {
+                }
+                field("Bank Branch"; Rec."Bank Branch")
+                {
+                }
+                field("Bank Account No"; Rec."Bank Account No")
+                {
+                }
                 field("Claimant No."; Rec."Claimant No.")
                 {
 
@@ -72,7 +88,7 @@ page 51525543 "Medical Claim Header"
     {
         area(Processing)
         {
-            // 1️⃣ Your real actions (logic)
+
             action(MyAttachment)
             {
                 ApplicationArea = All;
@@ -98,13 +114,25 @@ page 51525543 "Medical Claim Header"
                 ApplicationArea = All;
 
                 trigger OnAction()
+                var
+                    DocumentAttachment: Record "Document Attachment";
+                    RecRef: RecordRef;
                 begin
+                    // Check for attachments before sending for approval
+                    RecRef.GetTable(Rec);
+                    DocumentAttachment.SetRange("Table ID", RecRef.Number);
+                    DocumentAttachment.SetRange("No.", Rec."Claim No");
+                    if DocumentAttachment.IsEmpty() then
+                        Error('You cannot send a claim for approval without attachments. Please attach the required documents first.');
+
                     VarVariant := Rec;
                     if (Rec."Approval Status" <> Rec."Approval Status"::Open) and (Rec."Approval Status" <> Rec."Approval Status"::Rejected) then
                         Error('Document Status has to be open');
                     if CustomApprovals.CheckApprovalsWorkflowEnabled(VarVariant) then
                         CustomApprovals.OnSendDocForApproval(VarVariant);
+                    Rec.Get(Rec."Claim No");
                     Message('Approval request has been sent successfully.');
+                    CurrPage.Update(true);
 
                 end;
             }
@@ -119,17 +147,25 @@ page 51525543 "Medical Claim Header"
                         VarVariant := Rec;
                         CustomApprovals.OnCancelDocApprovalRequest(VarVariant);
                         Message('Approval request has been Canceled');
+                        Rec.Get(Rec."Claim No");
+                        if Rec."Approval Status" = Rec."Approval Status"::"Pending Approval" then begin
+                            Rec."Approval Status" := Rec."Approval Status"::Open;
+                            Rec.Modify();
+                            CurrPage.Update(true);
+                        end;
                     end;
                 end;
             }
-            action(MyApproval)
+            action(MyApprovals)
             {
-                Caption = 'Approval';
                 ApplicationArea = All;
-
+                Caption = 'Approvals';
+                Image = Approvals;
                 trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                 begin
-                    Rec."Approval Status" := Rec."Approval Status"::"Pending Approval";
+                    ApprovalsMgmt.OpenApprovalEntriesPage(Rec.RecordId);
                 end;
             }
             action(Reopen)
@@ -139,7 +175,9 @@ page 51525543 "Medical Claim Header"
 
                 trigger OnAction()
                 begin
-                    Rec."Approval Status" := Rec."Approval Status"::"Pending Approval";
+                    Rec."Approval Status" := Rec."Approval Status"::Open;
+                    Rec.Modify();
+                    CurrPage.Update(true);
                 end;
             }
 
@@ -152,6 +190,8 @@ page 51525543 "Medical Claim Header"
                 trigger OnAction()
                 begin
                     Rec.posted := true;
+                    Rec."Approval Status" := Rec."Approval Status"::Released;
+                    Rec.Modify();
                 end;
             }
             action(PrintClaimReport)
@@ -161,12 +201,9 @@ page 51525543 "Medical Claim Header"
                 Image = Print;
 
                 trigger OnAction()
-                var
-                    RecRef: RecordRef;
-                    MemoHeader: Record "Medical Claim Header";
                 begin
-                    RecRef.GetTable(Rec);
-                    Report.RunModal(Report::"Claims Report", true, true, MemoHeader);
+                    Rec.SetRange("Claim No", Rec."Claim No");
+                    Report.RunModal(Report::"Claims Report", true, true, Rec);
                 end;
             }
 
@@ -187,7 +224,7 @@ page 51525543 "Medical Claim Header"
 
                 actionref(MySendApprovalRef; MySendApproval) { }
                 actionref(MyCanceRef; MyCancelApproval) { }
-                actionref(MyApprovalRef; MyApproval) { }
+                actionref(MyApprovalRef; MyApprovals) { }
                 actionref(ReopenRef; Reopen) { }
 
             }

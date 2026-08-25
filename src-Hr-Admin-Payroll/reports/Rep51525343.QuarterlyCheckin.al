@@ -1,7 +1,7 @@
 report 51525343 "Quarterly Checkin"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/reports/layouts/QuarterlyCheckin.rdlc';
+    RDLCLayout = 'src-Hr-Admin-Payroll\reports\layouts\QuarterlyCheckin.rdlc';
     Caption = 'Mid Year Checkin';
 
     dataset

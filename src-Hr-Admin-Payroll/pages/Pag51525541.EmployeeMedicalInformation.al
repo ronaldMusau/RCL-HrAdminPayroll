@@ -1,6 +1,7 @@
 page 51525541 "Employee Medical Information"
 {
     ApplicationArea = All;
+    UsageCategory = Lists;
     PageType = Card;
     SourceTable = Employee;
     SourceTableView = WHERE(Status = CONST(Active));
@@ -64,6 +65,7 @@ page 51525541 "Employee Medical Information"
             }
             part(KPA; "Medical Info")
             {
+                SubPageLink = "Employee No" = FIELD("No.");
             }
         }
     }

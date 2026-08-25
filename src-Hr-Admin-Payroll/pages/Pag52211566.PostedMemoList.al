@@ -6,7 +6,7 @@ page 52211566 "Posted Memo List"
     ApplicationArea = All;
     UsageCategory = Lists;
     CardPageId = "Memo Card";
-    SourceTableView = where(posted = const(true));
+    SourceTableView = where("Approval Status" = const(Released));
 
 
     layout

@@ -1,4 +1,4 @@
-table 51525309 "Change Request"
+﻿table 51525309 "Change Request"
 {
     Caption = 'Employee Changes';
     DataCaptionFields = "No.", "First Name", "Middle Name", "Last Name";
@@ -383,7 +383,7 @@ table 51525309 "Change Request"
         }
         field(70; "Emp No."; Code[20])
         {
-            Caption = 'WB No.';
+            Caption = 'RC No.';
             TableRelation = Employee."No.";
 
             trigger OnValidate()
@@ -494,8 +494,8 @@ table 51525309 "Change Request"
                     "Sub Responsibility Center" := Employees."Sub Responsibility Center";
                     "Prev Sub Responsibility Center" := Employees."Sub Responsibility Center";
                     // *** NEW: Auto-populate Supervisor Name from Employee ***
-                    "New Supervisor No" := CopyStr(Employees."Supervisor Name", 1, MaxStrLen("New Supervisor No"));
-                    "Prev Supervisor No" := CopyStr(Employees."Supervisor Name", 1, MaxStrLen("Prev Supervisor No"));
+                    "New Supervisor No" := Employees."Supervisor No.";
+                    "Prev Supervisor No" := Employees."Supervisor No.";
                     "New Supervisor Full Name" := '';
                     "Prev Supervisor Full Name" := '';
                     if "New Supervisor No" <> '' then begin
@@ -1020,7 +1020,8 @@ table 51525309 "Change Request"
             Employees."Date Of Leaving" := "Date Of Leaving";
             Employees."Sub Responsibility Center" := "Sub Responsibility Center";
             // *** NEW: Push approved Supervisor Name back to Employee card ***
-            Employees."Supervisor Name" := "New Supervisor No";
+            Employees."Supervisor No." := "New Supervisor No";
+            Employees."Supervisor Name" := "New Supervisor Full Name";
             Employees.Modify;
         end;
 

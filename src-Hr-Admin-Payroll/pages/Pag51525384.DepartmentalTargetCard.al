@@ -9,9 +9,9 @@ page 51525384 "Departmental Target Card"
     {
         area(content)
         {
-            group(General)
+            group("Plan Header")
             {
-                Caption = 'General';
+                Caption = 'Plan Header';
 
                 field(No; Rec.No)
                 {
@@ -21,23 +21,6 @@ page 51525384 "Departmental Target Card"
                 {
                     ToolTip = 'Specifies the value of the Period field.';
                 }
-                field("Main Objective Code"; Rec."Main Objective Code")
-                {
-                    ToolTip = 'Specifies the value of the Main Objective Code field.';
-                }
-                field("Main Objective Description"; Rec."Main Objective Description")
-                {
-                    ToolTip = 'Specifies the value of the Main Objective Description field.';
-                }
-                field(Theme; Rec.Theme)
-                {
-                    ToolTip = 'Specifies the value of the Theme field.';
-                }
-                field("Success Measure"; Rec."Success Measure")
-                {
-                    MultiLine = true;
-                    ToolTip = 'Specifies the value of the Success Measure field.';
-                }
                 field("Department Code"; Rec."Department Code")
                 {
                     ToolTip = 'Specifies the value of the Department Code field.';
@@ -46,24 +29,13 @@ page 51525384 "Departmental Target Card"
                 {
                     ToolTip = 'Specifies the value of the Department Name field.';
                 }
-                field("Departmental Objective"; Rec."Departmental Objective")
-                {
-                    MultiLine = true;
-                    ToolTip = 'Specifies the value of the Departmental Objective field.';
-                }
-                field("Specific Action Plan"; Rec."Specific Action Plan")
-                {
-                    MultiLine = true;
-                    ToolTip = 'Specifies the value of the Specific Action Plan field.';
-                }
-                field("Due Date"; Rec."Due Date")
-                {
-                    ToolTip = 'Specifies the value of the Due Date field.';
-                }
-                field("Due Date Description"; Rec."Due Date Description")
-                {
-                    ToolTip = 'Specifies the value of the Due Date Description field.';
-                }
+            }
+
+            part(Objectives; "WB Dept Target Objectives")
+            {
+                ApplicationArea = All;
+                Caption = 'Objectives';
+                SubPageLink = "Document No" = field(No);
             }
         }
     }
